@@ -8,8 +8,8 @@ export default class Env {
         return 0;
     }
 
-    static getHeightTitleBar() {
-        return 40;
+    static getHeightActionBar() {
+        return 50;
     }
 
 }
