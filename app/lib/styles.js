@@ -6,6 +6,7 @@ export const Colors = {
     white: '#FFFFFF',
     whiteGreen: '#F4F7F6',
     grey: '#B7B7B7',
+    darkGrey: '#757575',
     black: '#000000',
 }
 
@@ -31,16 +32,12 @@ export const Styles = StyleSheet.create({
         alignItems: 'center'
     },
     icon24: {
-        width: 22,
-        height: 22,
+        width: 24,
+        height: 24,
     },
-    icon128: {
-        width: 128,
-        height: 128,
-    },
-    icon228: {
-        width: 226,
-        height: 226,
+    icon84: {
+        width: 84,
+        height: 84,
     },
     // COMMONS
     
@@ -48,6 +45,22 @@ export const Styles = StyleSheet.create({
         flex: 1,
         backgroundColor: Colors.whiteGreen,
     },
+
+    googleButton: {
+        height: 50,
+        paddingHorizontal: 20,
+        borderRadius: 5,
+        backgroundColor: Colors.white,
+        flexDirection: 'row',
+        alignItems: 'center',
+        elevation: 3
+    },
+    googleButtonText: {
+        fontWeight: 'bold',
+        color: Colors.darkGrey,
+        marginLeft: 10
+    },
+
     actionbarBox: {
         height: 50,
         elevation: 5,
