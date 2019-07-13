@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "739234713075",
+    "firebase_url": "https://app-moneyman.firebaseio.com",
+    "project_id": "app-moneyman",
+    "storage_bucket": "app-moneyman.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:739234713075:android:ca2afe13dcae5d25",
+        "android_client_info": {
+          "package_name": "com.moneyman"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "739234713075-ejp7gbv4pele076upf4bmtkm3pc0ho1h.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.moneyman",
+            "certificate_hash": "53995b40e79e746b139873c04011e3ceda07dad5"
+          }
+        },
+        {
+          "client_id": "739234713075-1hc03nude6iqoto27ks3i425p77578ql.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCSj1EBtMqkbwcgNqzPsNvYMqB5HEq46Vs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "739234713075-1hc03nude6iqoto27ks3i425p77578ql.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
