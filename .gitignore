@@ -57,3 +57,8 @@ buck-out/
 
 # CocoaPods
 /ios/Pods/
+
+# Configuration and credential files
+android/app/google-services.json
+ios/GoogleService-Info.plist
+config.js

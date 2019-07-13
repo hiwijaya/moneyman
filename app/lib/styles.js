@@ -38,6 +38,10 @@ export const Styles = StyleSheet.create({
         width: 128,
         height: 128,
     },
+    icon228: {
+        width: 226,
+        height: 226,
+    },
     // COMMONS
     
     sceneBox: {

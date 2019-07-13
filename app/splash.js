@@ -10,13 +10,13 @@ export default class Splash extends Component {
 
             //TODO: Put any logic here
 
-            this.props.navigation.navigate('home');
+            this.props.navigation.navigate('signin');
         }, 1000);
     }
 
     render() {
         return(
-            <View style={[Styles.center, {backgroundColor: Colors.whiteGreen}]}>
+            <View style={[Styles.sceneBox, Styles.center]}>
                 <Image style={Styles.icon128} source={require('./asset/wallet.png')}/>
             </View>
         );
