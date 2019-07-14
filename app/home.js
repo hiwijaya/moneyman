@@ -14,7 +14,7 @@ export default class Home extends Component {
 
     renderActionBar() {
         return(
-            <View style={Styles.actionbarBox}>
+            <View style={[Styles.actionbarBox, {elevation: 5}]}>
                 <TouchableOpacity style={Styles.dateButtonBox}>
                     <Text style={Styles.dateButtonLabel}>Jul</Text>
                 </TouchableOpacity>
@@ -22,7 +22,8 @@ export default class Home extends Component {
                     <TouchableOpacity style={Styles.actionbarButton}>
                         <Image style={Styles.icon24} source={require('./asset/icon-chart.png')}/>
                     </TouchableOpacity>
-                    <TouchableOpacity style={Styles.actionbarButton}>
+                    <TouchableOpacity style={Styles.actionbarButton}
+                        onPress={() => {this.props.navigation.navigate('account');}}>
                         <Image style={Styles.icon24} source={require('./asset/icon-user.png')}/>
                     </TouchableOpacity>
                 </View>

@@ -16,9 +16,9 @@ export default class Splash extends Component {
             offlineAccess: true,
         });
 
+        // TODO: Refactor again. Consider to user signInSilently()
         const isSignedIn = await GoogleSignin.isSignedIn();
         const currentUser = await GoogleSignin.getCurrentUser();
-        Alert.alert(currentUser.user.email);
 
         setTimeout(() => {
 

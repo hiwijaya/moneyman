@@ -2,6 +2,7 @@ import {createStackNavigator, createAppContainer} from 'react-navigation';
 import Splash from '../splash';
 import Signin from '../signin';
 import Home from '../home';
+import Account from '../account';
 
 
 const Router = createStackNavigator({
@@ -23,6 +24,13 @@ const Router = createStackNavigator({
         screen: Home,
         navigationOptions: {
             title: 'Home',
+            header: null
+        }
+    },
+    account: {
+        screen: Account,
+        navigationOptions: {
+            title: 'Account',
             header: null
         }
     }

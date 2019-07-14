@@ -11,9 +11,9 @@ export const Colors = {
 }
 
 export const Fonts = {
-    h1: 28,
-    h2: 24,
-    h3: 20,
+    h1: 26,
+    h2: 22,
+    h3: 18,
     h4: 16,     
     h5: 14,     // DEFAULT
     h6: 12,
@@ -30,6 +30,10 @@ export const Styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center'
+    },
+    icon18: {
+        width: 18,
+        height: 18,
     },
     icon24: {
         width: 24,
@@ -63,12 +67,12 @@ export const Styles = StyleSheet.create({
 
     actionbarBox: {
         height: 50,
-        elevation: 5,
         backgroundColor: Colors.primary,
         paddingHorizontal: PADDING_ACTIONBAR,
         flexDirection: 'row',
         alignItems: 'center',
-        justifyContent: 'space-between'
+        justifyContent: 'space-between',
+        // elevation: 5,
     },
     dateButtonBox: {
         paddingRight: 15,
@@ -86,6 +90,22 @@ export const Styles = StyleSheet.create({
     },
     actionbarButton: {
         padding: 7
+    },
+    backButton: {
+        paddingVertical: 15,
+        paddingRight: 15,
+    },
+    actionbarTitle: {
+        flex: 1,
+        fontSize: Fonts.h3,
+        fontWeight: 'bold',
+    },
+
+    accountHeaderBox: {
+        height: 150,
+        backgroundColor: Colors.primary,
+        borderBottomRightRadius: 50,
+        elevation: 5
     }
 
 
