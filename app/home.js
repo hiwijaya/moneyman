@@ -14,7 +14,7 @@ export default class Home extends Component {
 
     renderActionBar() {
         return(
-            <View style={[Styles.actionbarBox, {elevation: 5}]}>
+            <View style={Styles.actionbarBox}>
                 <TouchableOpacity style={Styles.dateButtonBox}>
                     <Text style={Styles.dateButtonLabel}>Jul</Text>
                 </TouchableOpacity>

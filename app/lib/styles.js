@@ -72,7 +72,7 @@ export const Styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
-        // elevation: 5,
+        elevation: 5,
     },
     dateButtonBox: {
         paddingRight: 15,
@@ -102,10 +102,42 @@ export const Styles = StyleSheet.create({
     },
 
     accountHeaderBox: {
-        height: 150,
+        height: 130,
         backgroundColor: Colors.primary,
         borderBottomRightRadius: 50,
         elevation: 5
+    },
+    accountPhotoBox: {
+        width: 100,
+        height: 100,
+        borderRadius: 30,
+        position: 'absolute',
+        left: 15,
+        top: 60,
+        elevation: 15,
+        backgroundColor: Colors.darkGrey,
+    },
+    accountPhoto: {
+        width: 100,
+        height: 100,
+        borderRadius: 30,
+    },
+    accountNameBox: {
+        marginLeft: 130,
+        marginTop: 20,
+    },
+    accountName: {
+        fontSize: Fonts.h2,
+        fontWeight: 'bold'
+    },
+    accountEmail: {
+        fontSize: Fonts.h5,
+    },
+
+    accountMenuBox: {
+        height: 50,
+        backgroundColor: Colors.white,
+        
     }
 
 

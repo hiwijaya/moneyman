@@ -11,20 +11,14 @@ import {
     statusCodes,
 } from 'react-native-google-signin';
 import { Styles } from './lib/styles'
+import Env from './lib/env';
 import config from '../config';
 
 
 export default class Signin extends Component {
-    
-    constructor(props) {
-        super(props);
-        this.state = {
-            userInfo: null,
-        };
-    }
+
 
     async componentDidMount() {
-
         GoogleSignin.configure({
             webClientId: config.webClientId,
             offlineAccess: true,
@@ -36,10 +30,9 @@ export default class Signin extends Component {
             // Check if device has Google Play Services installed
             await GoogleSignin.hasPlayServices({ showPlayServicesUpdateDialog: true });
             const userInfo = await GoogleSignin.signIn();
-            this.setState({userInfo: userInfo});
-            Alert.alert(userInfo.user.email);
 
-
+            Env.writeStorage(Env.key.USER_INFO, userInfo);
+            this.props.navigation.navigate('home');
 
         }
         catch(error){

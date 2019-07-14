@@ -11,6 +11,7 @@ import config from '../config';
 export default class Splash extends Component {
 
     async componentDidMount() {
+        
         await GoogleSignin.configure({
             webClientId: config.webClientId,
             offlineAccess: true,
@@ -18,20 +19,17 @@ export default class Splash extends Component {
 
         // TODO: Refactor again. Consider to user signInSilently()
         const isSignedIn = await GoogleSignin.isSignedIn();
-        const currentUser = await GoogleSignin.getCurrentUser();
 
         setTimeout(() => {
 
             //TODO: Put any logic here
+
             if(isSignedIn){
-                
                 this.props.navigation.navigate('home');
             }
             else {
                 this.props.navigation.navigate('signin');
             }
-
-            
         }, 1000);
     }
 
