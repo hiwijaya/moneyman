@@ -5,9 +5,11 @@ export const Colors = {
     primary: '#81cabc',
     white: '#FFFFFF',
     whiteGreen: '#F4F7F6',
+    lightGrey: '#f2f2f2',
     grey: '#B7B7B7',
     darkGrey: '#757575',
     black: '#000000',
+    red: '#E0555E',
 }
 
 export const Fonts = {
@@ -110,17 +112,17 @@ export const Styles = StyleSheet.create({
     accountPhotoBox: {
         width: 100,
         height: 100,
-        borderRadius: 30,
+        borderRadius: 35,
         position: 'absolute',
         left: 15,
         top: 60,
-        elevation: 15,
+        elevation: 5,
         backgroundColor: Colors.darkGrey,
     },
     accountPhoto: {
         width: 100,
         height: 100,
-        borderRadius: 30,
+        borderRadius: 35,
     },
     accountNameBox: {
         marginLeft: 130,
@@ -135,9 +137,54 @@ export const Styles = StyleSheet.create({
     },
 
     accountMenuBox: {
-        height: 50,
+        marginTop: 20,
         backgroundColor: Colors.white,
-        
+    },
+    accountMenuItem: {
+        height: 60,
+        flexDirection: 'row',
+        alignItems: 'center',
+    },
+    accountMenuIcon: {
+        width: 24,
+        height: 24,
+        marginLeft: 15,
+        marginRight: 30,
+    },
+    accountMenuTextBox: {
+        flex: 1,
+        height: 60,
+        justifyContent: 'center',
+        borderBottomWidth: 0,
+        borderBottomColor: Colors.lightGrey
+    },
+    accountMenuText: {
+        fontSize: Fonts.h4,
+        color: Colors.darkGrey,
+    },
+    versionTextBox: {
+        width: 70,
+        height: 60,
+        justifyContent: 'center',
+    },
+    versionText: {
+        fontSize: Fonts.h5,
+        color: Colors.darkGrey
+    },
+
+
+
+
+
+    signoutButton: {
+        height: 60,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    signoutText: {
+        fontSize: Fonts.h4,
+        fontWeight: 'bold',
+        color: Colors.red,
     }
 
 

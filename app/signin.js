@@ -50,17 +50,6 @@ export default class Signin extends Component {
         }
     }
 
-    signOut = async () => {
-        try {
-            await GoogleSignin.revokeAccess();
-            await GoogleSignin.signOut();
-            this.setState({
-                userInfo: null
-            });
-        } catch (error) {
-            console.error(error);
-        }
-    }
 
     render() {
         return (
@@ -71,10 +60,6 @@ export default class Signin extends Component {
                 <TouchableOpacity style={Styles.googleButton} onPress={this.signIn}>
                     <Image style={Styles.icon24} source={require('./asset/google.png')}/>
                     <Text style={Styles.googleButtonText}>Sign in with Google</Text>
-                </TouchableOpacity>
-
-                <TouchableOpacity onPress={this.signOut}>
-                    <Text>Logout</Text>
                 </TouchableOpacity>
             </View>
         );
