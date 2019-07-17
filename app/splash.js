@@ -4,6 +4,7 @@ import {
     GoogleSignin,
     statusCodes,
 } from 'react-native-google-signin';
+import { StackActions, NavigationActions } from 'react-navigation'
 import { Styles } from './lib/styles';
 import config from '../config';
 
@@ -25,7 +26,13 @@ export default class Splash extends Component {
             //TODO: Put any logic here
 
             if(isSignedIn){
-                this.props.navigation.navigate('home');
+                const resetAction = StackActions.reset({
+                    index: 0,
+                    actions: [NavigationActions.navigate({
+                        routeName: 'home'
+                    })],
+                });
+                this.props.navigation.dispatch(resetAction);
             }
             else {
                 this.props.navigation.navigate('signin');

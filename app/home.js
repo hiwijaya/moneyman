@@ -23,7 +23,7 @@ export default class Home extends Component {
                         <Image style={Styles.icon24} source={require('./asset/icon-chart.png')}/>
                     </TouchableOpacity>
                     <TouchableOpacity style={Styles.actionbarButton}
-                        onPress={() => {this.props.navigation.navigate('account');}}>
+                        onPress={() => {this.props.navigation.navigate('account', {item: 'fromA'});}}>
                         <Image style={Styles.icon24} source={require('./asset/icon-user.png')}/>
                     </TouchableOpacity>
                 </View>

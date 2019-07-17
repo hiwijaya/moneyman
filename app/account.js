@@ -103,7 +103,10 @@ export default class Account extends Component {
                             require('./asset/icon-categories.png'), 
                             'Categories', 
                             true, 
-                            () => {Alert.alert('Categories')})
+                            () => {
+                                // this.props.navigation.push('account');
+                                Alert.alert(this.props.navigation.getParam('item'));
+                            })
                     }
                     {
                         this.renderMenuItem(
@@ -111,7 +114,7 @@ export default class Account extends Component {
                             'Export',
                             false,
                             () => {
-                                Alert.alert('Export')
+                                this.props.navigation.popToTop();
                             })
                     }
                 </View>
