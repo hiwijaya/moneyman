@@ -4,7 +4,7 @@ import {
     GoogleSignin,
     statusCodes,
 } from 'react-native-google-signin';
-import { Styles, Colors } from './lib/styles';
+import { Styles } from './lib/styles';
 import config from '../config';
 
 
