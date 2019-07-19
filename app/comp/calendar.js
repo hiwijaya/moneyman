@@ -4,6 +4,7 @@ import {
     Text,
     Image,
     TouchableOpacity,
+    Alert,
 } from 'react-native';
 import { Styles, Colors } from '../lib/styles';
 
@@ -12,8 +13,15 @@ export default class Calendar extends Component {
 
     constructor(props) {
         super(props);
+
+        let today = new Date();
+        let month = today.getMonth() + 1;   // As January is 0.
+        let year = today.getFullYear();
+
         this.state = {
-            selectedMonth: 0
+            show: true,
+            selectedMonth: month,
+            selectedYear: year
         };
     }
 
@@ -28,50 +36,73 @@ export default class Calendar extends Component {
         });
     }
 
+    onPrevYear(){
+        this.setState({
+            selectedYear: this.state.selectedYear - 1
+        });
+    }
+
+    onNextYear(){
+        this.setState({
+            selectedYear: this.state.selectedYear + 1
+        });
+    }
+
 
     render() {
-        return (
-            <View style={Styles.calendarModalBox}>
-                <View style={Styles.calendarBox}>
-                    <View style={Styles.calendarYearBox}>
-                        <TouchableOpacity style={Styles.calendarYearButton}>
-                            <Image style={Styles.icon12} source={require('../asset/icon-left.png')}/>
-                        </TouchableOpacity>
-                        <Text style={{color: Colors.grey}}>2019</Text>
-                        <TouchableOpacity style={[Styles.calendarYearButton, {alignItems: 'flex-end'}]}>
-                            <Image style={Styles.icon12} source={require('../asset/icon-right.png')}/>
-                        </TouchableOpacity>
+        if(this.state.show){
+            return (
+                <View style={Styles.calendarModalBox}>
+                    <View style={Styles.calendarBox}>
+                        <View style={Styles.calendarYearBox}>
+                            <TouchableOpacity style={Styles.calendarYearButton} 
+                                onPress={() => this.onPrevYear()}>
+                                <Image style={Styles.icon12} source={require('../asset/icon-left.png')}/>
+                            </TouchableOpacity>
+                            <Text style={{color: Colors.grey}}>{this.state.selectedYear}</Text>
+                            <TouchableOpacity style={[Styles.calendarYearButton, {alignItems: 'flex-end'}]}
+                                onPress={() => this.onNextYear()}>
+                                <Image style={Styles.icon12} source={require('../asset/icon-right.png')}/>
+                            </TouchableOpacity>
+                        </View>
+                        <View style={Styles.calendarRowBox}>
+                            {
+                                this.month1.map((prop, key) => {
+                                    return(
+                                        <TouchableOpacity key={key} onPress={() => this.onMonthPress(prop.val) }
+                                            style={Styles.calendarMonthBox}>
+                                            <View style={this.state.selectedMonth == prop.val ? Styles.calendarMonthSelected : null} >
+                                                <Text style={this.state.selectedMonth == prop.val ? Styles.calendarTextSelected : null}>{prop.key}</Text>
+                                            </View>
+                                        </TouchableOpacity>
+                                    );
+                                })
+                            }
+                        </View>
+                        <View style={Styles.calendarRowBox}>
+                            {
+                                this.month2.map((prop, key) => {
+                                    return(
+                                        <TouchableOpacity key={key} onPress={() => this.onMonthPress(prop.val) }
+                                            style={Styles.calendarMonthBox}>
+                                            <View style={this.state.selectedMonth == prop.val ? Styles.calendarMonthSelected : null} >
+                                                <Text style={this.state.selectedMonth == prop.val ? Styles.calendarTextSelected : null}>{prop.key}</Text>
+                                            </View>
+                                        </TouchableOpacity>
+                                    );
+                                })
+                            }
+                        </View>
                     </View>
-                    <View style={Styles.calendarRowBox}>
-                        {
-                            this.month1.map((prop, key) => {
-                                return(
-                                    <TouchableOpacity key={key} onPress={() => this.onMonthPress(prop.val) }
-                                        style={Styles.calendarMonthBox}>
-                                        <View style={this.state.selectedMonth == prop.val ? Styles.calendarMonthSelected : null} >
-                                            <Text style={this.state.selectedMonth == prop.val ? Styles.calendarTextSelected : null}>{prop.key}</Text>
-                                        </View>
-                                    </TouchableOpacity>
-                                );
-                            })
-                        }
-                    </View>
-                    <View style={Styles.calendarRowBox}>
-                        {
-                            this.month2.map((prop, key) => {
-                                return(
-                                    <TouchableOpacity key={key} onPress={() => this.onMonthPress(prop.val) }
-                                        style={Styles.calendarMonthBox}>
-                                        <View style={this.state.selectedMonth == prop.val ? Styles.calendarMonthSelected : null} >
-                                            <Text style={this.state.selectedMonth == prop.val ? Styles.calendarTextSelected : null}>{prop.key}</Text>
-                                        </View>
-                                    </TouchableOpacity>
-                                );
-                            })
-                        }
-                    </View>
+                    <TouchableOpacity style={Styles.box} 
+                        onPress={() => this.setState({show: false})}>
+                        <View></View>
+                    </TouchableOpacity>
                 </View>
-            </View>
-        );
+            );
+        }
+        else{
+            return null;
+        }
     }
 }
