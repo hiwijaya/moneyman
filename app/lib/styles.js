@@ -28,10 +28,17 @@ const PADDING_ACTIONBAR = 15;
 export const Styles = StyleSheet.create({
 
     // COMMONS
+    box: {
+        flex: 1
+    },
     center: {
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center'
+    },
+    icon12: {
+        width: 12,
+        height: 12,
     },
     icon18: {
         width: 18,
@@ -46,6 +53,45 @@ export const Styles = StyleSheet.create({
         height: 84,
     },
     // COMMONS
+
+    calendarModalBox: {
+        flex: 1,
+        backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    },
+    calendarBox: {
+        height: 150,
+        backgroundColor: Colors.white,
+    },
+    calendarYearBox: {
+        height: 50,
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginHorizontal: 15,
+    },
+    calendarYearButton: {
+        flex: 1,
+        justifyContent: 'center',
+    },
+    calendarRowBox: {
+        height: 50,
+        flexDirection: 'row',
+    },
+    calendarMonthBox: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    calendarMonthSelected: {
+        backgroundColor: Colors.primary,
+        width: 40,
+        height: 40,
+        borderRadius: 40,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    calendarTextSelected: {
+        fontWeight: 'bold'
+    },
     
     sceneBox: {
         flex: 1,

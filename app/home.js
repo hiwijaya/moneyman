@@ -7,6 +7,7 @@ import {
     Image,
  } from 'react-native';
 import {Styles} from './lib/styles';
+import Calendar from './comp/calendar';
 
 
 export default class Home extends Component {
@@ -35,6 +36,7 @@ export default class Home extends Component {
         return(
             <View style={Styles.sceneBox}>
                 {this.renderActionBar()}
+                <Calendar/>
             </View>
         );
     }
