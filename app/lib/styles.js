@@ -63,7 +63,7 @@ export const Styles = StyleSheet.create({
         backgroundColor: 'rgba(0, 0, 0, 0.5)',
     },
     calendarBox: {
-        height: 170,
+        height: 160,
         backgroundColor: Colors.white,
     },
     calendarYearBox: {
@@ -74,6 +74,7 @@ export const Styles = StyleSheet.create({
     },
     calendarYearButton: {
         flex: 1,
+        height: 50,
         justifyContent: 'center',
     },
     calendarRowBox: {

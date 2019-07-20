@@ -26,7 +26,15 @@ export default class Home extends Component {
     renderActionBar() {
         return(
             <View style={Styles.actionbarBox}>
-                <TouchableOpacity onPress={() => {this.refCalendar.show()}}>
+                <TouchableOpacity 
+                    onPress={() => {
+                        if (this.refCalendar.isShow()){
+                            this.refCalendar.hide();
+                        }
+                        else{
+                            this.refCalendar.show();
+                        }
+                    }}>
                     <View style={Styles.periodButtonBox}>
                         <Text style={Styles.periodButtonLabel}>{this.state.monthLabel}</Text>
                         <Image style={Styles.icon8} source={require('./asset/icon-down.png')}/>
