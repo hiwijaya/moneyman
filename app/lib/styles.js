@@ -36,6 +36,10 @@ export const Styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center'
     },
+    icon8: {
+        width: 8,
+        height: 8,
+    },
     icon12: {
         width: 12,
         height: 12,
@@ -59,7 +63,7 @@ export const Styles = StyleSheet.create({
         backgroundColor: 'rgba(0, 0, 0, 0.5)',
     },
     calendarBox: {
-        height: 150,
+        height: 170,
         backgroundColor: Colors.white,
     },
     calendarYearBox: {
@@ -122,12 +126,17 @@ export const Styles = StyleSheet.create({
         justifyContent: 'space-between',
         elevation: 5,
     },
-    dateButtonBox: {
+    periodButtonBox: {
+        height: 50,
         paddingRight: 15,
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
     },
-    dateButtonLabel: {
+    periodButtonLabel: {
         fontSize: Fonts.h3,
         fontWeight: 'bold',
+        marginRight: 10,
     },
     actionbarButtonBox: {
         width: 80,

@@ -3,21 +3,34 @@ import {
     View, 
     Text,
     TouchableOpacity,
-    TouchableNativeFeedback,
     Image,
+    Alert,
  } from 'react-native';
-import {Styles} from './lib/styles';
+import {Styles, Colors} from './lib/styles';
 import Calendar from './comp/calendar';
 
 
 export default class Home extends Component {
 
+    constructor(props){
+        super(props);
+
+        this.refCalendar = null;
+
+        this.state = {
+            monthLabel: 'Jul',
+        }
+    }
+
 
     renderActionBar() {
         return(
             <View style={Styles.actionbarBox}>
-                <TouchableOpacity style={Styles.dateButtonBox}>
-                    <Text style={Styles.dateButtonLabel}>Jul</Text>
+                <TouchableOpacity onPress={() => {this.refCalendar.show()}}>
+                    <View style={Styles.periodButtonBox}>
+                        <Text style={Styles.periodButtonLabel}>{this.state.monthLabel}</Text>
+                        <Image style={Styles.icon8} source={require('./asset/icon-down.png')}/>
+                    </View>
                 </TouchableOpacity>
                 <View style={Styles.actionbarButtonBox}>
                     <TouchableOpacity style={Styles.actionbarButton}>
@@ -36,7 +49,10 @@ export default class Home extends Component {
         return(
             <View style={Styles.sceneBox}>
                 {this.renderActionBar()}
-                <Calendar/>
+                <Calendar ref={ref => this.refCalendar = ref} 
+                    onSelectedMonth={(year, month, monthLabel) => {
+                        this.setState({monthLabel: monthLabel});
+                    }}/>
             </View>
         );
     }

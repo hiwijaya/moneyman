@@ -19,10 +19,26 @@ export default class Calendar extends Component {
         let year = today.getFullYear();
 
         this.state = {
-            show: true,
-            selectedMonth: month,
-            selectedYear: year
+            show: false,
+            selectedYear: year,
+            selectedMonth: month
         };
+    }
+
+    show(){
+        this.setState({
+            show: true
+        });
+    }
+
+    hide(){
+        this.setState({
+            show: false
+        });
+    }
+
+    isShow(){
+        return this.state.show;
     }
 
     month1 = [{key: 'Jan', val: 1}, {key: 'Feb', val: 2}, {key: 'Mar', val: 3}, 
@@ -30,9 +46,16 @@ export default class Calendar extends Component {
     month2 = [{key: 'Jul', val: 7}, {key: 'Aug', val: 8}, {key: 'Sep', val: 9}, 
         {key: 'Oct', val: 10}, {key: 'Nov', val: 11}, {key: 'Dec', val: 12}];
     
-    onMonthPress(selectedMonth){
+    onMonthPress(selectedMonth, monthLabel){
         this.setState({
-            selectedMonth: selectedMonth
+            selectedMonth: selectedMonth,
+            show: false,
+        }, () => {
+            this.props.onSelectedMonth(
+                this.state.selectedYear, 
+                this.state.selectedMonth, 
+                monthLabel
+            );
         });
     }
 
@@ -69,7 +92,7 @@ export default class Calendar extends Component {
                             {
                                 this.month1.map((prop, key) => {
                                     return(
-                                        <TouchableOpacity key={key} onPress={() => this.onMonthPress(prop.val) }
+                                        <TouchableOpacity key={key} onPress={() => this.onMonthPress(prop.val, prop.key) }
                                             style={Styles.calendarMonthBox}>
                                             <View style={this.state.selectedMonth == prop.val ? Styles.calendarMonthSelected : null} >
                                                 <Text style={this.state.selectedMonth == prop.val ? Styles.calendarTextSelected : null}>{prop.key}</Text>
@@ -83,7 +106,7 @@ export default class Calendar extends Component {
                             {
                                 this.month2.map((prop, key) => {
                                     return(
-                                        <TouchableOpacity key={key} onPress={() => this.onMonthPress(prop.val) }
+                                        <TouchableOpacity key={key} onPress={() => this.onMonthPress(prop.val, prop.key) }
                                             style={Styles.calendarMonthBox}>
                                             <View style={this.state.selectedMonth == prop.val ? Styles.calendarMonthSelected : null} >
                                                 <Text style={this.state.selectedMonth == prop.val ? Styles.calendarTextSelected : null}>{prop.key}</Text>
@@ -105,4 +128,8 @@ export default class Calendar extends Component {
             return null;
         }
     }
+}
+
+Calendar.defaultProps = {
+    onSelectedMonth: (year, month, monthLabel) => {}
 }
