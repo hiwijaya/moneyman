@@ -144,7 +144,6 @@ export const Styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         marginRight: 10
-        
     },
     actionbarButton: {
         padding: 7
@@ -191,7 +190,6 @@ export const Styles = StyleSheet.create({
     accountEmail: {
         fontSize: Fonts.h5,
     },
-
     accountMenuBox: {
         marginTop: 20,
         backgroundColor: Colors.white,
@@ -228,10 +226,6 @@ export const Styles = StyleSheet.create({
         color: Colors.darkGrey
     },
 
-
-
-
-
     signoutButton: {
         height: 60,
         justifyContent: 'center',
@@ -241,7 +235,16 @@ export const Styles = StyleSheet.create({
         fontSize: Fonts.h4,
         fontWeight: 'bold',
         color: Colors.red,
-    }
+    },
 
+    tabBox: {
+        height: 50,
+        flexDirection: 'row',
+        backgroundColor: Colors.primary,
+    },
+    tabSelected: {
+        borderBottomWidth: 3,
+        borderBottomColor: Colors.black
+    }
 
 });

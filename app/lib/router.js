@@ -3,6 +3,7 @@ import Splash from '../splash';
 import Signin from '../signin';
 import Home from '../home';
 import Account from '../account';
+import Categories from '../categories';
 
 
 const Router = createStackNavigator({
@@ -33,6 +34,14 @@ const Router = createStackNavigator({
             title: 'Account',
             header: null
         }
-    }
+    },
+    categories: {
+        screen: Categories,
+        navigationOptions: {
+            title: 'Categories',
+            header: null
+        }
+    },
+
 });
 export default createAppContainer(Router);

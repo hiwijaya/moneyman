@@ -105,7 +105,8 @@ export default class Account extends Component {
                             true, 
                             () => {
                                 // this.props.navigation.push('account');
-                                Alert.alert(this.props.navigation.getParam('item'));
+                                // Alert.alert(this.props.navigation.getParam('item'));
+                                this.props.navigation.navigate('categories');
                             })
                     }
                     {
