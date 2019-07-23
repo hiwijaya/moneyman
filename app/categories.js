@@ -4,6 +4,7 @@ import {
     Text,
     Image,
     TouchableOpacity, 
+    FlatList,
 } from 'react-native';
 import { Styles } from './lib/styles';
 
@@ -17,6 +18,8 @@ export default class Categories extends Component {
             tabSelectedIndex: 0,
         };
     }
+
+    // TODO: Explore Flatlist, and consider to try react-native-swipeout.
 
     renderTab() {
         return(

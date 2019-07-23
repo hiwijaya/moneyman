@@ -3,6 +3,26 @@ export default class CategoriesHelper {
 
     // TODO: write some functions to manage categories easily
 
+    static getDefaultExpenses(){
+        return [
+            {
+                title: 'Bills',
+                icon: 'cat-shopping-bills.png',
+                color: '#FF7675'
+            },
+            {
+                title: 'Food',
+                icon: 'cat-food-burger.png',
+                color: '#778BEB'
+            },
+            {
+                title: 'Transportation',
+                icon: 'cat-transportation-bus.png',
+                color: '#2DB4E7'
+            },
+        ];
+    }
+
 
     static COLORS = [
         '#FF7675',  // 0
