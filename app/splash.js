@@ -7,6 +7,7 @@ import {
 import { StackActions, NavigationActions } from 'react-navigation'
 import { Styles } from './lib/styles';
 import config from '../config';
+import Env from './lib/env';
 
 
 export default class Splash extends Component {
@@ -23,7 +24,8 @@ export default class Splash extends Component {
 
         setTimeout(() => {
 
-            //TODO: Put any logic here
+            // TODO: testing. Next, put it on signin process.
+            Env.initDefaultCategories();
 
             if(isSignedIn){
                 const resetAction = StackActions.reset({

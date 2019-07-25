@@ -5,7 +5,7 @@ export const Colors = {
     primary: '#81cabc',
     white: '#FFFFFF',
     whiteGreen: '#F4F7F6',
-    lightGrey: '#f2f2f2',
+    lightGrey: '#e6e6e6',
     grey: '#B7B7B7',
     darkGrey: '#757575',
     black: '#000000',
@@ -23,7 +23,7 @@ export const Fonts = {
 
 export const Screen = Dimensions.get('window'); // Screen.width , Screen.height
 
-const PADDING_ACTIONBAR = 15;
+// PADDING SCENE => 15
 
 export const Styles = StyleSheet.create({
 
@@ -51,6 +51,10 @@ export const Styles = StyleSheet.create({
     icon24: {
         width: 24,
         height: 24,
+    },
+    icon36: {
+        width: 36,
+        height: 36,
     },
     icon84: {
         width: 84,
@@ -121,7 +125,7 @@ export const Styles = StyleSheet.create({
     actionbarBox: {
         height: 50,
         backgroundColor: Colors.primary,
-        paddingHorizontal: PADDING_ACTIONBAR,
+        paddingHorizontal: 15,
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
@@ -245,6 +249,23 @@ export const Styles = StyleSheet.create({
     tabSelected: {
         borderBottomWidth: 3,
         borderBottomColor: Colors.black
+    },
+
+    listItemBox: {
+        height: 60,
+        flexDirection: 'row',
+        paddingHorizontal: 15,
+        alignItems: 'center',
+    },
+    listIconBox: {
+        width: 40,
+        height: 40,
+        borderRadius: 20,
+        marginRight: 15,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: Colors.lightGrey,
     }
+
 
 });
