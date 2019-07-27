@@ -62,3 +62,6 @@ buck-out/
 android/app/google-services.json
 ios/GoogleService-Info.plist
 config.js
+
+# python script to listing categories icon
+app/asset/dummy.py

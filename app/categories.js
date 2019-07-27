@@ -24,9 +24,10 @@ export default class Categories extends Component {
     }
 
     componentDidMount() {
-        let dummy = Env.EXPENSE_ASSETS[0].icons
+
         let eCategories = Env.getCategories(null, Env.EXPENSE_TYPE)
-        this.setState({eCategories: dummy});
+        this.setState({eCategories: eCategories});
+
     }
 
     
@@ -70,7 +71,7 @@ export default class Categories extends Component {
                             <View style={Styles.listIconBox}>
                                 <Image style={Styles.icon18} source={item.icon}/>
                             </View>
-                            <Text>{item.color}</Text>
+                            <Text>{item.title}</Text>
                         </View>
                     );
                 }}
@@ -85,8 +86,6 @@ export default class Categories extends Component {
             </View>
         );
     }
-
-
 
     render() {
         return (
