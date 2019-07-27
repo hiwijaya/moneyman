@@ -254,8 +254,8 @@ export const Styles = StyleSheet.create({
     listItemBox: {
         height: 60,
         flexDirection: 'row',
-        paddingHorizontal: 15,
         alignItems: 'center',
+        paddingHorizontal: 15,
     },
     listIconBox: {
         width: 40,
@@ -265,6 +265,12 @@ export const Styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: Colors.lightGrey,
+    },
+    listDeleteBox: {
+        width: 40,
+        height: 60,
+        justifyContent: 'center',
+        alignItems: 'center',
     }
 
 

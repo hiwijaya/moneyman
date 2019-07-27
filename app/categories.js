@@ -18,16 +18,18 @@ export default class Categories extends Component {
         this.state = {
             tabSelectedIndex: 0,
             eCategories: [],
-
+            iCategories: []
         };
 
     }
 
     componentDidMount() {
-
-        let eCategories = Env.getCategories(null, Env.EXPENSE_TYPE)
-        this.setState({eCategories: eCategories});
-
+        let eCategories = Env.getCategories(null, Env.EXPENSE_TYPE);
+        let iCategories = Env.getCategories(null, Env.INCOME_TYPE);
+        this.setState({
+            eCategories: eCategories,
+            iCategories: iCategories
+        });
     }
 
     
@@ -60,10 +62,11 @@ export default class Categories extends Component {
 
     // TODO: Consider to try react-native-swipeout.
 
-    renderExpenses() {
+
+    renderCategories(categories) {
         return(
             <FlatList 
-                data={this.state.eCategories}
+                data={categories}
                 keyExtractor={(item, index) => index.toString()}
                 renderItem={({item}) => {
                     return(
@@ -71,7 +74,10 @@ export default class Categories extends Component {
                             <View style={Styles.listIconBox}>
                                 <Image style={Styles.icon18} source={item.icon}/>
                             </View>
-                            <Text>{item.title}</Text>
+                            <Text style={{flex: 1}}>{item.title}</Text>
+                            <TouchableOpacity style={Styles.listDeleteBox}>
+                                <Image style={Styles.icon18} source={require('./asset/icon-delete.png')}/>
+                            </TouchableOpacity>
                         </View>
                     );
                 }}
@@ -79,19 +85,14 @@ export default class Categories extends Component {
         );
     }
 
-    renderIncome() {
-        return(
-            <View>
-                <Text>INCOME</Text>
-            </View>
-        );
-    }
-
     render() {
         return (
             <View style={Styles.sceneBox}>
                 {this.renderTab()}
-                {(this.state.tabSelectedIndex == 0) ? this.renderExpenses() : this.renderIncome()}
+                {
+                    (this.state.tabSelectedIndex == 0) ?
+                     this.renderCategories(this.state.eCategories) : this.renderCategories(this.state.iCategories)
+                }
             </View>
         );
     }
