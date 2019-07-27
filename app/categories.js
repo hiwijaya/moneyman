@@ -60,9 +60,6 @@ export default class Categories extends Component {
         );
     }
 
-    // TODO: Consider to try react-native-swipeout.
-
-
     renderCategories(categories) {
         return(
             <FlatList 
@@ -91,8 +88,15 @@ export default class Categories extends Component {
                 {this.renderTab()}
                 {
                     (this.state.tabSelectedIndex == 0) ?
-                     this.renderCategories(this.state.eCategories) : this.renderCategories(this.state.iCategories)
+                    this.renderCategories(this.state.eCategories) : this.renderCategories(this.state.iCategories)
                 }
+                <TouchableOpacity>
+                    <View style={Styles.listAddBox}>
+                        <Image style={[Styles.icon12, {marginRight: 5}]} 
+                            source={require('./asset/icon-add.png')}/>
+                        <Text>New Category</Text>
+                    </View>
+                </TouchableOpacity>
             </View>
         );
     }

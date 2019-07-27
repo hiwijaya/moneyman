@@ -271,6 +271,13 @@ export const Styles = StyleSheet.create({
         height: 60,
         justifyContent: 'center',
         alignItems: 'center',
+    },
+    listAddBox: {
+        height: 50,
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: Colors.white,
     }
 
 
