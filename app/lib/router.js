@@ -4,6 +4,7 @@ import Signin from '../signin';
 import Home from '../home';
 import Account from '../account';
 import Categories from '../categories';
+import AddCategory from '../add-category';
 
 
 const Router = createStackNavigator({
@@ -39,6 +40,13 @@ const Router = createStackNavigator({
         screen: Categories,
         navigationOptions: {
             title: 'Categories',
+            header: null
+        }
+    },
+    addCategory: {
+        screen: AddCategory,
+        navigationOptions: {
+            title: 'Add Category',
             header: null
         }
     },

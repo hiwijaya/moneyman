@@ -261,7 +261,6 @@ export const Styles = StyleSheet.create({
         width: 40,
         height: 40,
         borderRadius: 20,
-        marginRight: 15,
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: Colors.lightGrey,
@@ -278,6 +277,17 @@ export const Styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: Colors.white,
+    },
+    categoryTitleBox: {
+        height: 60,
+        flexDirection: 'row',
+        alignItems: 'center',
+        backgroundColor: Colors.white,
+        paddingHorizontal: 15
+    },
+    titleInput: {
+        flex: 1,
+        height: 50,
     }
 
 

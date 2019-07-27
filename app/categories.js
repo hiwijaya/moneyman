@@ -68,7 +68,7 @@ export default class Categories extends Component {
                 renderItem={({item}) => {
                     return(
                         <View style={Styles.listItemBox}>
-                            <View style={Styles.listIconBox}>
+                            <View style={[Styles.listIconBox, {marginRight: 15}]}>
                                 <Image style={Styles.icon18} source={item.icon}/>
                             </View>
                             <Text style={{flex: 1}}>{item.title}</Text>
@@ -90,7 +90,7 @@ export default class Categories extends Component {
                     (this.state.tabSelectedIndex == 0) ?
                     this.renderCategories(this.state.eCategories) : this.renderCategories(this.state.iCategories)
                 }
-                <TouchableOpacity>
+                <TouchableOpacity onPress={() => this.props.navigation.navigate('addCategory')}>
                     <View style={Styles.listAddBox}>
                         <Image style={[Styles.icon12, {marginRight: 5}]} 
                             source={require('./asset/icon-add.png')}/>
