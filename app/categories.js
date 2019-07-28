@@ -67,12 +67,12 @@ export default class Categories extends Component {
                 keyExtractor={(item, index) => index.toString()}
                 renderItem={({item}) => {
                     return(
-                        <View style={Styles.listItemBox}>
-                            <View style={[Styles.listIconBox, {marginRight: 15}]}>
+                        <View style={Styles.listIconBox}>
+                            <View style={[Styles.iconBox, {marginRight: 15}]}>
                                 <Image style={Styles.icon18} source={item.icon}/>
                             </View>
                             <Text style={{flex: 1}}>{item.title}</Text>
-                            <TouchableOpacity style={Styles.listDeleteBox}>
+                            <TouchableOpacity style={Styles.deleteIconBox}>
                                 <Image style={Styles.icon18} source={require('./asset/icon-delete.png')}/>
                             </TouchableOpacity>
                         </View>

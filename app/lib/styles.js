@@ -251,13 +251,13 @@ export const Styles = StyleSheet.create({
         borderBottomColor: Colors.black
     },
 
-    listItemBox: {
+    listIconBox: {
         height: 60,
         flexDirection: 'row',
         alignItems: 'center',
         paddingHorizontal: 15,
     },
-    listIconBox: {
+    iconBox: {
         width: 40,
         height: 40,
         borderRadius: 20,
@@ -265,7 +265,7 @@ export const Styles = StyleSheet.create({
         alignItems: 'center',
         backgroundColor: Colors.lightGrey,
     },
-    listDeleteBox: {
+    deleteIconBox: {
         width: 40,
         height: 60,
         justifyContent: 'center',
@@ -278,17 +278,22 @@ export const Styles = StyleSheet.create({
         alignItems: 'center',
         backgroundColor: Colors.white,
     },
-    categoryTitleBox: {
+    addTitleBox: {
         height: 60,
         flexDirection: 'row',
         alignItems: 'center',
         backgroundColor: Colors.white,
         paddingHorizontal: 15
     },
-    titleInput: {
+    addTitleInput: {
         flex: 1,
         height: 50,
+    },
+    addIconListBox: {
+        flexWrap: 'wrap',
+        flexDirection: 'row',
     }
+    
 
 
 });

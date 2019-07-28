@@ -4,9 +4,11 @@ import {
     Text,
     Image,
     TextInput,
+    ScrollView,
     TouchableOpacity 
 } from 'react-native';
 import {Styles, Colors} from './lib/styles';
+import Env from './lib/env';
 
 
 export default class AddCategory extends Component {
@@ -36,13 +38,13 @@ export default class AddCategory extends Component {
 
     renderInputTitle() {
         return(
-            <View style={Styles.categoryTitleBox} >
-                <View style={[Styles.listIconBox, {marginRight: 15}]}>
+            <View style={Styles.addTitleBox} >
+                <View style={[Styles.iconBox, {marginRight: 15}]}>
                     <Image style={Styles.icon18} 
                     source={require('./asset/categories/cat-food-burger.png')}/>
                 </View>
                 <TextInput 
-                    style={Styles.titleInput} 
+                    style={Styles.addTitleInput} 
                     autoCorrect={false}
                     underlineColorAndroid={Colors.primary}
                     placeholder={'Category Title'}
@@ -56,6 +58,31 @@ export default class AddCategory extends Component {
             <View style={Styles.sceneBox}>
                 {this.renderActionBar()}
                 {this.renderInputTitle()}
+                <ScrollView>
+                    {
+                        Env.EXPENSE_ASSETS.map((item, key) => {
+                            return(
+                                <View key={key}>
+                                    <View style={Styles.center}>
+                                        <Text>{item.category}</Text>
+                                    </View>
+                                    <View style={Styles.addIconListBox}>
+                                        {
+                                            item.icons.map((item2, key2) => {
+                                                return(
+                                                    <View key={key2} style={[Styles.iconBox, {marginRight: 15}]}>
+                                                        <Image style={Styles.icon18} 
+                                                            source={item2.icon}/>
+                                                    </View>
+                                                );
+                                            })
+                                        }
+                                    </View>
+                                </View>
+                            );
+                        })
+                    }
+                </ScrollView>
             </View>
         );
     }
