@@ -63,14 +63,14 @@ export default class AddCategory extends Component {
                         Env.EXPENSE_ASSETS.map((item, key) => {
                             return(
                                 <View key={key}>
-                                    <View style={Styles.center}>
+                                    <View style={Styles.addCategoryGroup}>
                                         <Text>{item.category}</Text>
                                     </View>
                                     <View style={Styles.addIconListBox}>
                                         {
                                             item.icons.map((item2, key2) => {
                                                 return(
-                                                    <View key={key2} style={[Styles.iconBox, {marginRight: 15}]}>
+                                                    <View key={key2} style={[Styles.addIconBox]}>
                                                         <Image style={Styles.icon18} 
                                                             source={item2.icon}/>
                                                     </View>

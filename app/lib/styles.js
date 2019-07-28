@@ -289,10 +289,25 @@ export const Styles = StyleSheet.create({
         flex: 1,
         height: 50,
     },
+    addCategoryGroup: {
+        alignItems: 'center',
+        marginTop: 20,
+    },
     addIconListBox: {
         flexWrap: 'wrap',
         flexDirection: 'row',
-    }
+        paddingHorizontal: 15,
+    },
+    addIconBox: {
+        width: 40,
+        height: 40,
+        borderRadius: 20,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: Colors.lightGrey,
+        marginHorizontal: 20,
+        marginVertical: 10
+    },
     
 
 
