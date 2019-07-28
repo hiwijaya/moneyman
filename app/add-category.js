@@ -16,6 +16,9 @@ export default class AddCategory extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            title: '',
+            icon: null,
+            color: null,
 
         };
     }
@@ -48,8 +51,21 @@ export default class AddCategory extends Component {
                     autoCorrect={false}
                     underlineColorAndroid={Colors.primary}
                     placeholder={'Category Title'}
+                    onChangeText={(text) => this.setState({title: text})}
+                    value={this.state.title}
                 />
             </View>
+        );
+    }
+
+    renderCategoryIcon(item, key){
+        return(
+            <TouchableOpacity key={key}>
+                <View style={[Styles.addIconBox]}>
+                    <Image style={Styles.icon18} 
+                        source={item.icon}/>
+                </View>
+            </TouchableOpacity>
         );
     }
 
@@ -70,10 +86,12 @@ export default class AddCategory extends Component {
                                         {
                                             item.icons.map((item2, key2) => {
                                                 return(
-                                                    <View key={key2} style={[Styles.addIconBox]}>
-                                                        <Image style={Styles.icon18} 
-                                                            source={item2.icon}/>
-                                                    </View>
+                                                    <TouchableOpacity key={key2}>
+                                                        <View style={[Styles.addIconBox, {backgroundColor: item2.color}]}>
+                                                            <Image style={Styles.icon18} 
+                                                                source={item2.icon}/>
+                                                        </View>
+                                                    </TouchableOpacity>
                                                 );
                                             })
                                         }
