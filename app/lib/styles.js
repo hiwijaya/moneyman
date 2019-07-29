@@ -257,7 +257,7 @@ export const Styles = StyleSheet.create({
         alignItems: 'center',
         paddingHorizontal: 15,
     },
-    iconBox: {
+    iconBox: {      // DEPRECATED --> cicon.js
         width: 40,
         height: 40,
         borderRadius: 20,
@@ -298,7 +298,7 @@ export const Styles = StyleSheet.create({
         flexDirection: 'row',
         paddingHorizontal: 15,
     },
-    addIconBox: {
+    addIconBox: {   // DEPRECATED --> cicon.js
         width: 40,
         height: 40,
         borderRadius: 20,

@@ -3,6 +3,7 @@ import {
     View, 
     Text,
     Image,
+    Alert,
     TextInput,
     ScrollView,
     TouchableOpacity 
@@ -15,12 +16,20 @@ export default class AddCategory extends Component {
 
     constructor(props) {
         super(props);
+
         this.state = {
             title: '',
             icon: null,
             color: null,
-
+            selectedIcon: '00'  // iconKey()
         };
+
+
+
+    }
+
+    iconKey(key, key2){
+        return key.toString() + key2.toString();
     }
 
     renderActionBar() {
@@ -74,6 +83,7 @@ export default class AddCategory extends Component {
             <View style={Styles.sceneBox}>
                 {this.renderActionBar()}
                 {this.renderInputTitle()}
+
                 <ScrollView>
                     {
                         Env.EXPENSE_ASSETS.map((item, key) => {
@@ -86,8 +96,19 @@ export default class AddCategory extends Component {
                                         {
                                             item.icons.map((item2, key2) => {
                                                 return(
-                                                    <TouchableOpacity key={key2}>
-                                                        <View style={[Styles.addIconBox, {backgroundColor: item2.color}]}>
+                                                    <TouchableOpacity key={this.iconKey(key, key2)} 
+                                                        onPress={() => {
+                                                            this.setState({
+                                                                icon: item2.icon,
+                                                                color: item2.color,
+                                                                selectedIcon: this.iconKey(key, key2)
+                                                            });
+                                                        }}>
+                                                        <View style={[Styles.addIconBox, 
+                                                            {
+                                                                backgroundColor: (this.state.selectedIcon === this.iconKey(key, key2)) ? 
+                                                                item2.color : Colors.lightGrey
+                                                            }]}>
                                                             <Image style={Styles.icon18} 
                                                                 source={item2.icon}/>
                                                         </View>
