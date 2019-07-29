@@ -16,7 +16,7 @@ export default class Cicon extends Component {
                     borderRadius: 20,
                     justifyContent: 'center',
                     alignItems: 'center',
-                    backgroundColor: (this.props.active) ? this.props.color : Colors.lightGrey,
+                    backgroundColor: this.props.color,
                     ...this.props.style
                 }}>
                     <Image style={Styles.icon18} 
@@ -26,5 +26,5 @@ export default class Cicon extends Component {
     }
 }
 Cicon.defaultProps = {
-    active: false
+    color: Colors.lightGrey
 }

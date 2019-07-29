@@ -8,6 +8,7 @@ import {
     ScrollView,
     TouchableOpacity 
 } from 'react-native';
+import Cicon from './comp/cicon';
 import {Styles, Colors} from './lib/styles';
 import Env from './lib/env';
 
@@ -21,7 +22,7 @@ export default class AddCategory extends Component {
             title: '',
             icon: null,
             color: null,
-            selectedIcon: '00'  // iconKey()
+            iKey: '00'  // iconKey()
         };
 
 
@@ -95,23 +96,18 @@ export default class AddCategory extends Component {
                                     <View style={Styles.addIconListBox}>
                                         {
                                             item.icons.map((item2, key2) => {
+                                                let k = this.iconKey(key, key2);
                                                 return(
-                                                    <TouchableOpacity key={this.iconKey(key, key2)} 
+                                                    <TouchableOpacity key={k} 
                                                         onPress={() => {
                                                             this.setState({
-                                                                icon: item2.icon,
-                                                                color: item2.color,
-                                                                selectedIcon: this.iconKey(key, key2)
+                                                                iKey: k
                                                             });
                                                         }}>
-                                                        <View style={[Styles.addIconBox, 
-                                                            {
-                                                                backgroundColor: (this.state.selectedIcon === this.iconKey(key, key2)) ? 
-                                                                item2.color : Colors.lightGrey
-                                                            }]}>
-                                                            <Image style={Styles.icon18} 
-                                                                source={item2.icon}/>
-                                                        </View>
+                                                        <Cicon style={{marginHorizontal: 20, marginVertical: 10}} 
+                                                            icon={item2.icon} 
+                                                            color={(this.state.iKey === k) ? item2.color : Colors.lightGrey}
+                                                        />
                                                     </TouchableOpacity>
                                                 );
                                             })
