@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, PureComponent } from 'react';
 import { 
     View, 
     Image 
@@ -8,7 +8,21 @@ import { Styles, Colors } from '../lib/styles';
 
 export default class Cicon extends Component {
 
+    // [TIPS] always consider to use shouldComponentUpdate() or PureComponent.
+    shouldComponentUpdate(nextProps, nextState) {
+        if(this.props.id === nextProps.sid){
+            return true;
+        }
+        else if(this.props.id === this.props.sid){
+            if(this.props.sid !== nextProps.sid){
+                return true;
+            }
+        }
+        return false;
+    }
+
     render() {
+        console.log('RENDERCICONNNN')
         return (
             <View style={{
                     width: 40,
@@ -20,7 +34,7 @@ export default class Cicon extends Component {
                     ...this.props.style
                 }}>
                     <Image style={Styles.icon18} 
-                    source={this.props.icon}/>
+                        source={this.props.icon}/>
             </View>
         );
     }

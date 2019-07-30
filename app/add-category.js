@@ -104,7 +104,8 @@ export default class AddCategory extends Component {
                                                                 iKey: k
                                                             });
                                                         }}>
-                                                        <Cicon style={{marginHorizontal: 20, marginVertical: 10}} 
+                                                        <Cicon id={k} sid={this.state.iKey}
+                                                            style={{marginHorizontal: 20, marginVertical: 10}} 
                                                             icon={item2.icon} 
                                                             color={(this.state.iKey === k) ? item2.color : Colors.lightGrey}
                                                         />
