@@ -6,6 +6,7 @@ import {
     Alert,
     TextInput,
     ScrollView,
+    ToastAndroid,
     TouchableOpacity 
 } from 'react-native';
 import Cicon from './comp/cicon';
@@ -39,7 +40,10 @@ export default class AddCategory extends Component {
                 </TouchableOpacity>
                 <Text style={Styles.actionbarTitle}>Add Expense Category</Text>
                 <TouchableOpacity style={Styles.backButton} 
-                    onPress={() => { this.props.navigation.goBack(); }}>
+                    onPress={() => {
+                        //  this.props.navigation.goBack(); 
+                         ToastAndroid.show('Select category first!', ToastAndroid.SHORT);
+                    }}>
                     <Image style={Styles.icon18} source={require('./asset/icon-checked.png')}/>
                 </TouchableOpacity>
             </View>
