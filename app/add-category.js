@@ -20,13 +20,10 @@ export default class AddCategory extends Component {
 
         this.state = {
             title: '',
-            icon: null,
-            color: null,
+            icon: require('./asset/categories/cat-food-apple.png'),
+            color: '#FF7675',
             iKey: '00'  // iconKey()
         };
-
-
-
     }
 
     iconKey(key, key2){
@@ -52,10 +49,8 @@ export default class AddCategory extends Component {
     renderInputTitle() {
         return(
             <View style={Styles.addTitleBox} >
-                <View style={[Styles.iconBox, {marginRight: 15}]}>
-                    <Image style={Styles.icon18} 
-                    source={require('./asset/categories/cat-food-burger.png')}/>
-                </View>
+                <Cicon style={{marginRight: 15}} 
+                    icon={this.state.icon} color={this.state.color}/>
                 <TextInput 
                     style={Styles.addTitleInput} 
                     autoCorrect={false}
@@ -72,8 +67,7 @@ export default class AddCategory extends Component {
         return(
             <TouchableOpacity key={key}>
                 <View style={[Styles.addIconBox]}>
-                    <Image style={Styles.icon18} 
-                        source={item.icon}/>
+                    <Image style={Styles.icon18} source={item.icon}/>
                 </View>
             </TouchableOpacity>
         );
@@ -99,10 +93,12 @@ export default class AddCategory extends Component {
                                                 let k = this.iconKey(key, key2);
                                                 return(
                                                     <TouchableOpacity key={k} 
-                                                        onPress={() => {
+                                                        onPress={() => { 
                                                             this.setState({
-                                                                iKey: k
-                                                            });
+                                                                iKey: k,
+                                                                icon: item2.icon,
+                                                                color: item2.color
+                                                            }); 
                                                         }}>
                                                         <Cicon id={k} sid={this.state.iKey}
                                                             style={{marginHorizontal: 20, marginVertical: 10}} 

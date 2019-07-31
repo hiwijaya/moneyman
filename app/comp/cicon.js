@@ -22,9 +22,9 @@ export default class Cicon extends Component {
     }
 
     render() {
-        console.log('RENDERCICONNNN')
         return (
-            <View style={{
+            <View 
+                style={{
                     width: 40,
                     height: 40,
                     borderRadius: 20,
@@ -33,8 +33,7 @@ export default class Cicon extends Component {
                     backgroundColor: this.props.color,
                     ...this.props.style
                 }}>
-                    <Image style={Styles.icon18} 
-                        source={this.props.icon}/>
+                <Image style={Styles.icon18} source={this.props.icon}/>
             </View>
         );
     }
