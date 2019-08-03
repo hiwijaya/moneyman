@@ -90,7 +90,12 @@ export default class Categories extends Component {
                     (this.state.tabSelectedIndex == 0) ?
                     this.renderCategories(this.state.eCategories) : this.renderCategories(this.state.iCategories)
                 }
-                <TouchableOpacity onPress={() => this.props.navigation.navigate('addCategory')}>
+                <TouchableOpacity 
+                    onPress={() => {
+                        this.props.navigation.navigate('addCategory', {
+                            transactionType: (this.state.tabSelectedIndex === 0) ? Env.EXPENSE_TYPE : Env.INCOME_TYPE
+                        })
+                    }}>
                     <View style={Styles.listAddBox}>
                         <Image style={[Styles.icon12, {marginRight: 5}]} 
                             source={require('./asset/icon-add.png')}/>

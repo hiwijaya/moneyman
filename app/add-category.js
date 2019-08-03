@@ -20,6 +20,7 @@ export default class AddCategory extends Component {
         super(props);
 
         this.state = {
+            transactionType: this.props.navigation.getParam('transactionType'),
             title: '',
             icon: require('./asset/categories/cat-food-apple.png'),
             color: '#FF7675',
@@ -38,7 +39,9 @@ export default class AddCategory extends Component {
                     onPress={() => { this.props.navigation.goBack(); }}>
                     <Image style={Styles.icon18} source={require('./asset/icon-back.png')}/>
                 </TouchableOpacity>
-                <Text style={Styles.actionbarTitle}>Add Expense Category</Text>
+                <Text style={Styles.actionbarTitle}>
+                    {this.state.transactionType === Env.EXPENSE_TYPE ? 'Add Expense Category' : 'Add Income Category'}
+                </Text>
                 <TouchableOpacity style={Styles.backButton} 
                     onPress={() => {
                         //  this.props.navigation.goBack(); 
