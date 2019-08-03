@@ -6,6 +6,7 @@ import {
     TouchableOpacity, 
     FlatList,
     Alert,
+    ToastAndroid,
 } from 'react-native';
 import Cicon from './comp/cicon';
 import { Styles } from './lib/styles';
@@ -84,7 +85,27 @@ export default class Categories extends Component {
                         <View style={Styles.listIconBox}>
                             <Cicon style={{marginRight: 15}} icon={item.icon} />
                             <Text style={{flex: 1}}>{item.title}</Text>
-                            <TouchableOpacity style={Styles.deleteIconBox}>
+                            <TouchableOpacity style={Styles.deleteIconBox} 
+                                onPress={() => {
+                                    Alert.alert(
+                                        'Delete Category', 
+                                        'Delete this category will also delete all records in this category',
+                                        [{
+                                            text: 'CANCEL',
+                                        },
+                                        {
+                                            text: 'OK', 
+                                            onPress: () => {
+                                                Env.deleteCategory(
+                                                    item.id,
+                                                    (this.state.tabSelectedIndex === 0) ? Env.EXPENSE_TYPE : Env.INCOME_TYPE);
+                                                this.setCategories();
+                                                ToastAndroid.show('Category deleted', ToastAndroid.SHORT);
+                                            }
+                                        }]
+                                    );
+
+                                }}>
                                 <Image style={Styles.icon18} source={require('./asset/icon-delete.png')}/>
                             </TouchableOpacity>
                         </View>
