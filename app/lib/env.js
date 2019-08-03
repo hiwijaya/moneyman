@@ -270,58 +270,64 @@ export default class Env {
     ];
 
 
-    static INCOME_ASSETS = [{
-            icon: require('../asset/categories/cat-finance-atm.png'),
-            color: '#FF7675',
-        },
+    static INCOME_ASSETS = [
         {
-            icon: require('../asset/categories/cat-finance-bag.png'),
-            color: '#778BEB'
-        },
-        {
-            icon: require('../asset/categories/cat-finance-bitcoin.png'),
-            color: '#2DB4E7'
-        },
-        {
-            icon: require('../asset/categories/cat-finance-card.png'),
-            color: '#F19066'
-        },
-        {
-            icon: require('../asset/categories/cat-finance-check.png'),
-            color: '#65C6C4'
-        },
-        {
-            icon: require('../asset/categories/cat-finance-diamond.png'),
-            color: '#E3646D'
-        },
-        {
-            icon: require('../asset/categories/cat-finance-mastercard.png'),
-            color: '#9F90F1'
-        },
-        {
-            icon: require('../asset/categories/cat-finance-money.png'),
-            color: '#74B9FF'
-        },
-        {
-            icon: require('../asset/categories/cat-finance-piggy.png'),
-            color: '#FFF3A3'
-        },
-        {
-            icon: require('../asset/categories/cat-finance-safe.png'),
-            color: '#7FE7CC'
-        },
-        {
-            icon: require('../asset/categories/cat-finance-stock.png'),
-            color: '#E0555E'
-        },
-        {
-            icon: require('../asset/categories/cat-finance-visa.png'),
-            color: '#9B59B6'
-        },
-        {
-            icon: require('../asset/categories/cat-finance-wallet.png'),
-            color: '#3498DB'
-        },
+            category: 'Finance',
+            icons: [
+                {
+                    icon: require('../asset/categories/cat-finance-atm.png'),
+                    color: '#FF7675',
+                }, 
+                {
+                    icon: require('../asset/categories/cat-finance-bag.png'),
+                    color: '#778BEB'
+                }, 
+                {
+                    icon: require('../asset/categories/cat-finance-bitcoin.png'),
+                    color: '#2DB4E7'
+                }, 
+                {
+                    icon: require('../asset/categories/cat-finance-card.png'),
+                    color: '#F19066'
+                }, 
+                {
+                    icon: require('../asset/categories/cat-finance-check.png'),
+                    color: '#65C6C4'
+                }, 
+                {
+                    icon: require('../asset/categories/cat-finance-diamond.png'),
+                    color: '#E3646D'
+                }, 
+                {
+                    icon: require('../asset/categories/cat-finance-mastercard.png'),
+                    color: '#9F90F1'
+                }, 
+                {
+                    icon: require('../asset/categories/cat-finance-money.png'),
+                    color: '#74B9FF'
+                }, 
+                {
+                    icon: require('../asset/categories/cat-finance-piggy.png'),
+                    color: '#FFF3A3'
+                }, 
+                {
+                    icon: require('../asset/categories/cat-finance-safe.png'),
+                    color: '#7FE7CC'
+                }, 
+                {
+                    icon: require('../asset/categories/cat-finance-stock.png'),
+                    color: '#E0555E'
+                }, 
+                {
+                    icon: require('../asset/categories/cat-finance-visa.png'),
+                    color: '#9B59B6'
+                }, 
+                {
+                    icon: require('../asset/categories/cat-finance-wallet.png'),
+                    color: '#3498DB'
+                },
+            ]
+        }
     ];
 
     static EXPENSE_ASSETS = [

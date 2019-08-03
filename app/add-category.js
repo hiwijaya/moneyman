@@ -19,13 +19,18 @@ export default class AddCategory extends Component {
     constructor(props) {
         super(props);
 
+        this.transactionType = this.props.navigation.getParam('transactionType');
+        this.categoryAssets = (this.transactionType === Env.EXPENSE_TYPE) ? Env.EXPENSE_ASSETS : Env.INCOME_ASSETS;
+
         this.state = {
-            transactionType: this.props.navigation.getParam('transactionType'),
+            transactionType: this.transactionType,
             title: '',
             icon: require('./asset/categories/cat-food-apple.png'),
             color: '#FF7675',
             iKey: '00'  // iconKey()
         };
+
+         
     }
 
     iconKey(key, key2){
@@ -88,7 +93,7 @@ export default class AddCategory extends Component {
 
                 <ScrollView>
                     {
-                        Env.EXPENSE_ASSETS.map((item, key) => {
+                        this.categoryAssets.map((item, key) => {
                             return(
                                 <View key={key}>
                                     <View style={Styles.addCategoryGroup}>
