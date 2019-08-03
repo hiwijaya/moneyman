@@ -7,6 +7,7 @@ import {
     FlatList,
     Alert,
 } from 'react-native';
+import Cicon from './comp/cicon';
 import { Styles } from './lib/styles';
 import Env from './lib/env';
 
@@ -25,7 +26,9 @@ export default class Categories extends Component {
     }
 
     componentDidMount() {
-        this.setCategories();
+        let eCategories = Env.getCategories(null, Env.EXPENSE_TYPE);
+        let iCategories = Env.getCategories(null, Env.INCOME_TYPE);
+        this.setState({eCategories, iCategories});
     }
 
     setCategories() {
@@ -79,9 +82,7 @@ export default class Categories extends Component {
                 renderItem={({item}) => {
                     return(
                         <View style={Styles.listIconBox}>
-                            <View style={[Styles.iconBox, {marginRight: 15}]}>
-                                <Image style={Styles.icon18} source={item.icon}/>
-                            </View>
+                            <Cicon style={{marginRight: 15}} icon={item.icon} />
                             <Text style={{flex: 1}}>{item.title}</Text>
                             <TouchableOpacity style={Styles.deleteIconBox}>
                                 <Image style={Styles.icon18} source={require('./asset/icon-delete.png')}/>
