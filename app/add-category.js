@@ -49,9 +49,16 @@ export default class AddCategory extends Component {
                 </Text>
                 <TouchableOpacity style={Styles.backButton} 
                     onPress={() => {
+                        let title = this.state.title;
+
+                        if(title === null || title === ''){
+                            ToastAndroid.show('Please input the category title', ToastAndroid.SHORT);
+                            return;
+                        }
+
                         let newCategory = {
                             id: Env.getRandomString(16),
-                            title: this.state.title,
+                            title: title,
                             icon: this.state.icon,
                             color: this.state.color,
                             type: this.transactionType
