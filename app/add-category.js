@@ -49,8 +49,18 @@ export default class AddCategory extends Component {
                 </Text>
                 <TouchableOpacity style={Styles.backButton} 
                     onPress={() => {
-                        //  this.props.navigation.goBack(); 
-                         ToastAndroid.show('Select category first!', ToastAndroid.SHORT);
+                        let newCategory = {
+                            id: Env.getRandomString(16),
+                            title: this.state.title,
+                            icon: this.state.icon,
+                            color: this.state.color,
+                            type: this.transactionType
+                        }
+                        Env.addCategory(newCategory);
+
+                        ToastAndroid.show('Category added', ToastAndroid.SHORT);
+                        this.props.navigation.state.params.onNavigateBack(null);
+                        this.props.navigation.goBack();
                     }}>
                     <Image style={Styles.icon18} source={require('./asset/icon-checked.png')}/>
                 </TouchableOpacity>

@@ -5,6 +5,7 @@ import {
     Image,
     TouchableOpacity, 
     FlatList,
+    Alert,
 } from 'react-native';
 import { Styles } from './lib/styles';
 import Env from './lib/env';
@@ -24,12 +25,22 @@ export default class Categories extends Component {
     }
 
     componentDidMount() {
-        let eCategories = Env.getCategories(null, Env.EXPENSE_TYPE);
-        let iCategories = Env.getCategories(null, Env.INCOME_TYPE);
-        this.setState({
-            eCategories: eCategories,
-            iCategories: iCategories
-        });
+        this.setCategories();
+    }
+
+    setCategories() {
+        if(this.state.tabSelectedIndex === 0){
+            let eCategories = Env.getCategories(null, Env.EXPENSE_TYPE);
+            this.setState({eCategories: eCategories});
+        }
+        else{
+            let iCategories = Env.getCategories(null, Env.INCOME_TYPE);
+            this.setState({iCategories: iCategories});
+        }
+    }
+
+    handleOnNavigateBack = (params) => {
+        this.setCategories();
     }
 
     
@@ -93,7 +104,8 @@ export default class Categories extends Component {
                 <TouchableOpacity 
                     onPress={() => {
                         this.props.navigation.navigate('addCategory', {
-                            transactionType: (this.state.tabSelectedIndex === 0) ? Env.EXPENSE_TYPE : Env.INCOME_TYPE
+                            transactionType: (this.state.tabSelectedIndex === 0) ? Env.EXPENSE_TYPE : Env.INCOME_TYPE,
+                            onNavigateBack: this.handleOnNavigateBack
                         })
                     }}>
                     <View style={Styles.listAddBox}>
