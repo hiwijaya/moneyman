@@ -305,6 +305,8 @@ export const Styles = StyleSheet.create({
     },
 
     homeScroll: {
+        display: 'flex',
+        flex: 1,
         zIndex: 1,
     },
     homeResumeBox: {
@@ -332,6 +334,18 @@ export const Styles = StyleSheet.create({
         height: 30,
         backgroundColor: Colors.lightGrey
     },
+    homeAddButton: {
+        position: 'absolute',
+        top: 100,
+        right: 30,
+        width: 50,
+        height: 50,
+        borderRadius: 50,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: Colors.primary,
+        elevation: 5
+    }
     
 
 

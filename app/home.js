@@ -54,7 +54,7 @@ export default class Home extends Component {
         );
     }
 
-    renderResume(){
+    renderResume() {
         return(
             <View style={Styles.homeResumeBox}>
                 <View style={Styles.homeResumeItemBox}>
@@ -75,6 +75,14 @@ export default class Home extends Component {
         );
     }
 
+    renderAddButton() {
+        return(
+            <TouchableOpacity style={Styles.homeAddButton}>
+                <Text>+</Text>
+            </TouchableOpacity>
+        );
+    }
+
     render() {
         return(
             <View style={Styles.sceneBox}>
@@ -85,6 +93,9 @@ export default class Home extends Component {
                     }}/>
                 <ScrollView style={Styles.homeScroll}>
                     {this.renderResume()}
+                    {/* TODO: scrollview size issue (empty content) */}
+                    {this.renderAddButton()}
+                    
                 </ScrollView>
             </View>
         );
