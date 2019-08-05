@@ -63,8 +63,13 @@ export const Styles = StyleSheet.create({
     // COMMONS
 
     calendarModalBox: {
-        flex: 1,
+        position: 'absolute',
+        top: 50,
+        left: 0, 
+        right: 0,
+        bottom: 0,
         backgroundColor: 'rgba(0, 0, 0, 0.5)',
+        zIndex: 2
     },
     calendarBox: {
         height: 160,
@@ -298,15 +303,34 @@ export const Styles = StyleSheet.create({
         flexDirection: 'row',
         paddingHorizontal: 15,
     },
-    addIconBox: {   // DEPRECATED --> cicon.js
-        width: 40,
-        height: 40,
-        borderRadius: 20,
-        justifyContent: 'center',
+
+    homeScroll: {
+        zIndex: 1,
+    },
+    homeResumeBox: {
+        margin: 15,
+        height: 100,
+        borderRadius: 5,
+        flexDirection: 'row',
         alignItems: 'center',
-        backgroundColor: Colors.lightGrey,
-        marginHorizontal: 20,
-        marginVertical: 10
+        backgroundColor: Colors.white,
+        elevation: 5,
+    },
+    homeResumeItemBox: {
+        display: 'flex',
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    homeResumeValue: {
+        fontSize: Fonts.h4,
+        fontWeight: 'bold',
+        marginTop: 5
+    },
+    separator: {
+        width: 1,
+        height: 30,
+        backgroundColor: Colors.lightGrey
     },
     
 

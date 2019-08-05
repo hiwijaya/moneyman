@@ -2,9 +2,10 @@ import React, { Component } from 'react';
 import { 
     View, 
     Text,
-    TouchableOpacity,
     Image,
     Alert,
+    ScrollView,
+    TouchableOpacity,
  } from 'react-native';
 import {Styles, Colors} from './lib/styles';
 import Calendar from './comp/calendar';
@@ -53,6 +54,27 @@ export default class Home extends Component {
         );
     }
 
+    renderResume(){
+        return(
+            <View style={Styles.homeResumeBox}>
+                <View style={Styles.homeResumeItemBox}>
+                    <Text>Income</Text>
+                    <Text style={Styles.homeResumeValue}>100,000,000</Text>
+                </View>
+                <View style={Styles.separator}></View>
+                <View style={Styles.homeResumeItemBox}>
+                    <Text>Expense</Text>
+                    <Text style={Styles.homeResumeValue}>200,000,000</Text>
+                </View>
+                <View style={Styles.separator}></View>
+                <View style={Styles.homeResumeItemBox}>
+                    <Text>Balance</Text>
+                    <Text style={Styles.homeResumeValue}>100,000,000</Text>
+                </View>
+            </View>
+        );
+    }
+
     render() {
         return(
             <View style={Styles.sceneBox}>
@@ -61,6 +83,9 @@ export default class Home extends Component {
                     onSelectedMonth={(year, month, monthLabel) => {
                         this.setState({monthLabel: monthLabel});
                     }}/>
+                <ScrollView style={Styles.homeScroll}>
+                    {this.renderResume()}
+                </ScrollView>
             </View>
         );
     }
