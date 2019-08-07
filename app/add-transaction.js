@@ -96,31 +96,29 @@ export default class AddTransaction extends Component {
             <View>
                 {this.renderCombobox()}
                 <ScrollView>
-                    <View style={{ alignItems: 'center'}}>
-                        <View style={Styles.addIconListBox}>
-                            {
-                                categories.map((item, key) => {
-                                    return(
-                                        <TouchableOpacity key={key} 
-                                            onPress={() => { 
-                                                this.setState({
-                                                    iKey: key,
-                                                    icon: item.icon,
-                                                    color: item.color,
-                                                    categoryId: item.id
-                                                }); 
-                                            }}>
-                                            <View style={ Styles.addIconBox}>
-                                                <Cicon id={key} sid={this.state.iKey}
-                                                    icon={item.icon} 
-                                                    color={(this.state.iKey === key) ? item.color : Colors.lightGrey} />
-                                                <Text style={{fontSize: Fonts.h6}}>{item.title}</Text>
-                                            </View>
-                                        </TouchableOpacity>
-                                    );
-                                })
-                            }
-                        </View>
+                    <View style={Styles.addIconListBox}>
+                        {
+                            categories.map((item, key) => {
+                                return(
+                                    <TouchableOpacity key={key} 
+                                        onPress={() => { 
+                                            this.setState({
+                                                iKey: key,
+                                                icon: item.icon,
+                                                color: item.color,
+                                                categoryId: item.id
+                                            }); 
+                                        }}>
+                                        <View style={ Styles.addIconBox}>
+                                            <Cicon id={key} sid={this.state.iKey}
+                                                icon={item.icon} 
+                                                color={(this.state.iKey === key) ? item.color : Colors.lightGrey} />
+                                            <Text style={{fontSize: Fonts.h6}}>{item.title}</Text>
+                                        </View>
+                                    </TouchableOpacity>
+                                );
+                            })
+                        }
                     </View>
                 </ScrollView>
             </View>
