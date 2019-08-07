@@ -111,8 +111,8 @@ export default class Env {
     // CATEGORY MANAGER ----------------------------------------------
 
     //Transaction Type
-    static EXPENSE_TYPE = 'EXPENSE';
-    static INCOME_TYPE = 'INCOME';
+    static EXPENSE_TYPE = 'Expense';
+    static INCOME_TYPE = 'Income';
 
     static categorySchema = {
         name: 'Category',

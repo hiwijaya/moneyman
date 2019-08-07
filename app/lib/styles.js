@@ -375,13 +375,20 @@ export const Styles = StyleSheet.create({
         alignItems: 'center',
     },
 
-
-    iconTextBox: {
-        width: Screen.width/4,
-        height: 60,
-        justifyContent: 'center',
+    comboTypeBox: {
+        position: 'absolute',
+        left: 46,
+        borderRadius: 5,
+        backgroundColor: Colors.white,
+        elevation: 7,
+        zIndex: 2,
+    },
+    comboTypeItem: {
+        width: 150,
+        height: 50,
+        paddingHorizontal: 15,
         alignItems: 'center',
-        backgroundColor: Colors.darkGrey
+        flexDirection: 'row'
     }
     
 
