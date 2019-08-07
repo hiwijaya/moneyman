@@ -301,7 +301,11 @@ export const Styles = StyleSheet.create({
     addIconListBox: {
         flexWrap: 'wrap',
         flexDirection: 'row',
-        paddingHorizontal: 15,
+    },
+    addIconBox: {
+        width: (Screen.width / 4),    // TODO: calculate width to find best row item
+        marginVertical: 15, 
+        alignItems: 'center',
     },
 
     homeScroll: {
@@ -337,8 +341,8 @@ export const Styles = StyleSheet.create({
     },
     homeAddButton: {
         position: 'absolute',
-        top: 75,
-        right: 20,
+        top: 90,
+        right: 30,
         width: 50,
         height: 50,
         borderRadius: 50,
@@ -369,8 +373,16 @@ export const Styles = StyleSheet.create({
     homeTransactionItemBox: {
         flexDirection: 'row',
         alignItems: 'center',
-    }
+    },
 
+
+    iconTextBox: {
+        width: Screen.width/4,
+        height: 60,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: Colors.darkGrey
+    }
     
 
 

@@ -10,7 +10,7 @@ import {
     TouchableOpacity 
 } from 'react-native';
 import Cicon from './comp/cicon';
-import {Styles, Colors} from './lib/styles';
+import {Styles, Colors, Screen} from './lib/styles';
 import Env from './lib/env';
 
 
@@ -92,16 +92,6 @@ export default class AddCategory extends Component {
         );
     }
 
-    renderCategoryIcon(item, key){
-        return(
-            <TouchableOpacity key={key}>
-                <View style={[Styles.addIconBox]}>
-                    <Image style={Styles.icon18} source={item.icon}/>
-                </View>
-            </TouchableOpacity>
-        );
-    }
-
     render() {
         return (
             <View style={Styles.sceneBox}>
@@ -121,20 +111,21 @@ export default class AddCategory extends Component {
                                             item.icons.map((item2, key2) => {
                                                 let k = this.iconKey(key, key2);
                                                 return(
-                                                    <TouchableOpacity key={k} 
-                                                        onPress={() => { 
-                                                            this.setState({
-                                                                iKey: k,
-                                                                icon: item2.icon,
-                                                                color: item2.color
-                                                            }); 
-                                                        }}>
-                                                        <Cicon id={k} sid={this.state.iKey}
-                                                            style={{marginHorizontal: 20, marginVertical: 10}} 
-                                                            icon={item2.icon} 
-                                                            color={(this.state.iKey === k) ? item2.color : Colors.lightGrey}
-                                                        />
-                                                    </TouchableOpacity>
+                                                    <View key={k} 
+                                                        style={Styles.addIconBox}>
+                                                        <TouchableOpacity 
+                                                            onPress={() => { 
+                                                                this.setState({
+                                                                    iKey: k,
+                                                                    icon: item2.icon,
+                                                                    color: item2.color
+                                                                }); 
+                                                            }}>
+                                                            <Cicon id={k} sid={this.state.iKey}
+                                                                icon={item2.icon} 
+                                                                color={(this.state.iKey === k) ? item2.color : Colors.lightGrey}/>
+                                                        </TouchableOpacity>
+                                                    </View>
                                                 );
                                             })
                                         }

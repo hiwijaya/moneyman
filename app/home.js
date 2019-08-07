@@ -57,20 +57,22 @@ export default class Home extends Component {
 
     renderResume() {
         return(
-            <View style={Styles.homeResumeBox}>
-                <View style={Styles.homeResumeItemBox}>
-                    <Text>Income</Text>
-                    <Text style={Styles.homeResumeValue}>100,000,000</Text>
-                </View>
-                <View style={Styles.separator}></View>
-                <View style={Styles.homeResumeItemBox}>
-                    <Text>Expense</Text>
-                    <Text style={Styles.homeResumeValue}>200,000,000</Text>
-                </View>
-                <View style={Styles.separator}></View>
-                <View style={Styles.homeResumeItemBox}>
-                    <Text>Balance</Text>
-                    <Text style={Styles.homeResumeValue}>100,000,000</Text>
+            <View>
+                <View style={Styles.homeResumeBox}>
+                    <View style={Styles.homeResumeItemBox}>
+                        <Text>Income</Text>
+                        <Text style={Styles.homeResumeValue}>100,000,000</Text>
+                    </View>
+                    <View style={Styles.separator}></View>
+                    <View style={Styles.homeResumeItemBox}>
+                        <Text>Expense</Text>
+                        <Text style={Styles.homeResumeValue}>200,000,000</Text>
+                    </View>
+                    <View style={Styles.separator}></View>
+                    <View style={Styles.homeResumeItemBox}>
+                        <Text>Balance</Text>
+                        <Text style={Styles.homeResumeValue}>100,000,000</Text>
+                    </View>
                 </View>
                 {this.renderAddButton()}
             </View>
@@ -79,7 +81,8 @@ export default class Home extends Component {
 
     renderAddButton() {
         return(
-            <TouchableOpacity style={Styles.homeAddButton}>
+            <TouchableOpacity style={Styles.homeAddButton} 
+                onPress={() => {this.props.navigation.navigate('addTransaction')}}>
                 <Image style={Styles.icon12} 
                     source={require('./asset/icon-add.png')}/>
             </TouchableOpacity>
