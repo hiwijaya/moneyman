@@ -311,6 +311,7 @@ export const Styles = StyleSheet.create({
     },
     homeResumeBox: {
         margin: 15,
+        marginBottom: 30,
         height: 100,
         borderRadius: 5,
         flexDirection: 'row',
@@ -336,8 +337,8 @@ export const Styles = StyleSheet.create({
     },
     homeAddButton: {
         position: 'absolute',
-        top: 100,
-        right: 30,
+        top: 75,
+        right: 20,
         width: 50,
         height: 50,
         borderRadius: 50,
@@ -345,7 +346,31 @@ export const Styles = StyleSheet.create({
         alignItems: 'center',
         backgroundColor: Colors.primary,
         elevation: 5
+    },
+    homeTransactionBox: {
+        margin: 15,
+        marginTop: 0,
+        padding: 10,
+        borderRadius: 5,
+        backgroundColor: Colors.white,
+        elevation: 5,
+    },
+    homeTransactionHeaderBox: {
+        marginBottom: 10,
+        paddingBottom: 5,
+        flexDirection: 'row',
+        borderBottomWidth: 1,
+        borderBottomColor: Colors.lightGrey
+    },
+    homeTransactionHeaderText: {
+        fontSize: Fonts.h6,
+        color: Colors.grey
+    },
+    homeTransactionItemBox: {
+        flexDirection: 'row',
+        alignItems: 'center',
     }
+
     
 
 

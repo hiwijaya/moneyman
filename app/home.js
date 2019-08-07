@@ -9,6 +9,7 @@ import {
  } from 'react-native';
 import {Styles, Colors} from './lib/styles';
 import Calendar from './comp/calendar';
+import Cicon from './comp/cicon';
 
 
 export default class Home extends Component {
@@ -71,6 +72,7 @@ export default class Home extends Component {
                     <Text>Balance</Text>
                     <Text style={Styles.homeResumeValue}>100,000,000</Text>
                 </View>
+                {this.renderAddButton()}
             </View>
         );
     }
@@ -78,8 +80,38 @@ export default class Home extends Component {
     renderAddButton() {
         return(
             <TouchableOpacity style={Styles.homeAddButton}>
-                <Text>+</Text>
+                <Image style={Styles.icon12} 
+                    source={require('./asset/icon-add.png')}/>
             </TouchableOpacity>
+        );
+    }
+
+    // per Day
+    renderTransaction() {
+        return(
+            <View style={Styles.homeTransactionBox}>
+                <View style={Styles.homeTransactionHeaderBox}>
+                    <Text style={[Styles.homeTransactionHeaderText, {flex: 1}]}>
+                        08/17 Sat
+                    </Text>
+                    <View style={{flexDirection: 'row'}}>
+                        <Text style={[Styles.homeTransactionHeaderText, {marginRight: 10}]}>
+                            Income: 13,000,000
+                        </Text>
+                        <Text style={Styles.homeTransactionHeaderText}>
+                            Expenses: 2,300,000
+                        </Text>
+                    </View>
+                </View>
+                <View>
+                    <View style={Styles.homeTransactionItemBox}>
+                        <Cicon color={'#F19066'}
+                            icon={require('./asset/categories/cat-food-burger.png')}/>
+                        <Text style={{flex: 1, marginHorizontal: 10}}>Burger King</Text>
+                        <Text style={{color: Colors.grey}}>- 49,000</Text>
+                    </View>
+                </View>
+            </View>
         );
     }
 
@@ -91,11 +123,10 @@ export default class Home extends Component {
                     onSelectedMonth={(year, month, monthLabel) => {
                         this.setState({monthLabel: monthLabel});
                     }}/>
+                
                 <ScrollView style={Styles.homeScroll}>
                     {this.renderResume()}
-                    {/* TODO: scrollview size issue (empty content) */}
-                    {this.renderAddButton()}
-                    
+                    {this.renderTransaction()}
                 </ScrollView>
             </View>
         );
