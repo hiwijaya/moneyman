@@ -389,6 +389,16 @@ export const Styles = StyleSheet.create({
         paddingHorizontal: 15,
         alignItems: 'center',
         flexDirection: 'row'
+    },
+
+    boardBox: {
+        // position: 'absolute',
+        // left: 0,
+        // right: 0,
+        // bottom: 0,
+        height: 300,
+        backgroundColor: Colors.red
+        
     }
     
 

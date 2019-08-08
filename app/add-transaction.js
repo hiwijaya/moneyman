@@ -93,7 +93,7 @@ export default class AddTransaction extends Component {
             this.state.eCategories : this.state.iCategories;
             
         return(
-            <View>
+            <View style={{flex: 1}}>
                 {this.renderCombobox()}
                 <ScrollView>
                     <View style={Styles.addIconListBox}>
@@ -121,6 +121,17 @@ export default class AddTransaction extends Component {
                         }
                     </View>
                 </ScrollView>
+                {this.renderBoard()}
+            </View>
+        );
+    }
+
+    renderBoard() {
+        return(
+            <View style={Styles.boardBox}>
+                <View>
+                    <Cicon icon={this.state.icon} color={this.state.color}/>
+                </View>
             </View>
         );
     }
