@@ -396,10 +396,23 @@ export const Styles = StyleSheet.create({
         // left: 0,
         // right: 0,
         // bottom: 0,
-        height: 300,
-        backgroundColor: Colors.red
-        
-    }
+        height: 250,
+        borderWidth: 1,
+        borderColor: Colors.grey,
+        backgroundColor: Colors.white 
+    },
+    boardInputBox: {
+        height: 50,
+        paddingHorizontal: 10,
+        flexDirection: 'row',
+        alignItems: 'center',
+    },
+    boardInput: {
+        flex: 1,
+        height: 50,
+        paddingHorizontal: 10,
+    },
+    
     
 
 

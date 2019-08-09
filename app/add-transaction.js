@@ -3,8 +3,12 @@ import {
     View, 
     Text,
     Image,
+    TextInput,
     TouchableOpacity,
     ScrollView, 
+    Keyboard,
+    Alert,
+    DatePickerAndroid
 } from 'react-native';
 import Cicon from './comp/cicon';
 import { Styles, Colors, Fonts } from './lib/styles';
@@ -26,6 +30,7 @@ export default class AddTransaction extends Component {
             icon: null,
             color: null,
             categoryId: null,
+            memo: null,
         };
     }
 
@@ -36,6 +41,35 @@ export default class AddTransaction extends Component {
             eCategories,
             iCategories,
         });
+
+        this.keyboardDidShowListener = Keyboard.addListener(
+            'keyboardDidShow', this.onKeyboardDidShow);
+        this.keyboardDidHideListener = Keyboard.addListener(
+            'keyboardDidHide', this.onKeyboardDidHide);
+    }
+
+    componentWillUnmount() {
+        this.keyboardDidShowListener.remove();
+        this.keyboardDidHideListener.remove();
+    }
+
+    onKeyboardDidShow(e){
+        const { height, screenX, screenY, width } = e.endCoordinates;
+        Alert.alert(height.toString());
+    }
+
+    onKeyboardDidHide(e){
+        Alert.alert('Keyboard hide');
+    }
+
+    async showDatePicker() {
+        try {
+            const {action, year, month, day} = await DatePickerAndroid.open({
+                date: new Date()
+            });
+        } catch ({code, message}) {
+            console.warn('Cannot open date picker', message);
+        }
     }
 
     renderActionBar() {
@@ -129,8 +163,19 @@ export default class AddTransaction extends Component {
     renderBoard() {
         return(
             <View style={Styles.boardBox}>
-                <View>
+                <View style={Styles.boardInputBox}>
                     <Cicon icon={this.state.icon} color={this.state.color}/>
+                    <TextInput 
+                        style={Styles.boardInput} 
+                        autoCorrect={false}
+                        underlineColorAndroid={'transparent'}
+                        placeholder={'Memo'}
+                        onChangeText={(text) => this.setState({memo: text})}
+                        value={this.state.memo} />
+                    <Text style={{fontWeight: 'bold'}}>50,000</Text>
+                </View>
+                <View>
+
                 </View>
             </View>
         );
