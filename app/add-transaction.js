@@ -19,6 +19,7 @@ export default class AddTransaction extends Component {
 
     constructor(props) {
         super(props);
+
         this.state = {
             transactionType: Env.EXPENSE_TYPE,
             eCategories: [],
@@ -32,11 +33,14 @@ export default class AddTransaction extends Component {
             categoryId: null,
             memo: null,
             amount: '0',
+            date: 'today',
 
             inputShow: false,
             keyboardShow: false,
             keyboardHeight: 0,
         };
+
+        this.transactionDate = Env.now()
     }
 
     componentDidMount() {
@@ -70,8 +74,14 @@ export default class AddTransaction extends Component {
     async showDatePicker() {
         try {
             const {action, year, month, day} = await DatePickerAndroid.open({
-                date: new Date()
+                date: Env.now()
             });
+
+            if(action !== DatePickerAndroid.dismissedAction){
+                this.transactionDate = new Date(year, month, day);
+                Alert.alert(this.transactionDate.toString());
+            }
+            
         } catch ({code, message}) {
             console.warn('Cannot open date picker', message);
         }
