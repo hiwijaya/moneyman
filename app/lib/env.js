@@ -42,6 +42,25 @@ export default class Env {
         return new Date();
     }
 
+    static doFormatCurrency(amount){
+        if (amount != "") {
+            var value = parseFloat(amount.replace(/\,/g, "")).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            return value;
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+    // REALM DATABASE -----------------
 
     static key = {
         USER_INFO: 'USER_INFO',     // refer to 'userInfo' object from react-native-google-signin
@@ -98,14 +117,6 @@ export default class Env {
 
         return JSON.parse(result);
     }
-
-
-
-
-
-
-
-
 
 
     // CATEGORY MANAGER ----------------------------------------------

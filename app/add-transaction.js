@@ -31,6 +31,7 @@ export default class AddTransaction extends Component {
             color: null,
             categoryId: null,
             memo: null,
+            amount: '0',
 
             inputShow: false,
             keyboardShow: false,
@@ -74,6 +75,13 @@ export default class AddTransaction extends Component {
         } catch ({code, message}) {
             console.warn('Cannot open date picker', message);
         }
+    }
+
+    onType(digit) {
+        //TODO: do simple calculations
+
+        let str = this.state.amount + digit;
+        this.setState({amount: Env.doFormatCurrency(str)});
     }
 
     renderActionBar() {
@@ -181,7 +189,7 @@ export default class AddTransaction extends Component {
                             placeholder={'Memo'}
                             onChangeText={(text) => this.setState({memo: text})}
                             value={this.state.memo} />
-                        <Text style={{fontWeight: 'bold'}}>50,000</Text>
+                        <Text style={{fontWeight: 'bold'}}>{this.state.amount}</Text>
                     </View>
                     {this.renderBoard()}
                 </View>
@@ -195,59 +203,74 @@ export default class AddTransaction extends Component {
             return(
                 <View style={{flex: 1}}>
                     <View style={Styles.boardKeyBox}>
-                        <TouchableOpacity style={Styles.boardKey}>
+                        <TouchableOpacity style={Styles.boardKey}
+                            onPress={() => this.onType('7')}>
                             <Text style={Styles.boardDigit}>7</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity style={Styles.boardKey}>
+                        <TouchableOpacity style={Styles.boardKey}
+                            onPress={() => this.onType('8')}>
                             <Text style={Styles.boardDigit}>8</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity style={Styles.boardKey}>
+                        <TouchableOpacity style={Styles.boardKey}
+                            onPress={() => this.onType('9')}>
                             <Text style={Styles.boardDigit}>9</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity style={Styles.boardKey}>
+                        <TouchableOpacity style={Styles.boardKey}
+                            onPress={() => this.showDatePicker()}>
                             <View style={Styles.center}>
                                 <Text>{'Today\n08/10'}</Text>
                             </View>
                         </TouchableOpacity>
                     </View>
                     <View style={Styles.boardKeyBox}>
-                        <TouchableOpacity style={Styles.boardKey}>
+                        <TouchableOpacity style={Styles.boardKey}
+                            onPress={() => this.onType('4')}>
                             <Text style={Styles.boardDigit}>4</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity style={Styles.boardKey}>
+                        <TouchableOpacity style={Styles.boardKey}
+                            onPress={() => this.onType('5')}>
                             <Text style={Styles.boardDigit}>5</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity style={Styles.boardKey}>
+                        <TouchableOpacity style={Styles.boardKey}
+                            onPress={() => this.onType('6')}>
                             <Text style={Styles.boardDigit}>6</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity style={Styles.boardKey}>
+                        <TouchableOpacity style={Styles.boardKey}
+                            onPress={() => this.onType('+')}>
                             <Image style={Styles.icon10} 
                                 source={require('./asset/icon-add.png')}/>
                         </TouchableOpacity>
                     </View>
                     <View style={Styles.boardKeyBox}>
-                        <TouchableOpacity style={Styles.boardKey}>
+                        <TouchableOpacity style={Styles.boardKey}
+                            onPress={() => this.onType('1')}>
                             <Text style={Styles.boardDigit}>1</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity style={Styles.boardKey}>
+                        <TouchableOpacity style={Styles.boardKey}
+                            onPress={() => this.onType('2')}>
                             <Text style={Styles.boardDigit}>2</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity style={Styles.boardKey}>
+                        <TouchableOpacity style={Styles.boardKey}
+                            onPress={() => this.onType('3')}>
                             <Text style={Styles.boardDigit}>3</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity style={Styles.boardKey}>
+                        <TouchableOpacity style={Styles.boardKey}
+                            onPress={() => this.onType('-')}>
                             <Image style={Styles.icon10} 
                                 source={require('./asset/icon-minus.png')}/>
                         </TouchableOpacity>
                     </View>
                     <View style={Styles.boardKeyBox}>
-                        <TouchableOpacity style={Styles.boardKey}>
-                            <Text style={{fontWeight: 'bold', fontSize: Fonts.h1}}>.</Text>
+                        <TouchableOpacity style={Styles.boardKey}
+                            onPress={() => this.onType('.')}>
+                            <Text style={Styles.boardDigit}>C</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity style={Styles.boardKey}>
+                        <TouchableOpacity style={Styles.boardKey}
+                            onPress={() => this.onType('0')}>
                             <Text style={Styles.boardDigit}>0</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity style={Styles.boardKey}>
+                        <TouchableOpacity style={Styles.boardKey}
+                            onPress={() => this.onType('D')}>
                             <Image style={Styles.icon18} 
                                 source={require('./asset/icon-backspace.png')}/>
                         </TouchableOpacity>
