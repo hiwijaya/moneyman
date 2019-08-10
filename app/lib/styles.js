@@ -40,6 +40,10 @@ export const Styles = StyleSheet.create({
         width: 8,
         height: 8,
     },
+    icon10: {
+        width: 10,
+        height: 10,
+    },
     icon12: {
         width: 12,
         height: 12,
@@ -392,13 +396,8 @@ export const Styles = StyleSheet.create({
     },
 
     boardBox: {
-        // position: 'absolute',
-        // left: 0,
-        // right: 0,
-        // bottom: 0,
-        height: 250,
         borderWidth: 1,
-        borderColor: Colors.grey,
+        borderColor: Colors.lightGrey,
         backgroundColor: Colors.white 
     },
     boardInputBox: {
@@ -406,12 +405,31 @@ export const Styles = StyleSheet.create({
         paddingHorizontal: 10,
         flexDirection: 'row',
         alignItems: 'center',
+        borderBottomWidth: 1,
+        borderColor: Colors.lightGrey
     },
     boardInput: {
         flex: 1,
         height: 50,
         paddingHorizontal: 10,
     },
+    boardKeyBox: {
+        flex: 1,
+        flexDirection: 'row'
+    },
+    boardKey: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        fontWeight: 'bold',
+        borderRightWidth: 1,
+        borderBottomWidth: 1,
+        borderColor: Colors.lightGrey
+    },
+    boardDigit: {
+        fontSize: Fonts.h3,
+        fontWeight: 'bold',
+    }
     
     
 

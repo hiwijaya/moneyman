@@ -8,7 +8,7 @@ import {
     ScrollView, 
     Keyboard,
     Alert,
-    DatePickerAndroid
+    DatePickerAndroid,
 } from 'react-native';
 import Cicon from './comp/cicon';
 import { Styles, Colors, Fonts } from './lib/styles';
@@ -31,6 +31,10 @@ export default class AddTransaction extends Component {
             color: null,
             categoryId: null,
             memo: null,
+
+            inputShow: false,
+            keyboardShow: false,
+            keyboardHeight: 0,
         };
     }
 
@@ -43,9 +47,9 @@ export default class AddTransaction extends Component {
         });
 
         this.keyboardDidShowListener = Keyboard.addListener(
-            'keyboardDidShow', this.onKeyboardDidShow);
+            'keyboardDidShow', this.onKeyboardDidShow.bind(this));
         this.keyboardDidHideListener = Keyboard.addListener(
-            'keyboardDidHide', this.onKeyboardDidHide);
+            'keyboardDidHide', this.onKeyboardDidHide.bind(this));
     }
 
     componentWillUnmount() {
@@ -55,11 +59,11 @@ export default class AddTransaction extends Component {
 
     onKeyboardDidShow(e){
         const { height, screenX, screenY, width } = e.endCoordinates;
-        Alert.alert(height.toString());
+        this.setState({keyboardShow: true, keyboardHeight: height});
     }
 
     onKeyboardDidHide(e){
-        Alert.alert('Keyboard hide');
+        this.setState({keyboardShow: false, keyboardHeight: 0});
     }
 
     async showDatePicker() {
@@ -140,7 +144,8 @@ export default class AddTransaction extends Component {
                                                 iKey: key,
                                                 icon: item.icon,
                                                 color: item.color,
-                                                categoryId: item.id
+                                                categoryId: item.id,
+                                                inputShow: true
                                             }); 
                                         }}>
                                         <View style={ Styles.addIconBox}>
@@ -155,30 +160,105 @@ export default class AddTransaction extends Component {
                         }
                     </View>
                 </ScrollView>
-                {this.renderBoard()}
+                {this.renderInput()}
             </View>
         );
     }
 
-    renderBoard() {
-        return(
-            <View style={Styles.boardBox}>
-                <View style={Styles.boardInputBox}>
-                    <Cicon icon={this.state.icon} color={this.state.color}/>
-                    <TextInput 
-                        style={Styles.boardInput} 
-                        autoCorrect={false}
-                        underlineColorAndroid={'transparent'}
-                        placeholder={'Memo'}
-                        onChangeText={(text) => this.setState({memo: text})}
-                        value={this.state.memo} />
-                    <Text style={{fontWeight: 'bold'}}>50,000</Text>
-                </View>
-                <View>
+    
 
+    renderInput() {
+        if(this.state.inputShow){
+            return(
+                <View style={[Styles.boardBox, {height: (this.state.keyboardShow) ? 50 : 280}]}>
+                    <View style={Styles.boardInputBox}>
+                        <Cicon style={{width: 30, height: 30}}
+                            icon={this.state.icon} color={this.state.color}/>
+                        <TextInput 
+                            style={Styles.boardInput} 
+                            autoCorrect={false}
+                            underlineColorAndroid={'transparent'}
+                            placeholder={'Memo'}
+                            onChangeText={(text) => this.setState({memo: text})}
+                            value={this.state.memo} />
+                        <Text style={{fontWeight: 'bold'}}>50,000</Text>
+                    </View>
+                    {this.renderBoard()}
                 </View>
-            </View>
-        );
+            );
+        }
+        return null;
+    }
+
+    renderBoard() {
+        if(!this.state.keyboardShow){
+            return(
+                <View style={{flex: 1}}>
+                    <View style={Styles.boardKeyBox}>
+                        <TouchableOpacity style={Styles.boardKey}>
+                            <Text style={Styles.boardDigit}>7</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={Styles.boardKey}>
+                            <Text style={Styles.boardDigit}>8</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={Styles.boardKey}>
+                            <Text style={Styles.boardDigit}>9</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={Styles.boardKey}>
+                            <View style={Styles.center}>
+                                <Text>{'Today\n08/10'}</Text>
+                            </View>
+                        </TouchableOpacity>
+                    </View>
+                    <View style={Styles.boardKeyBox}>
+                        <TouchableOpacity style={Styles.boardKey}>
+                            <Text style={Styles.boardDigit}>4</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={Styles.boardKey}>
+                            <Text style={Styles.boardDigit}>5</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={Styles.boardKey}>
+                            <Text style={Styles.boardDigit}>6</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={Styles.boardKey}>
+                            <Image style={Styles.icon10} 
+                                source={require('./asset/icon-add.png')}/>
+                        </TouchableOpacity>
+                    </View>
+                    <View style={Styles.boardKeyBox}>
+                        <TouchableOpacity style={Styles.boardKey}>
+                            <Text style={Styles.boardDigit}>1</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={Styles.boardKey}>
+                            <Text style={Styles.boardDigit}>2</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={Styles.boardKey}>
+                            <Text style={Styles.boardDigit}>3</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={Styles.boardKey}>
+                            <Image style={Styles.icon10} 
+                                source={require('./asset/icon-minus.png')}/>
+                        </TouchableOpacity>
+                    </View>
+                    <View style={Styles.boardKeyBox}>
+                        <TouchableOpacity style={Styles.boardKey}>
+                            <Text style={{fontWeight: 'bold', fontSize: Fonts.h1}}>.</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={Styles.boardKey}>
+                            <Text style={Styles.boardDigit}>0</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={Styles.boardKey}>
+                            <Image style={Styles.icon18} 
+                                source={require('./asset/icon-backspace.png')}/>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={[Styles.boardKey, {backgroundColor: Colors.primary}]}>
+                            <Image style={Styles.icon18} 
+                                source={require('./asset/icon-checked.png')}/>
+                        </TouchableOpacity>
+                    </View>
+                </View>
+            );
+        }
     }
 
     render() {
