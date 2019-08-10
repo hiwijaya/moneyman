@@ -80,8 +80,25 @@ export default class AddTransaction extends Component {
     onType(digit) {
         //TODO: do simple calculations
 
-        let str = this.state.amount + digit;
-        this.setState({amount: Env.doFormatCurrency(str)});
+        if(digit === 'C'){
+            this.setState({amount: '0'});
+        }
+        else if(digit === 'D'){
+            let amount = this.state.amount;
+            if(amount.length <= 1){
+                this.setState({amount: '0'});
+            }
+            else{
+                let str = this.state.amount.slice(0, -1);
+                this.setState({amount: Env.doFormatCurrency(str)});
+            }
+        }
+        else{
+            let amount = this.state.amount + digit;
+            this.setState({amount: Env.doFormatCurrency(amount)});
+        }
+
+        
     }
 
     renderActionBar() {
@@ -262,7 +279,7 @@ export default class AddTransaction extends Component {
                     </View>
                     <View style={Styles.boardKeyBox}>
                         <TouchableOpacity style={Styles.boardKey}
-                            onPress={() => this.onType('.')}>
+                            onPress={() => this.onType('C')}>
                             <Text style={Styles.boardDigit}>C</Text>
                         </TouchableOpacity>
                         <TouchableOpacity style={Styles.boardKey}
