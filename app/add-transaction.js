@@ -32,15 +32,19 @@ export default class AddTransaction extends Component {
             color: null,
             categoryId: null,
             memo: null,
-            amount: '0',
+            amount: '0',    // amountStr
             date: 'today',
 
             inputShow: false,
             keyboardShow: false,
             keyboardHeight: 0,
+            doCalculate: false,
         };
 
-        this.transactionDate = Env.now()
+        // board
+        this.transactionDate = Env.now();
+        this.firstValue = null;     // in Number
+        this.operation = null       // + / -
     }
 
     componentDidMount() {
@@ -83,32 +87,133 @@ export default class AddTransaction extends Component {
             }
             
         } catch ({code, message}) {
-            console.warn('Cannot open date picker', message);
+            console.warn('Cannot open DatePicker', message);
         }
     }
 
     onType(digit) {
-        //TODO: do simple calculations
 
         if(digit === 'C'){
             this.setState({amount: '0'});
+            return;
         }
-        else if(digit === 'D'){
+
+        if(digit === 'D'){
             let amount = this.state.amount;
             if(amount.length <= 1){
                 this.setState({amount: '0'});
             }
             else{
-                let str = this.state.amount.slice(0, -1);
-                this.setState({amount: Env.doFormatCurrency(str)});
+                if(this.operation === null){
+                    let amountStr = this.state.amount.slice(0, -1);
+                    this.setState({amount: Env.formatCurrency(amountStr)});
+                }
+                else{
+
+                    let amountStr = this.state.amount;
+                    let secondValue = amountStr.slice(amountStr.indexOf(this.operation) + 1);
+                    secondValue = secondValue.slice(0, -1);
+
+                    // TODO: still buggy when delete last operation
+
+                    if(secondValue === ''){
+                        this.setState({
+                            amount: amountStr.slice(0, amountStr.indexOf(this.operation) + 1),
+                        });
+                    }
+                    else{
+                        secondValue = Env.formatCurrency(secondValue)
+                        this.setState({
+                            amount: amountStr.slice(0, amountStr.indexOf(this.operation) + 1) + secondValue
+                        });
+                    }
+                }
             }
-        }
-        else{
-            let amount = this.state.amount + digit;
-            this.setState({amount: Env.doFormatCurrency(amount)});
+            return;
         }
 
+        if(digit === '+' || digit === '-'){
+            if(this.operation === null){
+                this.operation = digit;
+                this.firstValue = Env.convertCurrency(this.state.amount);
+
+                let amountStr = this.state.amount + digit;
+                this.setState({amount: amountStr});
+            }
+            else{
+                let amountStr = this.state.amount;
+                let secondValue = amountStr.slice(amountStr.indexOf(this.operation) + 1);
+
+                if(secondValue === '') {
+                    if (this.operation !== digit){
+                        // change current operation
+                        this.operation = digit;
+                        amountStr = amountStr.slice(0, -1) + digit;
+                        this.setState({amount: amountStr});
+                    }
+                    return;
+                }
+
+                // do calculate
+                secondValue = Env.convertCurrency(secondValue);
+                let newValue = (this.operation === '+') ? 
+                    (this.firstValue + secondValue) : (this.firstValue - secondValue);
+                    
+                this.setState({
+                    amount: Env.formatCurrency(newValue.toString()) + digit,
+                    doCalculate: false,
+                });
+                this.operation = digit;
+                this.firstValue = newValue;
+            }
+
+            return;
+        }
+
+        // do calculate
+        if(digit === '='){
+            let amountStr = this.state.amount;
+            let secondValue = amountStr.slice(amountStr.indexOf(this.operation) + 1);
+
+            secondValue = Env.convertCurrency(secondValue);
+            let newValue = (this.operation === '+') ? 
+                (this.firstValue + secondValue) : (this.firstValue - secondValue);
+                    
+            this.setState({
+                amount: Env.formatCurrency(newValue.toString()),
+                doCalculate: false,
+            });
+            this.operation = null;
+            this.firstValue = 0;
+
+            return;
+        }
+
+        if(this.operation === null){
+            let amountStr = this.state.amount + digit;
+            this.setState({amount: Env.formatCurrency(amountStr)});
+        }
+        else{
+            let amountStr = this.state.amount + digit;
+            let secondValue = amountStr.slice(amountStr.indexOf(this.operation) + 1);
+            secondValue = Env.formatCurrency(secondValue);
+            this.setState({
+                amount: amountStr.slice(0, amountStr.indexOf(this.operation)+1) + secondValue,
+                doCalculate: true,
+            });
+        }
         
+    }
+
+
+    saveTransaction(){
+        if(this.state.doCalculate){
+            this.onType('=');
+            return;
+        }
+
+        // save transaction
+
     }
 
     renderActionBar() {
@@ -301,9 +406,13 @@ export default class AddTransaction extends Component {
                             <Image style={Styles.icon18} 
                                 source={require('./asset/icon-backspace.png')}/>
                         </TouchableOpacity>
-                        <TouchableOpacity style={[Styles.boardKey, {backgroundColor: Colors.primary}]}>
-                            <Image style={Styles.icon18} 
-                                source={require('./asset/icon-checked.png')}/>
+                        <TouchableOpacity style={[Styles.boardKey, {backgroundColor: Colors.primary}]}
+                            onPress={() => this.saveTransaction()}>
+                            {
+                                (this.state.doCalculate) ? 
+                                <Text style={Styles.boardDigit}>=</Text> :
+                                <Image style={Styles.icon18} source={require('./asset/icon-checked.png')}/>
+                            }
                         </TouchableOpacity>
                     </View>
                 </View>

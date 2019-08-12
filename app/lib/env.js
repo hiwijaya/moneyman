@@ -42,11 +42,20 @@ export default class Env {
         return new Date();
     }
 
-    static doFormatCurrency(amount){
+    static formatCurrency(amount) {
         if (amount != "") {
-            var value = parseFloat(amount.replace(/\,/g, "")).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            let value = parseFloat(amount.replace(/\,/g, "")).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
             return value;
         }
+        return '0';
+    }
+
+    static convertCurrency(amountStr) {
+        if (amountStr != "") {
+            let value = parseFloat(amountStr.replace(/\,/g, ""));
+            return value;
+        }
+        return 0;
     }
 
 
