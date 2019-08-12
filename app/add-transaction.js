@@ -94,13 +94,14 @@ export default class AddTransaction extends Component {
     onType(digit) {
 
         if(digit === 'C'){
-            this.setState({amount: '0'});
+            this.setState({amount: '0', doCalculate: false});
+            this.operation = null;
+            this.firstValue = null;
             return;
         }
 
         if(digit === 'D'){
-            let amount = this.state.amount;
-            if(amount.length <= 1){
+            if (this.state.amount.length <= 1) {
                 this.setState({amount: '0'});
             }
             else{
@@ -109,20 +110,28 @@ export default class AddTransaction extends Component {
                     this.setState({amount: Env.formatCurrency(amountStr)});
                 }
                 else{
-
                     let amountStr = this.state.amount;
                     let secondValue = amountStr.slice(amountStr.indexOf(this.operation) + 1);
                     secondValue = secondValue.slice(0, -1);
 
-                    // TODO: still buggy when delete last operation
-
                     if(secondValue === ''){
+                        amountStr = amountStr.slice(0, -1);
                         this.setState({
-                            amount: amountStr.slice(0, amountStr.indexOf(this.operation) + 1),
+                            amount: amountStr,
+                            doCalculate: false
                         });
+                        let lastDigit = amountStr.slice(-1);
+                        if (lastDigit === '+' || lastDigit === '-'){
+                            // do nothing
+                        }
+                        else{
+                            this.operation = null;
+                            this.firstValue = null;
+                        }  
                     }
                     else{
-                        secondValue = Env.formatCurrency(secondValue)
+                        
+                        secondValue = Env.formatCurrency(secondValue);
                         this.setState({
                             amount: amountStr.slice(0, amountStr.indexOf(this.operation) + 1) + secondValue
                         });
