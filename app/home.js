@@ -21,7 +21,7 @@ export default class Home extends Component {
         this.refCalendar = null;
 
         this.state = {
-            monthLabel: 'Jul',
+            monthName: Env.formatMonthName(new Date()),
         }
     }
 
@@ -44,7 +44,7 @@ export default class Home extends Component {
                         }
                     }}>
                     <View style={Styles.periodButtonBox}>
-                        <Text style={Styles.periodButtonLabel}>{this.state.monthLabel}</Text>
+                        <Text style={Styles.periodButtonLabel}>{this.state.monthName}</Text>
                         <Image style={Styles.icon8} source={require('./asset/icon-down.png')}/>
                     </View>
                 </TouchableOpacity>
@@ -53,7 +53,7 @@ export default class Home extends Component {
                         <Image style={Styles.icon24} source={require('./asset/icon-chart.png')}/>
                     </TouchableOpacity>
                     <TouchableOpacity style={Styles.actionbarButton}
-                        onPress={() => {this.props.navigation.navigate('account', {item: 'fromA'});}}>
+                        onPress={() => {this.props.navigation.navigate('account');}}>
                         <Image style={Styles.icon24} source={require('./asset/icon-user.png')}/>
                     </TouchableOpacity>
                 </View>
@@ -133,8 +133,9 @@ export default class Home extends Component {
             <View style={Styles.sceneBox}>
                 {this.renderActionBar()}
                 <Calendar ref={ref => this.refCalendar = ref} 
-                    onSelectedMonth={(year, month, monthLabel) => {
-                        this.setState({monthLabel: monthLabel});
+                    onSelectedMonth={(year, month, monthName) => {
+                        Alert.alert(year.toString(), month.toString());
+                        this.setState({monthName: monthName});
                     }}/>
                 
                 <ScrollView style={Styles.homeScroll}>

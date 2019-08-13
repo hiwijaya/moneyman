@@ -52,20 +52,26 @@ export default class Env {
         return false;
     }
 
-    // return 31/07
-    static formatDateMonth(date) {
+    static formatDate(date, pattern){
         if(date !== null){
-            return moment(date).format('DD/MM');
+            return moment(date).format(pattern);
         }
         return '-';
     }
 
     // return Jul
-    static formatMonthName(date){
-        if(date !== null){
-            return moment(date).format('MMM');
-        }
-        return '-';
+    static formatMonthName(date) {
+        return Env.formatDate(date, 'MMM')
+    }
+
+    // return 31/07
+    static formatDateMonth(date) {
+        return Env.formatDate(date, 'DD/MM')
+    }
+
+    // return period 0719
+    static formatMonthYear(date) {
+        return Env.formatDate(date, 'MMYY')
     }
 
     static formatCurrency(amount) {
@@ -180,7 +186,7 @@ export default class Env {
             categoryId: 'string',
             amount: 'int',
             memo: 'string',
-            period: 'string',   // relative with payday (jul/aug/..)
+            period: 'string',   // relative with payday (MMYYYY/0719)
             date: {
                 type: 'date',
                 default: Env.now()

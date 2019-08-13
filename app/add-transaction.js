@@ -81,6 +81,7 @@ export default class AddTransaction extends Component {
 
     async showDatePicker() {
         try {
+            // WARNING: month --> 0=Jan
             const {action, year, month, day} = await DatePickerAndroid.open({
                 date: this.transactionDate
             });
@@ -246,7 +247,7 @@ export default class AddTransaction extends Component {
             categoryId: this.state.categoryId,
             amount: Env.convertCurrency(this.state.amount),
             memo: memo,
-            period: Env.formatMonthName(this.transactionDate),
+            period: Env.formatMonthYear(this.transactionDate),
             date: this.transactionDate,
             type: this.state.transactionType
         }

@@ -91,13 +91,15 @@ export const Styles = StyleSheet.create({
         justifyContent: 'center',
     },
     calendarRowBox: {
-        height: 50,
+        // height: 50,
+        flexWrap: 'wrap',
         flexDirection: 'row',
     },
     calendarMonthBox: {
-        flex: 1,
+        width: (Screen.width / 6),
+        height: 50,
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
     },
     calendarMonthSelected: {
         backgroundColor: Colors.primary,

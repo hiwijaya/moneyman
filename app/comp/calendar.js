@@ -4,8 +4,8 @@ import {
     Text,
     Image,
     TouchableOpacity,
-    Alert,
 } from 'react-native';
+import moment from 'moment';
 import { Styles, Colors } from '../lib/styles';
 
 
@@ -17,7 +17,7 @@ export default class Calendar extends Component {
         let today = new Date();
 
         this.selectedYear = today.getFullYear();
-        this.selectedMonth = today.getMonth() + 1; // As January is 0.
+        this.selectedMonth = today.getMonth(); // January is 0.
         
         this.state = {
             show: false,
@@ -25,6 +25,7 @@ export default class Calendar extends Component {
             month: this.selectedMonth,
         };
 
+        this.months = moment.monthsShort();
 
     }
 
@@ -45,13 +46,8 @@ export default class Calendar extends Component {
     isShow(){
         return this.state.show;
     }
-
-    month1 = [{key: 'Jan', val: 1}, {key: 'Feb', val: 2}, {key: 'Mar', val: 3}, 
-        {key: 'Apr', val: 4}, {key: 'May', val: 5}, {key: 'Jun', val: 6}];
-    month2 = [{key: 'Jul', val: 7}, {key: 'Aug', val: 8}, {key: 'Sep', val: 9}, 
-        {key: 'Oct', val: 10}, {key: 'Nov', val: 11}, {key: 'Dec', val: 12}];
     
-    onMonthPress(month, monthLabel){
+    onMonthPress(month, monthName){
         this.setState({
             month: month,
             show: false,
@@ -61,7 +57,7 @@ export default class Calendar extends Component {
             this.props.onSelectedMonth(
                 this.state.year, 
                 this.state.month, 
-                monthLabel
+                monthName
             );
         });
     }
@@ -72,7 +68,7 @@ export default class Calendar extends Component {
 
         this.setState({
             year: selectingYear,
-            month: (selectingYear === this.selectedYear) ? this.selectedMonth : 0,
+            month: (selectingYear === this.selectedYear) ? this.selectedMonth : null,
         });
 
     }
@@ -96,26 +92,12 @@ export default class Calendar extends Component {
                         </View>
                         <View style={Styles.calendarRowBox}>
                             {
-                                this.month1.map((prop, key) => {
+                                this.months.map((val, key) => {
                                     return(
-                                        <TouchableOpacity key={key} onPress={() => this.onMonthPress(prop.val, prop.key) }
+                                        <TouchableOpacity key={key} onPress={() => this.onMonthPress(key, val) }
                                             style={Styles.calendarMonthBox}>
-                                            <View style={this.state.month == prop.val ? Styles.calendarMonthSelected : null} >
-                                                <Text style={this.state.month == prop.val ? Styles.calendarTextSelected : null}>{prop.key}</Text>
-                                            </View>
-                                        </TouchableOpacity>
-                                    );
-                                })
-                            }
-                        </View>
-                        <View style={Styles.calendarRowBox}>
-                            {
-                                this.month2.map((prop, key) => {
-                                    return(
-                                        <TouchableOpacity key={key} onPress={() => this.onMonthPress(prop.val, prop.key) }
-                                            style={Styles.calendarMonthBox}>
-                                            <View style={this.state.month == prop.val ? Styles.calendarMonthSelected : null} >
-                                                <Text style={this.state.month == prop.val ? Styles.calendarTextSelected : null}>{prop.key}</Text>
+                                            <View style={this.state.month == key ? Styles.calendarMonthSelected : null} >
+                                                <Text style={this.state.month == key ? Styles.calendarTextSelected : null}>{val}</Text>
                                             </View>
                                         </TouchableOpacity>
                                     );
@@ -137,5 +119,6 @@ export default class Calendar extends Component {
 }
 
 Calendar.defaultProps = {
-    onSelectedMonth: (year, month, monthLabel) => {}
+    // TODO: add props to set default calendar
+    onSelectedMonth: (year, month, monthName) => {}    // month: 0=Jan
 }
