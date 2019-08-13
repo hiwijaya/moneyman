@@ -1,4 +1,5 @@
 import Realm from 'realm';
+import moment from 'moment';
 
 
 export default class Env {
@@ -39,7 +40,24 @@ export default class Env {
     }
 
     static now() {
-        return new Date();
+        return moment().toDate();
+    }
+
+    static isToday(date){
+        if(date !== null){
+            if(date.toDateString() === Env.now().toDateString()){
+                return true
+            }
+        }
+        return false;
+    }
+
+    // formate date --> 31/07
+    static formatDateMonth(date) {
+        if(date !== null){
+            return moment(date).format('DD/MM');
+        }
+        return '-';
     }
 
     static formatCurrency(amount) {

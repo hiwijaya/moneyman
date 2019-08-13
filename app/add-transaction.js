@@ -33,7 +33,8 @@ export default class AddTransaction extends Component {
             categoryId: null,
             memo: null,
             amount: '0',    // amountStr
-            date: 'today',
+            date1: 'Today',
+            date2: Env.formatDateMonth(new Date()),
 
             inputShow: false,
             keyboardShow: false,
@@ -45,6 +46,7 @@ export default class AddTransaction extends Component {
         this.transactionDate = Env.now();
         this.firstValue = null;     // in Number
         this.operation = null       // + / -
+
     }
 
     componentDidMount() {
@@ -78,12 +80,23 @@ export default class AddTransaction extends Component {
     async showDatePicker() {
         try {
             const {action, year, month, day} = await DatePickerAndroid.open({
-                date: Env.now()
+                date: this.transactionDate
             });
 
             if(action !== DatePickerAndroid.dismissedAction){
-                this.transactionDate = new Date(year, month, day);
-                Alert.alert(this.transactionDate.toString());
+                this.transactionDate = new Date(year, month, day);  
+                if(Env.isToday(this.transactionDate)){
+                    this.setState({
+                        date1: 'Today',
+                        date2: Env.formatDateMonth(this.transactionDate)
+                    });
+                }
+                else {
+                     this.setState({
+                         date1: Env.formatDateMonth(this.transactionDate),
+                         date2: year.toString()
+                     });
+                }
             }
             
         } catch ({code, message}) {
@@ -359,7 +372,10 @@ export default class AddTransaction extends Component {
                         <TouchableOpacity style={Styles.boardKey}
                             onPress={() => this.showDatePicker()}>
                             <View style={Styles.center}>
-                                <Text>{'Today\n08/10'}</Text>
+                                <Text>{this.state.date1}</Text>
+                                <Text style={{fontSize: Fonts.h6, color: Colors.grey}}>
+                                    {this.state.date2}
+                                </Text>
                             </View>
                         </TouchableOpacity>
                     </View>
