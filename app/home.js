@@ -10,6 +10,7 @@ import {
 import {Styles, Colors} from './lib/styles';
 import Calendar from './comp/calendar';
 import Cicon from './comp/cicon';
+import Env from './lib/env';
 
 
 export default class Home extends Component {
@@ -22,6 +23,11 @@ export default class Home extends Component {
         this.state = {
             monthLabel: 'Jul',
         }
+    }
+
+    onNavigateBack = (params) => {
+        let transactions = Env.getTransactions();
+        Alert.alert(transactions.length.toString());
     }
 
 
@@ -82,7 +88,11 @@ export default class Home extends Component {
     renderAddButton() {
         return(
             <TouchableOpacity style={Styles.homeAddButton} 
-                onPress={() => {this.props.navigation.navigate('addTransaction')}}>
+                onPress={() => {
+                    this.props.navigation.navigate('addTransaction', {
+                        onNavigateBack: this.onNavigateBack
+                    });
+                }}>
                 <Image style={Styles.icon12} 
                     source={require('./asset/icon-add.png')}/>
             </TouchableOpacity>

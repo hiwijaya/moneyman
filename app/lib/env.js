@@ -52,10 +52,18 @@ export default class Env {
         return false;
     }
 
-    // formate date --> 31/07
+    // return 31/07
     static formatDateMonth(date) {
         if(date !== null){
             return moment(date).format('DD/MM');
+        }
+        return '-';
+    }
+
+    // return Jul
+    static formatMonthName(date){
+        if(date !== null){
+            return moment(date).format('MMM');
         }
         return '-';
     }
@@ -70,7 +78,7 @@ export default class Env {
 
     static convertCurrency(amountStr) {
         if (amountStr != "") {
-            let value = parseFloat(amountStr.replace(/\,/g, ""));
+            let value = parseFloat(amountStr.replace(/\,|\+|\-/g, ""));
             return value;
         }
         return 0;
@@ -166,16 +174,18 @@ export default class Env {
 
     static transactionSchema = {
         name: 'Transaction',
+        primaryKey: 'id',
         properties: {
             id: 'string',
             categoryId: 'string',
             amount: 'int',
             memo: 'string',
+            period: 'string',   // relative with payday (jul/aug/..)
             date: {
                 type: 'date',
                 default: Env.now()
             },
-            type: 'string'
+            type: 'string'      // Expense/Income
         }
     }
 
@@ -227,6 +237,48 @@ export default class Env {
                 realm.delete(category);
             }
         });
+        if (category !== null) {
+            realm.write(() => {
+                realm.delete(category);
+            });
+        }
+    }
+
+    static saveTransaction(transaction){
+        let realm = new Realm({
+            schema: [Env.schema, Env.categorySchema, Env.transactionSchema]
+        });
+
+        realm.write(() => {
+            realm.create('Transaction', transaction, true);
+        });
+
+        // set return isSuccess
+
+    }
+
+    static getTransactions(){
+        let realm = new Realm({
+            schema: [Env.schema, Env.categorySchema, Env.transactionSchema]
+        });
+
+        return realm.objects('Transaction');
+    }
+
+    static deleteTransaction(id){
+        let realm = new Realm({
+            schema: [Env.schema, Env.categorySchema, Env.transactionSchema]
+        });
+
+        let transactions = realm.objects('Transaction');
+        let transaction = transactions.filtered('id = "' + id + '"');
+        if(transaction !== null){
+            realm.write(() => {
+                realm.delete(transaction);
+            });
+        }
+
+        
     }
 
 

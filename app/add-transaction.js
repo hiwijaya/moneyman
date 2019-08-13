@@ -9,6 +9,7 @@ import {
     Keyboard,
     Alert,
     DatePickerAndroid,
+    ToastAndroid,
 } from 'react-native';
 import Cicon from './comp/cicon';
 import { Styles, Colors, Fonts } from './lib/styles';
@@ -28,9 +29,9 @@ export default class AddTransaction extends Component {
 
             showCombobox: false,
 
+            categoryId: null,
             icon: null,
             color: null,
-            categoryId: null,
             memo: null,
             amount: '0',    // amountStr
             date1: 'Today',
@@ -43,6 +44,7 @@ export default class AddTransaction extends Component {
         };
 
         // board
+        this.defaultMemo = '';
         this.transactionDate = Env.now();
         this.firstValue = null;     // in Number
         this.operation = null       // + / -
@@ -235,6 +237,24 @@ export default class AddTransaction extends Component {
         }
 
         // save transaction
+        let memo = this.state.memo;
+        if(memo === null || memo === ''){
+            memo = this.defaultMemo;
+        }
+        let transaction = {
+            id: Env.getRandomString(16),
+            categoryId: this.state.categoryId,
+            amount: Env.convertCurrency(this.state.amount),
+            memo: memo,
+            period: Env.formatMonthName(this.transactionDate),
+            date: this.transactionDate,
+            type: this.state.transactionType
+        }
+        Env.saveTransaction(transaction);
+        ToastAndroid.show('Transaction saved', ToastAndroid.SHORT);
+        this.props.navigation.state.params.onNavigateBack(null);
+        this.props.navigation.goBack();
+        
 
     }
 
@@ -309,6 +329,7 @@ export default class AddTransaction extends Component {
                                                 categoryId: item.id,
                                                 inputShow: true
                                             }); 
+                                            this.defaultMemo = item.title;
                                         }}>
                                         <View style={ Styles.addIconBox}>
                                             <Cicon id={key} sid={this.state.iKey}

@@ -43,7 +43,7 @@ export default class Categories extends Component {
         }
     }
 
-    handleOnNavigateBack = (params) => {
+    onNavigateBack = (params) => {
         this.setCategories();
     }
 
@@ -127,8 +127,8 @@ export default class Categories extends Component {
                     onPress={() => {
                         this.props.navigation.navigate('addCategory', {
                             transactionType: (this.state.tabSelectedIndex === 0) ? Env.EXPENSE_TYPE : Env.INCOME_TYPE,
-                            onNavigateBack: this.handleOnNavigateBack
-                        })
+                            onNavigateBack: this.onNavigateBack
+                        });
                     }}>
                     <View style={Styles.listAddBox}>
                         <Image style={[Styles.icon12, {marginRight: 5}]} 
