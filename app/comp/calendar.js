@@ -18,7 +18,7 @@ export default class Calendar extends Component {
 
         this.selectedYear = today.getFullYear();
         this.selectedMonth = today.getMonth(); // January is 0.
-        
+
         this.state = {
             show: false,
             year: this.selectedYear,
@@ -26,7 +26,6 @@ export default class Calendar extends Component {
         };
 
         this.months = moment.monthsShort();
-
     }
 
     show(){
@@ -46,7 +45,7 @@ export default class Calendar extends Component {
     isShow(){
         return this.state.show;
     }
-    
+
     onMonthPress(month, monthName){
         this.setState({
             month: month,

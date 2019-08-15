@@ -70,6 +70,7 @@ export default class Env {
     }
 
     // return period 0719
+    // TODO: add logic to decide period per payday
     static formatMonthYear(date) {
         return Env.formatDate(date, 'MMYY')
     }
@@ -186,7 +187,7 @@ export default class Env {
             categoryId: 'string',
             amount: 'int',
             memo: 'string',
-            period: 'string',   // relative with payday (MMYYYY/0719)
+            period: 'string',   // relative with payday (MMYY/0719)
             date: {
                 type: 'date',
                 default: Env.now()
@@ -263,12 +264,16 @@ export default class Env {
 
     }
 
-    static getTransactions(){
+    static getTransactionByPeriod(period){
         let realm = new Realm({
             schema: [Env.schema, Env.categorySchema, Env.transactionSchema]
         });
 
-        return realm.objects('Transaction');
+        let transactions = realm.objects('Transaction');
+        let fTransactions = transactions.filtered('period = "' + period + '"');
+
+        return fTransactions;
+
     }
 
     static deleteTransaction(id){

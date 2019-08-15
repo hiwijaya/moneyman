@@ -22,12 +22,18 @@ export default class Home extends Component {
 
         this.state = {
             monthName: Env.formatMonthName(new Date()),
+            transactions: []
         }
     }
 
+    componentDidMount() {
+        let t = Env.getTransactionByPeriod('0819');
+        this.setState({transactions: t});
+    }
+
     onNavigateBack = (params) => {
-        let transactions = Env.getTransactions();
-        Alert.alert(transactions.length.toString());
+        let transactions = Env.getTransactionByPeriod('0819');
+        this.setState({transactions: transactions});
     }
 
 
@@ -140,7 +146,15 @@ export default class Home extends Component {
                 
                 <ScrollView style={Styles.homeScroll}>
                     {this.renderResume()}
-                    {this.renderTransaction()}
+                    
+
+                    {
+                        this.state.transactions.map((item, key) => {
+                            return(
+                                <Text key={key}>{item.memo + '-' + item.amount}</Text>
+                            );
+                        })
+                    }
                 </ScrollView>
             </View>
         );
