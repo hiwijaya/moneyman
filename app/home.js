@@ -5,6 +5,7 @@ import {
     Image,
     Alert,
     ScrollView,
+    FlatList,
     TouchableOpacity,
  } from 'react-native';
 import {Styles, Colors} from './lib/styles';
@@ -22,18 +23,35 @@ export default class Home extends Component {
 
         this.state = {
             monthName: Env.formatMonthName(new Date()),
-            transactions: []
+            transactions: [],
+            tests: [],
         }
     }
 
     componentDidMount() {
-        let t = Env.getTransactionByPeriod('0819');
-        this.setState({transactions: t});
+        let t = Env.getRawTransactionByPeriod('0819');
+        let tests = Env.getTransactionByPeriod('0819');
+        this.setState({transactions: t, tests: tests});
     }
 
     onNavigateBack = (params) => {
-        let transactions = Env.getTransactionByPeriod('0819');
-        this.setState({transactions: transactions});
+        // TODO: Check params if any update to decide re-render
+        let t = Env.getRawTransactionByPeriod('0819');
+        let tests = Env.getTransactionByPeriod('0819');
+        this.setState({transactions: t, tests: tests});
+    }
+
+    getTotalText(type, amount){
+        if(amount === 0){
+            return '';
+        }
+
+        if(type === Env.INCOME_TYPE){
+            return `Income: ${Env.formatCurrency(amount)}`;
+        }
+        else{
+            return `Expenses: ${Env.formatCurrency(amount)}`;
+        }
     }
 
 
@@ -106,31 +124,51 @@ export default class Home extends Component {
     }
 
     // per Day
-    renderTransaction() {
+    renderTransactionCard(data) {
         return(
             <View style={Styles.homeTransactionBox}>
                 <View style={Styles.homeTransactionHeaderBox}>
                     <Text style={[Styles.homeTransactionHeaderText, {flex: 1}]}>
-                        08/17 Sat
+                        {data.transactionDate}
                     </Text>
                     <View style={{flexDirection: 'row'}}>
                         <Text style={[Styles.homeTransactionHeaderText, {marginRight: 10}]}>
-                            Income: 13,000,000
+                            {this.getTotalText(Env.INCOME_TYPE, data.incomeTotal)}
                         </Text>
                         <Text style={Styles.homeTransactionHeaderText}>
-                            Expenses: 2,300,000
+                            {this.getTotalText(Env.EXPENSE_TYPE, data.expenseTotal)}
                         </Text>
                     </View>
                 </View>
                 <View>
-                    <View style={Styles.homeTransactionItemBox}>
-                        <Cicon color={'#F19066'}
-                            icon={require('./asset/categories/cat-food-burger.png')}/>
-                        <Text style={{flex: 1, marginHorizontal: 10}}>Burger King</Text>
-                        <Text style={{color: Colors.grey}}>- 49,000</Text>
-                    </View>
+                    {
+                        data.transactions.map((item, key) => {
+                            return(
+                                <View key={key} style={Styles.homeTransactionItemBox}>
+                                    <Cicon style={{width: 30, height: 30}} color={item.color} icon={item.icon}/>
+                                    <Text style={{flex: 1, marginHorizontal: 10}}>{item.memo}</Text>
+                                    <Text style={{color: Colors.grey}}>{item.amount}</Text>
+                                </View>
+                            );
+                        })
+                    }
+                    
                 </View>
             </View>
+        );
+    }
+
+    renderTransactionList() {
+        return(
+            <FlatList style={Styles.homeScroll} data={this.state.tests} 
+                keyExtractor={(item, index) => index.toString()}
+                ListHeaderComponent={() => {
+                    return(this.renderResume());
+                }}
+                renderItem={({item}) => {
+                    return(this.renderTransactionCard(item));
+                }}
+            />
         );
     }
 
@@ -140,22 +178,11 @@ export default class Home extends Component {
                 {this.renderActionBar()}
                 <Calendar ref={ref => this.refCalendar = ref} 
                     onSelectedMonth={(year, month, monthName) => {
-                        Alert.alert(year.toString(), month.toString());
                         this.setState({monthName: monthName});
                     }}/>
-                
-                <ScrollView style={Styles.homeScroll}>
-                    {this.renderResume()}
-                    
 
-                    {
-                        this.state.transactions.map((item, key) => {
-                            return(
-                                <Text key={key}>{item.memo + '-' + item.amount}</Text>
-                            );
-                        })
-                    }
-                </ScrollView>
+                {this.renderTransactionList()}
+
             </View>
         );
     }

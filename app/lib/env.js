@@ -59,6 +59,10 @@ export default class Env {
         return '-';
     }
 
+    static formatDateDay(date) {
+        return Env.formatDate(date, 'DD/MM ddd')
+    }
+
     // return Jul
     static formatMonthName(date) {
         return Env.formatDate(date, 'MMM')
@@ -76,11 +80,18 @@ export default class Env {
     }
 
     static formatCurrency(amount) {
-        if (amount != "") {
-            let value = parseFloat(amount.replace(/\,/g, "")).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-            return value;
+
+        if (amount === "") {
+            return '0';
         }
-        return '0';
+
+        if(typeof amount === 'number'){
+            return amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        }
+        else{
+            return parseFloat(amount.replace(/\,/g, "")).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        }
+
     }
 
     static convertCurrency(amountStr) {
@@ -184,15 +195,15 @@ export default class Env {
         primaryKey: 'id',
         properties: {
             id: 'string',
-            categoryId: 'string',
+            categoryId: 'string',   // TODO: Consider to denormalize table for performance reason.
             amount: 'int',
             memo: 'string',
-            period: 'string',   // relative with payday (MMYY/0719)
+            period: 'string',       // relative with payday (MMYY/0719)
             date: {
                 type: 'date',
                 default: Env.now()
             },
-            type: 'string'      // Expense/Income
+            type: 'string'          // Expense/Income
         }
     }
 
@@ -238,7 +249,7 @@ export default class Env {
             schema: [Env.schema, Env.categorySchema, Env.transactionSchema]
         });
         let categories = realm.objects('Category');
-        let category = categories.filtered('id = "' + id + '" AND type = "' + type + '"');
+        let category = categories.filtered(`id = "${id}" AND type = "${type}"`);
         realm.write(() => {
             if (category !== null) {
                 realm.delete(category);
@@ -264,16 +275,98 @@ export default class Env {
 
     }
 
+    static getRawTransactionByPeriod(period){
+
+        let realm = new Realm({
+            schema: [Env.schema, Env.categorySchema, Env.transactionSchema]
+        });
+
+        let transactions = realm.objects('Transaction');
+        transactions = transactions.filtered(`period = "${period}"`);
+        transactions = transactions.sorted('date', true);
+
+        return transactions;
+    }
+
+    // TODO: Consider to move processing data on render to cut a lot of looping.
     static getTransactionByPeriod(period){
         let realm = new Realm({
             schema: [Env.schema, Env.categorySchema, Env.transactionSchema]
         });
 
         let transactions = realm.objects('Transaction');
-        let fTransactions = transactions.filtered('period = "' + period + '"');
+        transactions = transactions.filtered(`period = "${period}"`);
+        transactions = transactions.sorted('date', true);
 
-        return fTransactions;
+        let data = [];
+        let dataIndex = -1;
 
+        let expenseTotal = 0;
+        let incomeTotal = 0;
+
+        let tempDate = null;
+        transactions.forEach((value, index, array) => {
+
+            let categories = realm.objects('Category');
+            let category = categories.filtered(`id = "${value.categoryId}"`); 
+            category = (category.length > 0) ? category[0] : category;
+
+            let transactionItem = {
+                icon: category.icon,
+                color: category.color,
+                memo: value.memo,
+                amount: (value.type === Env.EXPENSE_TYPE) ?
+                    ('- ' + Env.formatCurrency(value.amount)) : Env.formatCurrency(value.amount),
+            }
+
+
+            let currentDate = value.date.toDateString();
+            if (tempDate !== currentDate) {     // new card
+                tempDate = currentDate;
+
+                expenseTotal = 0;
+                incomeTotal = 0;
+                if(value.type == Env.EXPENSE_TYPE){
+                    expenseTotal = value.amount;
+                }
+                else{
+                    incomeTotal = value.amount;
+                }
+
+
+                let transactionPerDay = {
+                    transactionDate: Env.formatDateDay(value.date),
+                    expenseTotal: expenseTotal,
+                    incomeTotal: incomeTotal,
+                    transactions: [transactionItem]
+                }
+
+                data.push(transactionPerDay);
+                dataIndex += 1;
+
+            }
+            else{
+                if(value.type == Env.EXPENSE_TYPE){
+                    expenseTotal += value.amount;
+                }
+                else{
+                    incomeTotal += value.amount;
+                }
+
+
+                let currentTransaction = data[dataIndex]; // transactionPerDay
+                currentTransaction.expenseTotal = expenseTotal;
+                currentTransaction.incomeTotal = incomeTotal;
+                currentTransaction.transactions.push(transactionItem);
+
+                data[dataIndex] = currentTransaction;
+            }
+            
+        });
+
+
+
+        return data;
     }
 
     static deleteTransaction(id){
@@ -282,7 +375,7 @@ export default class Env {
         });
 
         let transactions = realm.objects('Transaction');
-        let transaction = transactions.filtered('id = "' + id + '"');
+        let transaction = transactions.filtered(`id = "${id}"`);
         if(transaction !== null){
             realm.write(() => {
                 realm.delete(transaction);
@@ -293,10 +386,7 @@ export default class Env {
     }
 
 
-
-    // TODO: add transaction query functions too
-
-    static initDefaultCategories() {
+    static initDefaultCategories(){
 
         // if category already exist, ignore this function
         // consider if user delete all categories

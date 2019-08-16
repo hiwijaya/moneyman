@@ -366,7 +366,7 @@ export const Styles = StyleSheet.create({
         elevation: 5,
     },
     homeTransactionHeaderBox: {
-        marginBottom: 10,
+        marginBottom: 20,
         paddingBottom: 5,
         flexDirection: 'row',
         borderBottomWidth: 1,
@@ -379,6 +379,7 @@ export const Styles = StyleSheet.create({
     homeTransactionItemBox: {
         flexDirection: 'row',
         alignItems: 'center',
+        marginBottom: 20,
     },
 
     comboTypeBox: {
