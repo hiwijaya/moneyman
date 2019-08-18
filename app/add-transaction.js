@@ -281,14 +281,18 @@ export default class AddTransaction extends Component {
             return(
                 <View style={Styles.comboTypeBox}>
                     <TouchableOpacity 
-                        onPress={() => {this.setState({transactionType: Env.EXPENSE_TYPE, showCombobox: false})} }>
+                        onPress={() => {
+                            this.setState({transactionType: Env.EXPENSE_TYPE, showCombobox: false, iKey: null});
+                        }}>
                         <View style={Styles.comboTypeItem}>
                             <Text style={{flex: 1, color: Colors.darkGrey}}>Expenses</Text>
                             {this.renderChecked(Env.EXPENSE_TYPE)}
                         </View>
                     </TouchableOpacity>
                     <TouchableOpacity 
-                        onPress={() => {this.setState({transactionType: Env.INCOME_TYPE, showCombobox: false})} }>
+                        onPress={() => {
+                            this.setState({transactionType: Env.INCOME_TYPE, showCombobox: false, iKey: null});
+                        }}>
                         <View style={Styles.comboTypeItem}>
                             <Text style={{flex: 1, color: Colors.darkGrey}}>Income</Text>
                             {this.renderChecked(Env.INCOME_TYPE)}

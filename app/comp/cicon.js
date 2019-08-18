@@ -10,6 +10,11 @@ export default class Cicon extends Component {
 
     // [TIPS] always consider to use shouldComponentUpdate() or PureComponent.
     shouldComponentUpdate(nextProps, nextState) {
+
+        if(nextProps.sid === null){
+            return true;
+        }
+        
         if(this.props.id === nextProps.sid){
             return true;
         }
@@ -18,6 +23,8 @@ export default class Cicon extends Component {
                 return true;
             }
         }
+        
+
         return false;
     }
 
