@@ -40,11 +40,12 @@ export default class Cicon extends Component {
                     backgroundColor: this.props.color,
                     ...this.props.style
                 }}>
-                <Image style={Styles.icon18} source={this.props.icon}/>
+                <Image style={this.props.iconSize} source={this.props.icon}/>
             </View>
         );
     }
 }
 Cicon.defaultProps = {
+    iconSize: Styles.icon18,
     color: Colors.lightGrey
 }

@@ -145,7 +145,8 @@ export default class Home extends Component {
                         data.transactions.map((item, key) => {
                             return(
                                 <View key={key} style={Styles.homeTransactionItemBox}>
-                                    <Cicon style={{width: 30, height: 30}} color={item.color} icon={item.icon}/>
+                                    <Cicon style={{width: 30, height: 30}} 
+                                        color={item.color} icon={item.icon} iconSize={Styles.icon14}/>
                                     <Text style={{flex: 1, marginHorizontal: 10}}>{item.memo}</Text>
                                     <Text style={{color: Colors.grey}}>{item.amount}</Text>
                                 </View>

@@ -48,6 +48,10 @@ export const Styles = StyleSheet.create({
         width: 12,
         height: 12,
     },
+    icon14: {
+        width: 14,
+        height: 14,
+    },
     icon18: {
         width: 18,
         height: 18,
