@@ -23,22 +23,41 @@ export default class Home extends Component {
 
         this.state = {
             monthName: Env.formatMonthName(new Date()),
+            period: '0819',
             transactions: [],
-            tests: [],
+            income: '0',
+            expense: '0',
+            balance: '0',
         }
+        
     }
 
     componentDidMount() {
-        let t = Env.getRawTransactionByPeriod('0819');
-        let tests = Env.getTransactionByPeriod('0819');
-        this.setState({transactions: t, tests: tests});
+        this.getTransactions();
     }
 
     onNavigateBack = (params) => {
-        // TODO: Check params if any update to decide re-render
-        let t = Env.getRawTransactionByPeriod('0819');
-        let tests = Env.getTransactionByPeriod('0819');
-        this.setState({transactions: t, tests: tests});
+        this.getTransactions();
+    }
+
+    getTransactions(){
+        let transactions = Env.getTransactionByPeriod(this.state.period);
+        
+        let income = 0;
+        let expense = 0;
+        let balance = 0;
+        transactions.forEach((value, index, array) => {
+            income += value.incomeTotal;
+            expense += value.expenseTotal;
+        });
+        balance = income - expense;
+
+        this.setState({
+            transactions: transactions,
+            income: Env.formatCurrency(income),
+            expense: Env.formatCurrency(expense),
+            balance: Env.formatCurrency(balance),
+        });
     }
 
     getTotalText(type, amount){
@@ -91,17 +110,17 @@ export default class Home extends Component {
                 <View style={Styles.homeResumeBox}>
                     <View style={Styles.homeResumeItemBox}>
                         <Text>Income</Text>
-                        <Text style={Styles.homeResumeValue}>100,000,000</Text>
+                        <Text style={Styles.homeResumeValue}>{this.state.income}</Text>
                     </View>
                     <View style={Styles.separator}></View>
                     <View style={Styles.homeResumeItemBox}>
                         <Text>Expense</Text>
-                        <Text style={Styles.homeResumeValue}>200,000,000</Text>
+                        <Text style={Styles.homeResumeValue}>{this.state.expense}</Text>
                     </View>
                     <View style={Styles.separator}></View>
                     <View style={Styles.homeResumeItemBox}>
                         <Text>Balance</Text>
-                        <Text style={Styles.homeResumeValue}>100,000,000</Text>
+                        <Text style={Styles.homeResumeValue}>{this.state.balance}</Text>
                     </View>
                 </View>
                 {this.renderAddButton()}
@@ -161,7 +180,7 @@ export default class Home extends Component {
 
     renderTransactionList() {
         return(
-            <FlatList style={Styles.homeScroll} data={this.state.tests} 
+            <FlatList style={Styles.homeScroll} data={this.state.transactions} 
                 keyExtractor={(item, index) => index.toString()}
                 ListHeaderComponent={() => {
                     return(this.renderResume());
