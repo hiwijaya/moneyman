@@ -3,8 +3,6 @@ import {
     View, 
     Text,
     Image,
-    Alert,
-    ScrollView,
     FlatList,
     TouchableOpacity,
  } from 'react-native';
@@ -23,7 +21,7 @@ export default class Home extends Component {
 
         this.state = {
             monthName: Env.formatMonthName(new Date()),
-            period: '0819',
+            period: Env.formatMonthYear(new Date()),
             transactions: [],
             income: '0',
             expense: '0',
@@ -198,7 +196,11 @@ export default class Home extends Component {
                 {this.renderActionBar()}
                 <Calendar ref={ref => this.refCalendar = ref} 
                     onSelectedMonth={(year, month, monthName) => {
-                        this.setState({monthName: monthName});
+                        let period = Env.formatMonthYear(new Date(year, month, 1));
+                        this.setState({
+                            monthName: monthName,
+                            period: period
+                        });
                     }}/>
 
                 {this.renderTransactionList()}
