@@ -274,19 +274,7 @@ export default class Env {
         // set return isSuccess
 
     }
-
-    static getRawTransactionByPeriod(period){
-
-        let realm = new Realm({
-            schema: [Env.schema, Env.categorySchema, Env.transactionSchema]
-        });
-
-        let transactions = realm.objects('Transaction');
-        transactions = transactions.filtered(`period = "${period}"`);
-        transactions = transactions.sorted('date', true);
-
-        return transactions;
-    }
+    
 
     // TODO: Consider to move processing data on render to cut a lot of looping.
     static getTransactionByPeriod(period){
@@ -312,6 +300,7 @@ export default class Env {
             category = (category.length > 0) ? category[0] : category;
 
             let transactionItem = {
+                transactionId: value.id,
                 icon: category.icon,
                 color: category.color,
                 memo: value.memo,

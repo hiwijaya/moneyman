@@ -5,6 +5,7 @@ import {
     Image,
     FlatList,
     TouchableOpacity,
+    Alert,
  } from 'react-native';
 import {Styles, Colors} from './lib/styles';
 import Calendar from './comp/calendar';
@@ -161,12 +162,18 @@ export default class Home extends Component {
                     {
                         data.transactions.map((item, key) => {
                             return(
-                                <View key={key} style={Styles.homeTransactionItemBox}>
+                                <TouchableOpacity key={key} style={Styles.homeTransactionItemBox}
+                                    onPress={() => {
+                                         this.props.navigation.navigate('transactionDetail', {
+                                             transaction: item,
+                                             onNavigateBack: this.onNavigateBack
+                                         });
+                                    }}>
                                     <Cicon style={{width: 30, height: 30}} 
                                         color={item.color} icon={item.icon} iconSize={Styles.icon14}/>
                                     <Text style={{flex: 1, marginHorizontal: 10}}>{item.memo}</Text>
                                     <Text style={{color: Colors.grey}}>{item.amount}</Text>
-                                </View>
+                                </TouchableOpacity>
                             );
                         })
                     }
@@ -200,6 +207,8 @@ export default class Home extends Component {
                         this.setState({
                             monthName: monthName,
                             period: period
+                        }, () => {
+                            this.getTransactions();
                         });
                     }}/>
 

@@ -33,6 +33,28 @@ export default class AddCategory extends Component {
          
     }
 
+    saveCategory() {
+        let title = this.state.title;
+
+        if (title === null || title === '') {
+            ToastAndroid.show('Please input the category title', ToastAndroid.SHORT);
+            return;
+        }
+
+        let newCategory = {
+            id: Env.getRandomString(16),
+            title: title,
+            icon: this.state.icon,
+            color: this.state.color,
+            type: this.transactionType
+        }
+        Env.addCategory(newCategory);
+
+        ToastAndroid.show('Category added', ToastAndroid.SHORT);
+        this.props.navigation.state.params.onNavigateBack(null);
+        this.props.navigation.goBack();
+    }
+
     iconKey(key, key2){
         return key.toString() + key2.toString();
     }
@@ -48,27 +70,7 @@ export default class AddCategory extends Component {
                     {this.state.transactionType === Env.EXPENSE_TYPE ? 'Add Expense Category' : 'Add Income Category'}
                 </Text>
                 <TouchableOpacity style={Styles.backButton} 
-                    onPress={() => {
-                        let title = this.state.title;
-
-                        if(title === null || title === ''){
-                            ToastAndroid.show('Please input the category title', ToastAndroid.SHORT);
-                            return;
-                        }
-
-                        let newCategory = {
-                            id: Env.getRandomString(16),
-                            title: title,
-                            icon: this.state.icon,
-                            color: this.state.color,
-                            type: this.transactionType
-                        }
-                        Env.addCategory(newCategory);
-
-                        ToastAndroid.show('Category added', ToastAndroid.SHORT);
-                        this.props.navigation.state.params.onNavigateBack(null);
-                        this.props.navigation.goBack();
-                    }}>
+                    onPress={() => this.saveCategory() }>
                     <Image style={Styles.icon18} source={require('./asset/icon-checked.png')}/>
                 </TouchableOpacity>
             </View>
