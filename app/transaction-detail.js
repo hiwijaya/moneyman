@@ -29,7 +29,9 @@ export default class TransactionDetail extends Component {
     }
 
     componentDidMount() {
+
         let transactionId = this.props.navigation.getParam('transactionId');
+
         this.transaction = Env.getTransaction(transactionId);
         let category = Env.getCategories(this.transaction.categoryId, null);
         
@@ -65,10 +67,9 @@ export default class TransactionDetail extends Component {
         return(
             <TouchableOpacity style={Styles.detailEditButton} 
                 onPress={() => {
-                    Alert.alert('Edit');
-                    // this.props.navigation.navigate('addTransaction', {
-                    //     onNavigateBack: this.onNavigateBack
-                    // });
+                    this.props.navigation.navigate('addTransaction', {
+                        transaction: this.transaction
+                    });
                 }}>
                 <Image style={Styles.icon14} 
                     source={require('./asset/icon-edit.png')}/>

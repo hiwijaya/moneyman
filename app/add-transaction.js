@@ -39,7 +39,6 @@ export default class AddTransaction extends Component {
 
             inputShow: false,
             keyboardShow: false,
-            keyboardHeight: 0,
             doCalculate: false,
         };
 
@@ -52,17 +51,57 @@ export default class AddTransaction extends Component {
     }
 
     componentDidMount() {
-        let eCategories = Env.getCategories(null, Env.EXPENSE_TYPE);
-        let iCategories = Env.getCategories(null, Env.INCOME_TYPE);
-        this.setState({
-            eCategories,
-            iCategories,
-        });
 
         this.keyboardDidShowListener = Keyboard.addListener(
             'keyboardDidShow', this.onKeyboardDidShow.bind(this));
         this.keyboardDidHideListener = Keyboard.addListener(
             'keyboardDidHide', this.onKeyboardDidHide.bind(this));
+
+        let eCategories = Env.getCategories(null, Env.EXPENSE_TYPE);
+        let iCategories = Env.getCategories(null, Env.INCOME_TYPE);
+
+        
+        // EDIT MODE
+        this.transaction = this.props.navigation.getParam('transaction');
+
+        if (this.transaction !== undefined) {
+
+            let category = Env.getCategories(this.transaction.categoryId, null);
+            this.transactionDate = this.transaction.date;
+
+            let iKey = null;
+            if(this.transaction.type === Env.EXPENSE_TYPE){
+                iKey = this.getIkey(category.id, eCategories);
+            }
+            else{
+                iKey = this.getIkey(category.id, iCategories);
+            }
+            
+            this.setState({
+                transactionType: this.transaction.type,
+                eCategories: eCategories,
+                iCategories: iCategories,
+                iKey: iKey,
+
+                categoryId: category.id,
+                icon: category.icon,
+                color: category.color,
+                memo: this.transaction.memo,
+                amount: Env.formatCurrency(this.transaction.amount),
+                date1: (Env.isToday(this.transactionDate)) ? 
+                    'Today' : Env.formatDateMonth(this.transactionDate),
+                date2: (Env.isToday(this.transactionDate)) ? 
+                    Env.formatDateMonth(this.transactionDate) : this.transactionDate.getFullYear().toString(),
+
+                inputShow: true,
+            });
+
+            this.transactionDate
+        }
+        else{
+            this.transaction = null;
+            this.setState({eCategories, iCategories});
+        }
     }
 
     componentWillUnmount() {
@@ -71,12 +110,21 @@ export default class AddTransaction extends Component {
     }
 
     onKeyboardDidShow(e){
-        const { height, screenX, screenY, width } = e.endCoordinates;
-        this.setState({keyboardShow: true, keyboardHeight: height});
+        // const { height, screenX, screenY, width } = e.endCoordinates;
+        this.setState({keyboardShow: true});
     }
 
     onKeyboardDidHide(e){
-        this.setState({keyboardShow: false, keyboardHeight: 0});
+        this.setState({keyboardShow: false});
+    }
+
+    getIkey(categoryId, categories){
+
+        for(let i=0;i<categories.length;i++){
+            if(categoryId=== categories[i].id){
+                return i;
+            }
+        }
     }
 
     async showDatePicker() {
@@ -88,17 +136,16 @@ export default class AddTransaction extends Component {
 
             if(action !== DatePickerAndroid.dismissedAction){
                 this.transactionDate = new Date(year, month, day);  
-                if(Env.isToday(this.transactionDate)){
+                if (Env.isToday(this.transactionDate)) {
                     this.setState({
                         date1: 'Today',
                         date2: Env.formatDateMonth(this.transactionDate)
                     });
-                }
-                else {
-                     this.setState({
-                         date1: Env.formatDateMonth(this.transactionDate),
-                         date2: year.toString()
-                     });
+                } else {
+                    this.setState({
+                        date1: Env.formatDateMonth(this.transactionDate),
+                        date2: year.toString()
+                    });
                 }
             }
             

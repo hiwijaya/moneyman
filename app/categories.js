@@ -106,7 +106,7 @@ export default class Categories extends Component {
                                     );
 
                                 }}>
-                                <Image style={Styles.icon18} source={require('./asset/icon-delete.png')}/>
+                                <Image style={Styles.icon18} source={require('./asset/icon-delete-red.png')}/>
                             </TouchableOpacity>
                         </View>
                     );
