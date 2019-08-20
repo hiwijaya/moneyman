@@ -436,6 +436,51 @@ export const Styles = StyleSheet.create({
     boardDigit: {
         fontSize: Fonts.h3,
         fontWeight: 'bold',
+    },
+
+    detailBox: {
+        margin: 15,
+        padding: 15,
+        borderRadius: 5,
+        backgroundColor: Colors.white,
+        elevation: 7,
+    },
+    detailCategoryBox: {
+        marginBottom: 15,
+        height: 60,
+        flexDirection: 'row',
+        alignItems: 'center',
+        borderBottomWidth: 1,
+        borderBottomColor: Colors.lightGrey,
+    },
+    detailTitle: {
+        fontSize: Fonts.h2,
+        fontWeight: 'bold'
+    },
+    detailItemBox: {
+        height: 50,
+        flexDirection: 'row',
+        alignItems: 'center',
+    },
+    detailItem: {
+        width: 80,
+        fontSize: Fonts.h4,
+        color: Colors.darkGrey,
+    },
+    detailValue: {
+        fontSize: Fonts.h4
+    },
+    detailEditButton: {
+        position: 'absolute',
+        top: 280,
+        right: 15,
+        width: 50,
+        height: 50,
+        borderRadius: 50,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: Colors.primary,
+        elevation: 5
     }
     
     

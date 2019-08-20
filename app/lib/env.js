@@ -46,7 +46,7 @@ export default class Env {
     static isToday(date){
         if(date !== null){
             if(date.toDateString() === Env.now().toDateString()){
-                return true
+                return true;
             }
         }
         return false;
@@ -59,24 +59,28 @@ export default class Env {
         return '-';
     }
 
+    static formatFullDate(date){
+        return Env.formatDate(date, 'DD/MM/YYYY ddd');
+    }
+
     static formatDateDay(date) {
-        return Env.formatDate(date, 'DD/MM ddd')
+        return Env.formatDate(date, 'DD/MM ddd');
     }
 
     // return Jul
     static formatMonthName(date) {
-        return Env.formatDate(date, 'MMM')
+        return Env.formatDate(date, 'MMM');
     }
 
     // return 31/07
     static formatDateMonth(date) {
-        return Env.formatDate(date, 'DD/MM')
+        return Env.formatDate(date, 'DD/MM');
     }
 
     // return period 0719
     // TODO: add logic to decide period per payday
     static formatMonthYear(date) {
-        return Env.formatDate(date, 'MMYY')
+        return Env.formatDate(date, 'MMYY');
     }
 
     static formatCurrency(amount) {
@@ -228,8 +232,9 @@ export default class Env {
 
         let categories = realm.objects('Category');
 
-        if (id !== null && type !== null) {
-            return categories.filtered('id = "' + id + '" AND type = "' + type + '"');
+        if (id !== null) {
+            categories = categories.filtered('id = "' + id + '"');
+            return (categories.length > 0) ? categories[0] : null;
         }
 
         if(type !== null){
@@ -273,6 +278,17 @@ export default class Env {
 
         // set return isSuccess
 
+    }
+
+    static getTransaction(id){
+        let realm = new Realm({
+            schema: [Env.schema, Env.categorySchema, Env.transactionSchema]
+        });
+
+        let transactions = realm.objects('Transaction');
+        transactions = transactions.filtered(`id = "${id}"`);
+
+        return (transactions.length > 0) ? transactions[0] : null;
     }
     
 

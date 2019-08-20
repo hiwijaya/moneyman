@@ -135,7 +135,7 @@ export default class Home extends Component {
                         onNavigateBack: this.onNavigateBack
                     });
                 }}>
-                <Image style={Styles.icon12} 
+                <Image style={Styles.icon14} 
                     source={require('./asset/icon-add.png')}/>
             </TouchableOpacity>
         );
@@ -164,10 +164,10 @@ export default class Home extends Component {
                             return(
                                 <TouchableOpacity key={key} style={Styles.homeTransactionItemBox}
                                     onPress={() => {
-                                         this.props.navigation.navigate('transactionDetail', {
-                                             transaction: item,
-                                             onNavigateBack: this.onNavigateBack
-                                         });
+                                        this.props.navigation.navigate('transactionDetail', {
+                                            transactionId: item.transactionId,
+                                            onNavigateBack: this.onNavigateBack
+                                        });
                                     }}>
                                     <Cicon style={{width: 30, height: 30}} 
                                         color={item.color} icon={item.icon} iconSize={Styles.icon14}/>
