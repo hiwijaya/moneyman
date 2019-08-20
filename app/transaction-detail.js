@@ -33,7 +33,6 @@ export default class TransactionDetail extends Component {
         this.transaction = Env.getTransaction(transactionId);
         let category = Env.getCategories(this.transaction.categoryId, null);
         
-        
         this.setState({
             title: category.title,
             icon: category.icon,
@@ -105,8 +104,10 @@ export default class TransactionDetail extends Component {
                         <Text style={Styles.detailItem}>Memo</Text>
                         <Text style={Styles.detailValue}>{this.state.memo}</Text>
                     </View>
-                    {this.renderEditButton()}
                 </View>
+
+                {this.renderEditButton()}
+                
             </View>
         );
     }

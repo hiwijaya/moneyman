@@ -443,7 +443,7 @@ export const Styles = StyleSheet.create({
         padding: 15,
         borderRadius: 5,
         backgroundColor: Colors.white,
-        elevation: 7,
+        elevation: 5,
     },
     detailCategoryBox: {
         marginBottom: 15,
@@ -472,15 +472,15 @@ export const Styles = StyleSheet.create({
     },
     detailEditButton: {
         position: 'absolute',
-        top: 280,
-        right: 15,
+        top: 345,
+        right: 30,
         width: 50,
         height: 50,
         borderRadius: 50,
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: Colors.primary,
-        elevation: 5
+        elevation: 6,
     }
     
     
