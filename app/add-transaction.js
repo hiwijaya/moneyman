@@ -7,7 +7,6 @@ import {
     TouchableOpacity,
     ScrollView, 
     Keyboard,
-    Alert,
     DatePickerAndroid,
     ToastAndroid,
 } from 'react-native';
@@ -48,6 +47,8 @@ export default class AddTransaction extends Component {
         this.firstValue = null;     // in Number
         this.operation = null       // + / -
 
+        this.editMode = false;
+
     }
 
     componentDidMount() {
@@ -61,10 +62,13 @@ export default class AddTransaction extends Component {
         let iCategories = Env.getCategories(null, Env.INCOME_TYPE);
 
         
-        // EDIT MODE
+
         this.transaction = this.props.navigation.getParam('transaction');
 
+        // EDIT MODE
         if (this.transaction !== undefined) {
+
+            this.editMode = true;
 
             let category = Env.getCategories(this.transaction.categoryId, null);
             this.transactionDate = this.transaction.date;
@@ -96,9 +100,10 @@ export default class AddTransaction extends Component {
                 inputShow: true,
             });
 
-            this.transactionDate
+            
         }
         else{
+            this.editMode = false;
             this.transaction = null;
             this.setState({eCategories, iCategories});
         }
@@ -119,9 +124,8 @@ export default class AddTransaction extends Component {
     }
 
     getIkey(categoryId, categories){
-
         for(let i=0;i<categories.length;i++){
-            if(categoryId=== categories[i].id){
+            if(categoryId === categories[i].id){
                 return i;
             }
         }
@@ -289,7 +293,8 @@ export default class AddTransaction extends Component {
         if(memo === null || memo === ''){
             memo = this.defaultMemo;
         }
-        let transaction = {
+
+        let t = {
             id: Env.getRandomString(16),
             categoryId: this.state.categoryId,
             amount: Env.convertCurrency(this.state.amount),
@@ -298,11 +303,18 @@ export default class AddTransaction extends Component {
             date: this.transactionDate,
             type: this.state.transactionType
         }
-        Env.saveTransaction(transaction);
-        ToastAndroid.show('Transaction saved', ToastAndroid.SHORT);
-        this.props.navigation.state.params.onNavigateBack(null);
-        this.props.navigation.goBack();
         
+
+        // edit mode
+        if(this.editMode){
+            t.id = this.transaction.id
+        }
+        
+        Env.saveTransaction(t);
+
+        ToastAndroid.show('Transaction saved', ToastAndroid.SHORT);
+        this.props.navigation.state.params.onNavigateBack(t);
+        this.props.navigation.goBack();
 
     }
 

@@ -24,8 +24,9 @@ export default class TransactionDetail extends Component {
             amount: null,
             date: null,
             memo: null
-
         };
+
+        // TODO: BACK TO HOME MUST CALL RESET AGAIN.
     }
 
     componentDidMount() {
@@ -33,18 +34,27 @@ export default class TransactionDetail extends Component {
         let transactionId = this.props.navigation.getParam('transactionId');
 
         this.transaction = Env.getTransaction(transactionId);
-        let category = Env.getCategories(this.transaction.categoryId, null);
+        this.setTransaction(this.transaction);
         
+    }
+
+    setTransaction(transaction){
+        let category = Env.getCategories(transaction.categoryId, null);
+
         this.setState({
             title: category.title,
             icon: category.icon,
             color: category.color,
-            type: this.transaction.type,
-            amount: Env.formatCurrency(this.transaction.amount),
-            date: Env.formatFullDate(this.transaction.date),
-            memo: this.transaction.memo,
+            type: transaction.type,
+            amount: Env.formatCurrency(transaction.amount),
+            date: Env.formatFullDate(transaction.date),
+            memo: transaction.memo,
         });
     }
+
+     onNavigateBack = (params) => {
+         this.setTransaction(params);
+     }
 
 
     renderActionBar() {
@@ -68,7 +78,8 @@ export default class TransactionDetail extends Component {
             <TouchableOpacity style={Styles.detailEditButton} 
                 onPress={() => {
                     this.props.navigation.navigate('addTransaction', {
-                        transaction: this.transaction
+                        transaction: this.transaction,
+                        onNavigateBack: this.onNavigateBack
                     });
                 }}>
                 <Image style={Styles.icon14} 
