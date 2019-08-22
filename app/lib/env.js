@@ -386,8 +386,7 @@ export default class Env {
                 realm.delete(transaction);
             });
         }
-
-        
+ 
     }
 
 

@@ -3,8 +3,9 @@ import {
     View, 
     Text,
     Image,
-    TouchableOpacity, 
     Alert,
+    TouchableOpacity, 
+    ToastAndroid,
 } from 'react-native';
 import Cicon from './comp/cicon';
 import {Styles} from './lib/styles';
@@ -52,6 +53,26 @@ export default class TransactionDetail extends Component {
         });
     }
 
+    deleteTransaction(id){
+        Alert.alert(
+            'Delete Transaction',
+            'Are you sure want to delete this one?',
+            [{
+                    text: 'NO',
+                },
+                {
+                    text: 'YES',
+                    onPress: () => {
+                        Env.deleteTransaction(id);
+                        ToastAndroid.show('Transaction deleted', ToastAndroid.SHORT);
+                        this.props.navigation.state.params.onNavigateBack(null);
+                        this.props.navigation.goBack();
+                    }
+                }
+            ]
+        );
+    }
+
      onNavigateBack = (params) => {
          this.setTransaction(params);
      }
@@ -61,12 +82,15 @@ export default class TransactionDetail extends Component {
         return(
             <View style={Styles.actionbarBox}>
                 <TouchableOpacity style={Styles.backButton} 
-                    onPress={() => { this.props.navigation.goBack(); }}>
+                    onPress={() => { 
+                        this.props.navigation.state.params.onNavigateBack(null);
+                        this.props.navigation.goBack();
+                    }}>
                     <Image style={Styles.icon18} source={require('./asset/icon-back.png')}/>
                 </TouchableOpacity>
                 <Text style={Styles.actionbarTitle}>Details</Text>
                 <TouchableOpacity style={Styles.backButton} 
-                    onPress={() => {} }>
+                    onPress={() => this.deleteTransaction(this.transaction.id) }>
                     <Image style={Styles.icon18} source={require('./asset/icon-delete.png')}/>
                 </TouchableOpacity>
             </View>

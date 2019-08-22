@@ -304,10 +304,9 @@ export default class AddTransaction extends Component {
             type: this.state.transactionType
         }
         
-
         // edit mode
         if(this.editMode){
-            t.id = this.transaction.id
+            t.id = this.transaction.id;
         }
         
         Env.saveTransaction(t);
