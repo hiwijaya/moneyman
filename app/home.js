@@ -18,8 +18,6 @@ export default class Home extends Component {
     constructor(props){
         super(props);
 
-        this.refCalendar = null;
-
         this.state = {
             monthName: Env.formatMonthName(new Date()),
             period: Env.formatMonthYear(new Date()),
@@ -28,6 +26,8 @@ export default class Home extends Component {
             expense: '0',
             balance: '0',
         }
+
+        this.refCalendar = null;
         
     }
 
@@ -91,7 +91,8 @@ export default class Home extends Component {
                     </View>
                 </TouchableOpacity>
                 <View style={Styles.actionbarButtonBox}>
-                    <TouchableOpacity style={Styles.actionbarButton}>
+                    <TouchableOpacity style={Styles.actionbarButton} 
+                        onPress={() => {this.props.navigation.navigate('charts');}}>
                         <Image style={Styles.icon24} source={require('./asset/icon-chart.png')}/>
                     </TouchableOpacity>
                     <TouchableOpacity style={Styles.actionbarButton}

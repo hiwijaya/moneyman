@@ -481,7 +481,18 @@ export const Styles = StyleSheet.create({
         alignItems: 'center',
         backgroundColor: Colors.primary,
         elevation: 6,
+    },
+
+    chartBox: {
+        margin: 15,
+        paddingHorizontal: 15,
+        paddingVertical: 30,
+        borderRadius: 5,
+        backgroundColor: Colors.white,
+        elevation: 5
     }
+
+
     
     
 

@@ -30,6 +30,8 @@ target 'Moneyman' do
 
   pod 'RNGoogleSignin', :path => '../node_modules/react-native-google-signin'
 
+  pod 'RNSVG', :path => '../node_modules/react-native-svg'
+
   target 'MoneymanTests' do
     inherit! :search_paths
     # Pods for testing

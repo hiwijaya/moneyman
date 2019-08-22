@@ -285,6 +285,49 @@ export default class Env {
 
         return (transactions.length > 0) ? transactions[0] : null;
     }
+
+    static getTransactionPerCategory(period, type){
+
+        let realm = new Realm({
+            schema: [Env.schema, Env.categorySchema, Env.transactionSchema]
+        });
+
+        let transactions = realm.objects('Transaction');
+        transactions = transactions.filtered(`period = "${period}" AND type = "${type}"`);
+        
+        let data = [];
+        let grandtotal = 0;     // use for count percentage
+
+        let tUnique = transactions.filtered(`TRUEPREDICATE DISTINCT(categoryId)`);
+        for(let i=0; i<tUnique.length; i++){
+
+            let categories = realm.objects('Category');
+            let category = categories.filtered(`id = "${tUnique[i].categoryId}"`)[0];
+
+            // sum total per category
+            let tPerCategory = transactions.filtered(`categoryId = "${category.id}"`);
+            total = 0;
+            for(let j=0; j<tPerCategory.length; j++){
+                total += tPerCategory[j].amount;
+            }
+
+            grandtotal += total;
+
+            let item = {
+                categoryId: category.id,
+                icon: category.icon,
+                color: category.color,
+                total: total,
+                percentage: 0,      // count on below
+            }
+
+            data.push(item);
+        }
+
+        // TODO: COUNT PERCENTAGE AND DO SORT()
+
+        return data;
+    }
     
 
     // TODO: Consider to move processing data on render to cut a lot of looping.
@@ -308,7 +351,7 @@ export default class Env {
 
             let categories = realm.objects('Category');
             let category = categories.filtered(`id = "${value.categoryId}"`); 
-            category = (category.length > 0) ? category[0] : category;
+            category = (category.length > 0) ? category[0] : category;  // TODO: Not clean.
 
             let transactionItem = {
                 transactionId: value.id,
