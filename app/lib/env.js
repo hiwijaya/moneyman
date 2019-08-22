@@ -224,7 +224,6 @@ export default class Env {
 
     }
 
-    // set id=null to retrieve all categories
     static getCategories(id, type) {
         let realm = new Realm({
             schema: [Env.schema, Env.categorySchema, Env.transactionSchema]
@@ -246,20 +245,16 @@ export default class Env {
 
     // delete > means wipe out/erase/destroy from existance
     // remove > means move to somewhere else (e.g trash)
-    static deleteCategory(id, type){
+    static deleteCategory(id){
 
         // TODO: Add logic to delete transaction records also.
 
         let realm = new Realm({
             schema: [Env.schema, Env.categorySchema, Env.transactionSchema]
         });
+        
         let categories = realm.objects('Category');
-        let category = categories.filtered(`id = "${id}" AND type = "${type}"`);
-        realm.write(() => {
-            if (category !== null) {
-                realm.delete(category);
-            }
-        });
+        let category = categories.filtered(`id = "${id}"`);
         if (category !== null) {
             realm.write(() => {
                 realm.delete(category);

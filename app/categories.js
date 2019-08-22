@@ -43,6 +43,25 @@ export default class Categories extends Component {
         }
     }
 
+    deleteCategory(id){
+        Alert.alert(
+            'Delete Category',
+            'Delete this category will also delete all records in this category.',
+            [{
+                    text: 'CANCEL',
+                },
+                {
+                    text: 'OK',
+                    onPress: () => {
+                        Env.deleteCategory(id);
+                        this.setCategories();
+                        ToastAndroid.show('Category deleted', ToastAndroid.SHORT);
+                    }
+                }
+            ]
+        );
+    }
+
     onNavigateBack = (params) => {
         this.setCategories();
     }
@@ -86,26 +105,7 @@ export default class Categories extends Component {
                             <Cicon style={{marginRight: 15}} icon={item.icon} />
                             <Text style={{flex: 1}}>{item.title}</Text>
                             <TouchableOpacity style={Styles.deleteIconBox} 
-                                onPress={() => {
-                                    Alert.alert(
-                                        'Delete Category', 
-                                        'Delete this category will also delete all records in this category',
-                                        [{
-                                            text: 'CANCEL',
-                                        },
-                                        {
-                                            text: 'OK', 
-                                            onPress: () => {
-                                                Env.deleteCategory(
-                                                    item.id,
-                                                    (this.state.tabSelectedIndex === 0) ? Env.EXPENSE_TYPE : Env.INCOME_TYPE);
-                                                this.setCategories();
-                                                ToastAndroid.show('Category deleted', ToastAndroid.SHORT);
-                                            }
-                                        }]
-                                    );
-
-                                }}>
+                                onPress={() => this.deleteCategory(item.id)}>
                                 <Image style={Styles.icon18} source={require('./asset/icon-delete-red.png')}/>
                             </TouchableOpacity>
                         </View>

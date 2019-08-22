@@ -26,8 +26,7 @@ export default class TransactionDetail extends Component {
             date: null,
             memo: null
         };
-
-        // TODO: BACK TO HOME MUST CALL RESET AGAIN.
+        
     }
 
     componentDidMount() {
