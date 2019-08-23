@@ -490,8 +490,13 @@ export const Styles = StyleSheet.create({
         borderRadius: 5,
         backgroundColor: Colors.white,
         elevation: 5,
-    }
+    },
 
+    chartIndicator: {
+        width: 8,
+        height: 8,
+        borderRadius: 8,
+    }
 
     
     

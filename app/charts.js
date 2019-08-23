@@ -23,9 +23,8 @@ export default class Charts extends Component {
             transactionType: Env.EXPENSE_TYPE,
             monthName: Env.monthNow(),
             period: Env.formatMonthYear(Env.now()),
+            transactionData: [],
             pieData: [],
-            test: []
-
         };
 
         this.refCalendar = null;
@@ -43,16 +42,19 @@ export default class Charts extends Component {
         this.expensePie = this.convertToPieData(this.expenseData);
         this.incomePie = this.convertToPieData(this.incomeData);
 
+        let isExpense = (this.state.transactionType === Env.EXPENSE_TYPE);
+
         this.setState({
-            pieData: this.expensePie,
-            test: this.expenseData
+            transactionData: (isExpense) ? this.expenseData : this.incomeData,
+            pieData: (isExpense) ? this.expensePie : this.incomePie,
         });
     }
 
     switchPieData(){
+        let isExpense = (this.state.transactionType === Env.EXPENSE_TYPE);
         this.setState({
-            pieData: (this.state.transactionType === Env.EXPENSE_TYPE) 
-                ? this.expensePie : this.incomePie
+            transactionData: (isExpense) ? this.expenseData : this.incomeData,
+            pieData: (isExpense) ? this.expensePie : this.incomePie,
         });
     }
 
@@ -111,15 +113,18 @@ export default class Charts extends Component {
         return(
             <View>
                 {
-                    this.state.test.map((item, index) => {
+                    this.state.transactionData.map((item, index) => {
                         return(
-                            <Text key={index}>{`${item.title} - ${item.total} - ${item.percentage}`}</Text>
+                            <View key={index}>
+                                <View style={[Styles.chartIndicator, {backgroundColor: item.color}]}></View>
+                            </View>
                         );
                     })
                 }
             </View>
         );
     }
+
 
     render() {
         return (
