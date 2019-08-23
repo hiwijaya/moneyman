@@ -43,6 +43,10 @@ export default class Env {
         return moment().toDate();
     }
 
+    static monthNow() {
+        return Env.formatMonthName(Env.now());
+    }
+
     static isToday(date){
         if(date !== null){
             if(date.toDateString() === Env.now().toDateString()){
@@ -52,6 +56,7 @@ export default class Env {
         return false;
     }
 
+    // return Jul
     static formatDate(date, pattern){
         if(date !== null){
             return moment(date).format(pattern);
@@ -298,15 +303,16 @@ export default class Env {
         let data = [];
         let grandtotal = 0;     // use for count percentage
 
+        // grouping transaction by category
         let tUnique = transactions.filtered(`TRUEPREDICATE DISTINCT(categoryId)`);
         for(let i=0; i<tUnique.length; i++){
 
             let categories = realm.objects('Category');
             let category = categories.filtered(`id = "${tUnique[i].categoryId}"`)[0];
 
-            // sum total per category
+            // sum amount per category
             let tPerCategory = transactions.filtered(`categoryId = "${category.id}"`);
-            total = 0;
+            let total = 0;
             for(let j=0; j<tPerCategory.length; j++){
                 total += tPerCategory[j].amount;
             }
@@ -315,16 +321,23 @@ export default class Env {
 
             let item = {
                 categoryId: category.id,
+                title: category.title,
                 icon: category.icon,
                 color: category.color,
                 total: total,
-                percentage: 0,      // count on below
+                percentage: '0', 
             }
-
             data.push(item);
         }
 
-        // TODO: COUNT PERCENTAGE AND DO SORT()
+        // calculate percentage
+        for (let i=0; i<data.length; i++) {
+            let item = data[i];
+            let percentage = (item.total/grandtotal) * 100;
+            data[i].percentage = percentage.toFixed(1);
+        }
+
+        // do sorting
 
         return data;
     }
@@ -350,8 +363,7 @@ export default class Env {
         transactions.forEach((value, index, array) => {
 
             let categories = realm.objects('Category');
-            let category = categories.filtered(`id = "${value.categoryId}"`); 
-            category = (category.length > 0) ? category[0] : category;  // TODO: Not clean.
+            let category = categories.filtered(`id = "${value.categoryId}"`)[0]; 
 
             let transactionItem = {
                 transactionId: value.id,

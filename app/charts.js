@@ -4,7 +4,9 @@ import {
     Text,
     Image,
     Alert,
+    ScrollView,
     TouchableOpacity, 
+    ToastAndroid,
 } from 'react-native';
 import { PieChart } from 'react-native-svg-charts';
 import Calendar from './comp/calendar';
@@ -18,23 +20,56 @@ export default class Charts extends Component {
         super(props);
 
         this.state = {
-            monthName: Env.formatMonthName(new Date()),
-            period: Env.formatMonthYear(new Date()),
+            transactionType: Env.EXPENSE_TYPE,
+            monthName: Env.monthNow(),
+            period: Env.formatMonthYear(Env.now()),
+            pieData: [],
+            test: []
 
         };
 
         this.refCalendar = null;
+
     }
 
     componentDidMount(){
-        let incomeData = Env.getTransactionPerCategory(this.state.period, Env.EXPENSE_TYPE);
-        incomeData.forEach((value, index, array) => {
-            console.log(value.total);
-        });
-
-
+        this.setPieData();
     }
 
+    setPieData(){
+        this.expenseData = Env.getTransactionPerCategory(this.state.period, Env.EXPENSE_TYPE);
+        this.incomeData = Env.getTransactionPerCategory(this.state.period, Env.INCOME_TYPE);
+
+        this.expensePie = this.convertToPieData(this.expenseData);
+        this.incomePie = this.convertToPieData(this.incomeData);
+
+        this.setState({
+            pieData: this.expensePie,
+            test: this.expenseData
+        });
+    }
+
+    switchPieData(){
+        this.setState({
+            pieData: (this.state.transactionType === Env.EXPENSE_TYPE) 
+                ? this.expensePie : this.incomePie
+        });
+    }
+
+    convertToPieData(data){
+        let pieData = data
+            .map((item, index) => ({
+                value: item.total,
+                svg: {
+                    fill: item.color,
+                    arc: { cornerRadius: 10 },
+                    onPress: () => ToastAndroid.show(item.title, ToastAndroid.SHORT),
+                },
+                key: item.categoryId,
+            }));
+        
+        return pieData
+    }
 
 
     renderActionBar() {
@@ -63,23 +98,25 @@ export default class Charts extends Component {
     }
 
     renderChart(){
-        const data = [50, 10, 40, 95]
-        const randomColor = () => ('#' + ((Math.random() * 0xffffff) << 0).toString(16) + '000000').slice(0, 7);
-        const pieData = data
-            .map((value, index) => ({
-                value,
-                svg: {
-                    fill: randomColor(),
-                    onPress: () => Alert.alert(value.toString()),
-                },
-                key: `pie-${index}`,
-            }))
         return(
             <View style={Styles.chartBox}>
-                <PieChart style={{ height: 120, width: 120 }} 
-                    data={pieData} 
-                    cornerRadius={5}
+                <PieChart style={{ height: 150, width: 150 }} innerRadius={'70%'}
+                    data={this.state.pieData} 
                 />
+            </View>
+        );
+    }
+
+    renderLegend(){
+        return(
+            <View>
+                {
+                    this.state.test.map((item, index) => {
+                        return(
+                            <Text key={index}>{`${item.title} - ${item.total} - ${item.percentage}`}</Text>
+                        );
+                    })
+                }
             </View>
         );
     }
@@ -94,12 +131,14 @@ export default class Charts extends Component {
                         this.setState({
                             monthName: monthName,
                             period: period
-                        }, () => {
-                            Alert.alert(period.toString());
-                        });
+                        }, () => this.setPieData());
                 }}/>
+
+                <ScrollView style={Styles.homeScroll}>
+                    {this.renderChart()}
+                    {this.renderLegend()}
+                </ScrollView>
                 
-                {this.renderChart()}
             </View>
         );
     }

@@ -489,7 +489,7 @@ export const Styles = StyleSheet.create({
         paddingVertical: 30,
         borderRadius: 5,
         backgroundColor: Colors.white,
-        elevation: 5
+        elevation: 5,
     }
 
 

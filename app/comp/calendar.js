@@ -28,6 +28,7 @@ export default class Calendar extends Component {
         this.months = moment.monthsShort();
     }
 
+    // TODO: refactor this function --> show(boolean)
     show(){
         this.setState({
             show: true,
