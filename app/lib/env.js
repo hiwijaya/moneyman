@@ -337,7 +337,13 @@ export default class Env {
             data[i].percentage = percentage.toFixed(1);
         }
 
-        // do sorting
+        // sorting
+        data.sort((a, b) => {
+            if(a.total > b.total){
+                return -1
+            }
+            return 1;
+        });
 
         return data;
     }
