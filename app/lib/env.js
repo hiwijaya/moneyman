@@ -325,7 +325,7 @@ export default class Env {
                 icon: category.icon,
                 color: category.color,
                 total: total,
-                percentage: '0', 
+                percentage: 0, 
             }
             data.push(item);
         }
@@ -334,7 +334,7 @@ export default class Env {
         for (let i=0; i<data.length; i++) {
             let item = data[i];
             let percentage = (item.total/grandtotal) * 100;
-            data[i].percentage = percentage.toFixed(1);
+            data[i].percentage = parseFloat(percentage.toFixed(1));
         }
 
         // sorting

@@ -486,9 +486,10 @@ export const Styles = StyleSheet.create({
     pieBox: {
         margin: 15,
         paddingHorizontal: 15,
-        paddingVertical: 30,
+        paddingVertical: 25,
         borderRadius: 5,
         flexDirection: 'row',
+        alignItems: 'center',
         backgroundColor: Colors.white,
         elevation: 5,
     },

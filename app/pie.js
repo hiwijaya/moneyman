@@ -59,16 +59,38 @@ export default class Pie extends Component {
     }
 
     convertToPieData(data){
-        let pieData = data
-            .map((item, index) => ({
-                value: item.total,
+
+        let pieData = [];
+        
+        data.forEach(
+        (item, index, array) => {
+            let pieItem = {
+                key: item.categoryId,
+                title: item.title,
+                value: item.percentage,
                 svg: {
                     fill: item.color,
-                    arc: { cornerRadius: 10 },
+                    arc: {cornerRadius: 10},
                     onPress: () => ToastAndroid.show(item.title, ToastAndroid.SHORT),
-                },
-                key: item.categoryId,
-            }));
+                }   
+            }
+
+            if(index > 4){
+                pieItem = pieData[4];
+                pieItem.title = 'Others';
+                pieItem.value += item.percentage;
+                pieItem.svg = {
+                    fill: '#FFDC47',
+                    arc: {cornerRadius: 10},
+                    onPress: () => ToastAndroid.show('Others', ToastAndroid.SHORT),
+                }
+                pieData[4] = pieItem;
+            }
+            else{
+                pieData.push(pieItem);
+            }
+
+        });
         
         return pieData
     }
@@ -114,12 +136,12 @@ export default class Pie extends Component {
         return(
             <View style={Styles.legendBox}>
                 {
-                    this.state.transactionData.map((item, index) => {
+                    this.state.pieData.map((item, index) => {
                         return(
                             <View key={index} style={Styles.legendItemBox}>
-                                <View style={[Styles.legendPoint, {backgroundColor: item.color}]}></View>
+                                <View style={[Styles.legendPoint, {backgroundColor: item.svg.fill}]}></View>
                                 <Text style={[Styles.legendText, {flex: 1}]}>{item.title}</Text>
-                                <Text style={Styles.legendText}>{`${item.percentage}%`}</Text>
+                                <Text style={Styles.legendText}>{`${item.value.toString()}%`}</Text>
                             </View>
                         );
                     })
