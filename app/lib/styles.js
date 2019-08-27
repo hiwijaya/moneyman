@@ -483,19 +483,38 @@ export const Styles = StyleSheet.create({
         elevation: 6,
     },
 
-    chartBox: {
+    pieBox: {
         margin: 15,
         paddingHorizontal: 15,
         paddingVertical: 30,
         borderRadius: 5,
+        flexDirection: 'row',
         backgroundColor: Colors.white,
         elevation: 5,
     },
-
-    chartIndicator: {
+    legendBox: {
+        flex: 1,
+        marginLeft: 15,
+    },
+    legendItemBox: {
+        flex: 1,
+        height: 30,
+        flexDirection: 'row',
+        alignItems: 'center',
+    },
+    legendPoint: {
         width: 8,
         height: 8,
         borderRadius: 8,
+        marginRight: 10,
+    },
+    legendTextBox: {
+        flexDirection: 'row',
+        justifyContent: 'space-between'
+    },
+    legendText: {
+        fontSize: Fonts.h6,
+        color: Colors.grey
     }
 
     

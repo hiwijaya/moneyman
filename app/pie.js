@@ -101,22 +101,25 @@ export default class Pie extends Component {
 
     renderChart(){
         return(
-            <View style={Styles.chartBox}>
-                <PieChart style={{ height: 150, width: 150 }} innerRadius={'70%'}
+            <View style={Styles.pieBox}>
+                <PieChart style={{ height: 130, width: 130 }} innerRadius={'70%'}
                     data={this.state.pieData} 
                 />
+                {this.renderLegend()}
             </View>
         );
     }
 
     renderLegend(){
         return(
-            <View>
+            <View style={Styles.legendBox}>
                 {
                     this.state.transactionData.map((item, index) => {
                         return(
-                            <View key={index}>
-                                <View style={[Styles.chartIndicator, {backgroundColor: item.color}]}></View>
+                            <View key={index} style={Styles.legendItemBox}>
+                                <View style={[Styles.legendPoint, {backgroundColor: item.color}]}></View>
+                                <Text style={[Styles.legendText, {flex: 1}]}>{item.title}</Text>
+                                <Text style={Styles.legendText}>{`${item.percentage}%`}</Text>
                             </View>
                         );
                     })
@@ -141,7 +144,6 @@ export default class Pie extends Component {
 
                 <ScrollView style={Styles.homeScroll}>
                     {this.renderChart()}
-                    {this.renderLegend()}
                 </ScrollView>
                 
             </View>
