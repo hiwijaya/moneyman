@@ -2,7 +2,7 @@ import {createStackNavigator, createAppContainer} from 'react-navigation';
 import Splash from '../splash';
 import Signin from '../signin';
 import Home from '../home';
-import Charts from '../charts';
+import Pie from '../pie';
 import Account from '../account';
 import Categories from '../categories';
 import AddCategory from '../add-category';
@@ -32,8 +32,8 @@ const Router = createStackNavigator({
             header: null
         }
     },
-    charts: {
-        screen: Charts,
+    pie: {
+        screen: Pie,
         navigationOptions: {
             title: 'Chart',
             header: null

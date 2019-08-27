@@ -92,7 +92,7 @@ export default class Home extends Component {
                 </TouchableOpacity>
                 <View style={Styles.actionbarButtonBox}>
                     <TouchableOpacity style={Styles.actionbarButton} 
-                        onPress={() => {this.props.navigation.navigate('charts');}}>
+                        onPress={() => {this.props.navigation.navigate('pie');}}>
                         <Image style={Styles.icon24} source={require('./asset/icon-chart.png')}/>
                     </TouchableOpacity>
                     <TouchableOpacity style={Styles.actionbarButton}

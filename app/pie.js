@@ -14,7 +14,7 @@ import {Styles} from './lib/styles';
 import Env from './lib/env';
 
 
-export default class Charts extends Component {
+export default class Pie extends Component {
 
     constructor(props) {
         super(props);
