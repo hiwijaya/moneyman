@@ -36,6 +36,11 @@ export const Styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center'
     },
+    centerH: {
+        flex: 1,
+        flexDirection: 'row',
+        alignItems: 'center',
+    },
     icon8: {
         width: 8,
         height: 8,
@@ -516,7 +521,16 @@ export const Styles = StyleSheet.create({
     legendText: {
         fontSize: Fonts.h6,
         color: Colors.grey
-    }
+    },
+    pieListBox: {
+        margin: 15,
+        marginTop: 0,
+        padding: 15,
+        borderRadius: 5,
+        backgroundColor: Colors.white,
+        elevation: 5,
+    },
+
 
     
     

@@ -10,7 +10,8 @@ import {
 } from 'react-native';
 import { PieChart } from 'react-native-svg-charts';
 import Calendar from './comp/calendar';
-import {Styles} from './lib/styles';
+import Cicon from './comp/cicon';
+import {Styles, Fonts, Colors} from './lib/styles';
 import Env from './lib/env';
 
 
@@ -150,6 +151,29 @@ export default class Pie extends Component {
         );
     }
 
+    renderList(){
+        return(
+            <View style={Styles.pieListBox}>
+                <Text style={[Styles.legendText, {marginBottom: 5}]}>Expenses List</Text>
+                {
+                    this.state.transactionData.map((item, index) => {
+                        return(
+                            <View key={index} style={[Styles.centerH, {height: 60}]}>
+                                <Cicon style={{width: 30, height: 30, marginRight: 15}} 
+                                    color={item.color} icon={item.icon} iconSize={Styles.icon14}/>
+                                <View style={Styles.centerH}>
+                                    <Text style={{fontSize: Fonts.h6, marginRight: 10}}>{item.title}</Text>
+                                    <Text style={[Styles.legendText, {flex: 1}]}>{`${item.percentage.toString()}%`}</Text>
+                                    <Text style={{fontSize: Fonts.h6}}>{Env.formatCurrency(item.total)}</Text>
+                                </View>
+                            </View>
+                        );
+                    })
+                }
+            </View>
+        );
+    }
+
 
     render() {
         return (
@@ -166,6 +190,7 @@ export default class Pie extends Component {
 
                 <ScrollView style={Styles.homeScroll}>
                     {this.renderChart()}
+                    {this.renderList()}
                 </ScrollView>
                 
             </View>
