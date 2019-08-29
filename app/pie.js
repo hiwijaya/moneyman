@@ -3,7 +3,6 @@ import {
     View, 
     Text,
     Image,
-    Alert,
     ScrollView,
     TouchableOpacity, 
     ToastAndroid,
@@ -11,7 +10,7 @@ import {
 import { PieChart } from 'react-native-svg-charts';
 import Calendar from './comp/calendar';
 import Cicon from './comp/cicon';
-import {Styles, Fonts, Colors} from './lib/styles';
+import {Styles, Fonts, Screen} from './lib/styles';
 import Env from './lib/env';
 
 
@@ -96,6 +95,20 @@ export default class Pie extends Component {
         return pieData
     }
 
+    getWidthBar(total, index){
+        
+        let MAX_WIDTH = Screen.width - 105;
+
+        if(index === 0){
+            this.pivot = total;
+            return MAX_WIDTH;
+        }
+
+        let percentage = (total/this.pivot) * 100;
+
+        return (percentage / 100) * MAX_WIDTH;
+    }
+
 
     renderActionBar() {
         return(
@@ -161,11 +174,15 @@ export default class Pie extends Component {
                             <View key={index} style={[Styles.centerH, {height: 60}]}>
                                 <Cicon style={{width: 30, height: 30, marginRight: 15}} 
                                     color={item.color} icon={item.icon} iconSize={Styles.icon14}/>
-                                <View style={Styles.centerH}>
-                                    <Text style={{fontSize: Fonts.h6, marginRight: 10}}>{item.title}</Text>
-                                    <Text style={[Styles.legendText, {flex: 1}]}>{`${item.percentage.toString()}%`}</Text>
-                                    <Text style={{fontSize: Fonts.h6}}>{Env.formatCurrency(item.total)}</Text>
+                                <View style={Styles.box}>
+                                    <View style={Styles.centerH}>
+                                        <Text style={{fontSize: Fonts.h6, marginRight: 10}}>{item.title}</Text>
+                                        <Text style={[Styles.legendText, {flex: 1}]}>{`${item.percentage.toString()}%`}</Text>
+                                        <Text style={{fontSize: Fonts.h6}}>{Env.formatCurrency(item.total)}</Text>
+                                    </View>
+                                    <View style={[Styles.pieBar, {width: this.getWidthBar(item.total, index)}]}></View>
                                 </View>
+
                             </View>
                         );
                     })

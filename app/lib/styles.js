@@ -37,7 +37,6 @@ export const Styles = StyleSheet.create({
         alignItems: 'center'
     },
     centerH: {
-        flex: 1,
         flexDirection: 'row',
         alignItems: 'center',
     },
@@ -529,6 +528,12 @@ export const Styles = StyleSheet.create({
         borderRadius: 5,
         backgroundColor: Colors.white,
         elevation: 5,
+    },
+    pieBar: {
+        height: 5,
+        borderRadius: 5,
+        marginTop: 3,
+        backgroundColor: Colors.primary
     },
 
 
