@@ -20,6 +20,7 @@ export default class Signin extends Component {
 
     async componentDidMount() {
         GoogleSignin.configure({
+            scopes: config.scopes,
             webClientId: config.webClientId,
             offlineAccess: true,
         });
