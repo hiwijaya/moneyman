@@ -31,8 +31,11 @@ export default class Signin extends Component {
             // Check if device has Google Play Services installed
             await GoogleSignin.hasPlayServices({ showPlayServicesUpdateDialog: true });
             const userInfo = await GoogleSignin.signIn();
+            const token = await GoogleSignin.getTokens();
+            const accessToken = token.accessToken;
 
             Env.writeStorage(Env.key.USER_INFO, userInfo);
+            Env.writeStorage(Env.key.ACCESS_TOKEN, accessToken);
             this.props.navigation.navigate('home');
 
         }

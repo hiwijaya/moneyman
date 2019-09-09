@@ -126,6 +126,7 @@ export default class Env {
 
     static key = {
         USER_INFO: 'USER_INFO',     // refer to 'userInfo' object from react-native-google-signin
+        ACCESS_TOKEN: 'ACCESS_TOKEN',
         // many more..
     }
 

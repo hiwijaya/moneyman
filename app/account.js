@@ -11,6 +11,7 @@ import {GoogleSignin} from 'react-native-google-signin';
 import {Styles, Colors, Fonts} from './lib/styles';
 import Env from './lib/env';
 import config from '../config';
+import Gdrive from './lib/gdrive';
 
 
 export default class Account extends Component {
@@ -37,6 +38,25 @@ export default class Account extends Component {
             email: userInfo.user.email,
             photo: userInfo.user.photo
         });
+    }
+
+    testDrive(){
+        console.log('RUN TESTDRIVE');
+        const token = Env.readStorage(Env.key.ACCESS_TOKEN);
+
+        console.log(token);
+
+        const data = {
+            'data_penting': 'INI ADALAH DATA PENTING.'
+        }
+
+        let drive = new Gdrive();
+
+        drive.setToken(token);
+        // drive.upload(data, null);
+        drive.download('1LbTjUWqYLiE9xum-Ex9iNcH0I9QuNzx9ypSXZxbU60z94ApEtQ');
+
+
     }
 
     signOut = async () => {
@@ -127,7 +147,7 @@ export default class Account extends Component {
                             require('./asset/icon-licenses.png'), 
                             'Licenses', 
                             true, 
-                            () => {Alert.alert('Licenses')})
+                            () => {this.testDrive()})
                     }
                     {
                         this.renderMenuItem(
