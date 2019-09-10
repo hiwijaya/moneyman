@@ -4,54 +4,27 @@ import {
     Text,
     Image,
     TouchableOpacity, 
-    Alert,
 } from 'react-native';
-import {
-    GoogleSignin,
-    statusCodes,
-} from 'react-native-google-signin';
-import { Styles } from './lib/styles'
+import { Styles } from './lib/styles';
 import Env from './lib/env';
-import config from '../config';
+import GoogleService from './lib/google-service';
 
 
 export default class Signin extends Component {
 
 
-    async componentDidMount() {
-        GoogleSignin.configure({
-            scopes: config.scopes,
-            webClientId: config.webClientId,
-            offlineAccess: true,
-        });
+    componentDidMount() {
+        this.googleService = new GoogleService();
     }
 
     signIn = async () => {
-        try{
-            // Check if device has Google Play Services installed
-            await GoogleSignin.hasPlayServices({ showPlayServicesUpdateDialog: true });
-            const userInfo = await GoogleSignin.signIn();
-            const token = await GoogleSignin.getTokens();
-            const accessToken = token.accessToken;
-
-            Env.writeStorage(Env.key.USER_INFO, userInfo);
+        this.googleService.signIn((accessToken, userInfo) => {
+            
             Env.writeStorage(Env.key.ACCESS_TOKEN, accessToken);
-            this.props.navigation.navigate('home');
+            Env.writeStorage(Env.key.USER_INFO, userInfo);
 
-        }
-        catch(error){
-            if (error.code === statusCodes.SIGN_IN_CANCELLED) {
-                // sign in was cancelled
-                Alert.alert('cancelled');
-            } else if (error.code === statusCodes.IN_PROGRESS) {
-                // operation in progress already
-                Alert.alert('in progress');
-            } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
-                Alert.alert('play services not available or outdated');
-            } else {
-                Alert.alert('Something went wrong', error.toString());
-            }
-        }
+            this.props.navigation.navigate('home');
+        });
     }
 
 

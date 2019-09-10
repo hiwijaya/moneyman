@@ -53,8 +53,8 @@ export default class Account extends Component {
         let drive = new Gdrive();
 
         drive.setToken(token);
-        // drive.upload(data, null);
-        drive.download('1LbTjUWqYLiE9xum-Ex9iNcH0I9QuNzx9ypSXZxbU60z94ApEtQ');
+        // drive.upload(data, '1LbTjUWqYLiE9xum-Ex9iNcH0I9QuNzx9ypSXZxbU60z94ApEtQ');
+        drive.download('1LbTjUWqYLiE9xum-Ex9iNcH0I9QuNzx9ypSXZxbU60z94ApEtQs');
 
 
     }
