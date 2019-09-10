@@ -4,7 +4,7 @@ import {
     GoogleSignin,
     statusCodes,
 } from 'react-native-google-signin';
-import { StackActions, NavigationActions } from 'react-navigation'
+import { StackActions, NavigationActions } from 'react-navigation';
 import { Styles } from './lib/styles';
 import config from '../config';
 import Env from './lib/env';
@@ -27,18 +27,15 @@ export default class Splash extends Component {
             // TODO: testing. Next, put it on signin process.
             Env.initDefaultCategories();
 
-            if(isSignedIn){
-                const resetAction = StackActions.reset({
-                    index: 0,
-                    actions: [NavigationActions.navigate({
-                        routeName: 'home'
-                    })],
-                });
-                this.props.navigation.dispatch(resetAction);
-            }
-            else {
-                this.props.navigation.navigate('signin');
-            }
+            const resetAction = StackActions.reset({
+                index: 0,
+                actions: [NavigationActions.navigate({
+                    routeName: (isSignedIn) ? 'home' : 'signin'
+                })],
+            });
+            this.props.navigation.dispatch(resetAction);
+
+            
         }, 1000);
     }
 

@@ -7,17 +7,18 @@ import {
     StatusBar,
     Alert,
 } from 'react-native';
-import {GoogleSignin} from 'react-native-google-signin';
-import {Styles, Colors, Fonts} from './lib/styles';
+import { StackActions, NavigationActions } from 'react-navigation';
+import {Styles, Colors} from './lib/styles';
 import Env from './lib/env';
-import config from '../config';
 import Gdrive from './lib/gdrive';
+import GoogleService from './lib/google-service';
 
 
 export default class Account extends Component {
 
     constructor(props) {
         super(props);
+
         this.state = {
             name: 'Unknown',
             email: '',
@@ -25,12 +26,7 @@ export default class Account extends Component {
         };
     }
 
-    async componentDidMount() {
-        GoogleSignin.configure({
-            scopes: config.scopes,
-            webClientId: config.webClientId,
-            offlineAccess: true,
-        });
+    componentDidMount() {
 
         const userInfo = Env.readStorage(Env.key.USER_INFO);
         this.setState({
@@ -38,6 +34,8 @@ export default class Account extends Component {
             email: userInfo.user.email,
             photo: userInfo.user.photo
         });
+
+        this.googleService = new GoogleService();
     }
 
     testDrive(){
@@ -59,19 +57,22 @@ export default class Account extends Component {
 
     }
 
-    signOut = async () => {
-        try {
-            await GoogleSignin.revokeAccess();
-            await GoogleSignin.signOut();
+    signOut = () => {
+        this.googleService.signOut(() => {
             
             // remove local storage
-            Env.writeStorage(Env.USER_INFO, null);
+            Env.writeStorage(Env.key.ACCESS_TOKEN, null);
+            Env.writeStorage(Env.key.USER_INFO, null);
 
-            this.props.navigation.navigate('signin');
-        } 
-        catch (error) {
-            console.error(error);
-        }
+            const resetAction = StackActions.reset({
+                index: 0,
+                actions: [NavigationActions.navigate({
+                    routeName: 'signin'
+                })],
+            });
+            this.props.navigation.dispatch(resetAction);
+        });
+        
     }
 
     renderHeader() {

@@ -1,4 +1,7 @@
 import {
+    Alert
+} from 'react-native';
+import {
     GoogleSignin,
     statusCodes,
 } from 'react-native-google-signin';
@@ -55,6 +58,20 @@ export default class GoogleService {
             onSuccess(accessToken, userInfo);
         }
         catch(error){
+            this._handleError(error);
+        }
+    }
+
+
+    async signOut(onSuccess){
+        try {
+            await GoogleSignin.revokeAccess();
+            await GoogleSignin.signOut();
+
+            onSuccess();
+            
+        } 
+        catch (error) {
             this._handleError(error);
         }
     }

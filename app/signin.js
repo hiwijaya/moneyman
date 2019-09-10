@@ -5,6 +5,7 @@ import {
     Image,
     TouchableOpacity, 
 } from 'react-native';
+import { StackActions, NavigationActions } from 'react-navigation';
 import { Styles } from './lib/styles';
 import Env from './lib/env';
 import GoogleService from './lib/google-service';
@@ -23,7 +24,14 @@ export default class Signin extends Component {
             Env.writeStorage(Env.key.ACCESS_TOKEN, accessToken);
             Env.writeStorage(Env.key.USER_INFO, userInfo);
 
-            this.props.navigation.navigate('home');
+            const resetAction = StackActions.reset({
+                index: 0,
+                actions: [NavigationActions.navigate({
+                    routeName: 'home'
+                })],
+            });
+            this.props.navigation.dispatch(resetAction);
+
         });
     }
 
