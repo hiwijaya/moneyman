@@ -10,7 +10,6 @@ import {
 import { StackActions, NavigationActions } from 'react-navigation';
 import {Styles, Colors} from './lib/styles';
 import Env from './lib/env';
-import Gdrive from './lib/gdrive';
 import GoogleService from './lib/google-service';
 
 
@@ -39,22 +38,31 @@ export default class Account extends Component {
     }
 
     testDrive(){
-        console.log('RUN TESTDRIVE');
-        const token = Env.readStorage(Env.key.ACCESS_TOKEN);
-
-        console.log(token);
 
         const data = {
-            'data_penting': 'INI ADALAH DATA PENTING.'
+            'data_penting': 'Ini test backup dengan google-serive.js'
         }
 
-        let drive = new Gdrive();
+        this.googleService.upload(data, 
+            (res) => {
+                Alert.alert('success');
+            });
 
-        drive.setToken(token);
-        // drive.upload(data, '1LbTjUWqYLiE9xum-Ex9iNcH0I9QuNzx9ypSXZxbU60z94ApEtQ');
-        drive.download('1LbTjUWqYLiE9xum-Ex9iNcH0I9QuNzx9ypSXZxbU60z94ApEtQs');
 
+    }
 
+    testDownload(){
+        const fileId = '1B7sHYZ4aQ4D68ZmBKDdK_jX-2Zcq5L-WLB7zUePWMkuXGkoH1Q';
+        this.googleService.download(fileId);
+    }
+
+    testRefresh(){
+        let oldToken = Env.readStorage(Env.key.ACCESS_TOKEN);
+        console.log(`OLD TOKEN= ${oldToken}`);
+
+        this.googleService.signInSilent((token, userInfo) => {
+            console.log(`NEW TOKEN= ${token}`);
+        });
     }
 
     signOut = () => {
@@ -156,10 +164,10 @@ export default class Account extends Component {
                             'Rate Us',
                             true,
                             () => {
-                                Alert.alert('Rate Us')
+                                this.testDownload();
                             })
                     }
-                    <TouchableOpacity onPress={() => {Alert.alert('About')}}>
+                    <TouchableOpacity onPress={() => {this.testRefresh()}}>
                         <View style={Styles.accountMenuItem}>
                             <Image style={Styles.accountMenuIcon} 
                                 source={require('./asset/icon-about.png')}/>
