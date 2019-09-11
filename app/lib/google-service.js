@@ -25,20 +25,6 @@ export default class GoogleService {
 
     }
 
-
-    async signInSilent(onSuccess){
-        try{
-            await GoogleSignin.signInSilently();
-            const token = await GoogleSignin.getTokens();
-            const accessToken = token.accessToken;
-            
-            onSuccess(accessToken);
-        }
-        catch(error){
-            this._handleError(error);
-        }
-    }
-
     // onSuccess(userInfo);
     async signIn(onSuccess){
         try{
@@ -91,6 +77,7 @@ export default class GoogleService {
 
         onSuccess(responseJson.id);
 
+        console.log(`TOKEN= ${accessToken}`);
         console.log(responseJson);
     }
 
@@ -109,6 +96,8 @@ export default class GoogleService {
         let responseJson = await response.json();
 
         console.log(responseJson);
+
+        Alert.alert(responseJson.backup);
 
     }
 

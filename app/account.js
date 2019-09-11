@@ -52,17 +52,8 @@ export default class Account extends Component {
     }
 
     exportCSV(){
-        const fileId = '1B7sHYZ4aQ4D68ZmBKDdK_jX-2Zcq5L-WLB7zUePWMkuXGkoH1Q';
+        const fileId = Env.readStorage(Env.key.BACKUP_FILE_ID);
         this.googleService.download(fileId);
-    }
-
-    testRefresh(){
-        let oldToken = Env.readStorage(Env.key.ACCESS_TOKEN);
-        console.log(`OLD TOKEN= ${oldToken}`);
-
-        this.googleService.signInSilent((token) => {
-            console.log(`NEW TOKEN= ${token}`);
-        });
     }
 
     signOut = () => {
@@ -167,7 +158,7 @@ export default class Account extends Component {
                             require('./asset/icon-licenses.png'), 
                             'Licenses', 
                             true, 
-                            () => {this.testRefresh()})
+                            () => {})
                     }
                     {
                         this.renderMenuItem(
