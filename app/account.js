@@ -5,6 +5,7 @@ import {
     Image,
     TouchableOpacity, 
     StatusBar,
+    ScrollView,
     Alert,
 } from 'react-native';
 import { StackActions, NavigationActions } from 'react-navigation';
@@ -37,21 +38,20 @@ export default class Account extends Component {
         this.googleService = new GoogleService();
     }
 
-    testDrive(){
+    backup(){
 
         const data = {
-            'data_penting': 'Ini test backup dengan google-serive.js'
+            'backup': 'Ini adalah data backup dari aplikasi moneyman.'
         }
 
         this.googleService.upload(data, 
-            (res) => {
-                Alert.alert('success');
+            (fileId) => {
+                Alert.alert(fileId);
             });
-
 
     }
 
-    testDownload(){
+    exportCSV(){
         const fileId = '1B7sHYZ4aQ4D68ZmBKDdK_jX-2Zcq5L-WLB7zUePWMkuXGkoH1Q';
         this.googleService.download(fileId);
     }
@@ -60,12 +60,15 @@ export default class Account extends Component {
         let oldToken = Env.readStorage(Env.key.ACCESS_TOKEN);
         console.log(`OLD TOKEN= ${oldToken}`);
 
-        this.googleService.signInSilent((token, userInfo) => {
+        this.googleService.signInSilent((token) => {
             console.log(`NEW TOKEN= ${token}`);
         });
     }
 
     signOut = () => {
+
+        // TODO: implement double click to prevent unwanted signout
+
         this.googleService.signOut(() => {
             
             // remove local storage
@@ -132,21 +135,29 @@ export default class Account extends Component {
                         this.renderMenuItem(
                             require('./asset/icon-categories.png'), 
                             'Categories', 
-                            true, 
+                            false, 
                             () => {
                                 // this.props.navigation.push('account');
                                 // Alert.alert(this.props.navigation.getParam('item'));
                                 this.props.navigation.navigate('categories');
                             })
                     }
+                </View>
+
+                <View style={Styles.accountMenuBox}>
+                    {
+                        this.renderMenuItem(
+                            require('./asset/icon-sync.png'),
+                            'Backup',
+                            true,
+                            () => {this.backup()})
+                    }
                     {
                         this.renderMenuItem(
                             require('./asset/icon-export.png'),
                             'Export',
                             false,
-                            () => {
-                                this.props.navigation.popToTop();
-                            })
+                            () => {this.exportCSV()})
                     }
                 </View>
 
@@ -156,18 +167,16 @@ export default class Account extends Component {
                             require('./asset/icon-licenses.png'), 
                             'Licenses', 
                             true, 
-                            () => {this.testDrive()})
+                            () => {this.testRefresh()})
                     }
                     {
                         this.renderMenuItem(
                             require('./asset/icon-rate.png'),
                             'Rate Us',
                             true,
-                            () => {
-                                this.testDownload();
-                            })
+                            () => {this.props.navigation.popToTop()})
                     }
-                    <TouchableOpacity onPress={() => {this.testRefresh()}}>
+                    <TouchableOpacity onPress={() => {Alert.alert('Moneyman')}}>
                         <View style={Styles.accountMenuItem}>
                             <Image style={Styles.accountMenuIcon} 
                                 source={require('./asset/icon-about.png')}/>

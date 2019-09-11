@@ -25,37 +25,30 @@ export default class GoogleService {
 
     }
 
+
     async signInSilent(onSuccess){
         try{
-            
-            const userInfo = await GoogleSignin.signInSilently();
+            await GoogleSignin.signInSilently();
             const token = await GoogleSignin.getTokens();
             const accessToken = token.accessToken;
             
-
-            // TODO: move handle accessToken and userInfo in here
-
-            onSuccess(accessToken, userInfo);
+            onSuccess(accessToken);
         }
         catch(error){
             this._handleError(error);
         }
     }
 
-
-    // onSuccess(accessToken, userInfo);
+    // onSuccess(userInfo);
     async signIn(onSuccess){
         try{
             // Check if device has Google Play Services installed
             await GoogleSignin.hasPlayServices({ showPlayServicesUpdateDialog: true });
 
             const userInfo = await GoogleSignin.signIn();
-            const token = await GoogleSignin.getTokens();
-            const accessToken = token.accessToken;
+            Env.writeStorage(Env.key.USER_INFO, userInfo);
 
-            // TODO: move handle accessToken and userInfo in here
-
-            onSuccess(accessToken, userInfo);
+            onSuccess(userInfo);
         }
         catch(error){
             this._handleError(error);
@@ -69,7 +62,6 @@ export default class GoogleService {
             await GoogleSignin.signOut();
 
             onSuccess();
-            
         } 
         catch (error) {
             this._handleError(error);
@@ -79,27 +71,39 @@ export default class GoogleService {
     // uploads a file with its contents and its meta data (name, description, type, location)
     async upload(content, onSuccess) {
 
-        // TODO: use /tokeninfo to check access-token's validity
-
+        // get new access-token with signInSilently()
+        await GoogleSignin.signInSilently();
+        const token = await GoogleSignin.getTokens();
+        const accessToken = token.accessToken;
+        
         const fileId = Env.readStorage(Env.key.BACKUP_FILE_ID);
 
         const body = this._createMultipartBody(content, !!fileId);
-        const options = this._configurePostOptions(body.length, !!fileId);
-
+        const options = this._configurePostOptions(accessToken, body.length, !!fileId);
         let response = await fetch(`${this.UPLOAD_URL}/files${fileId ? `/${fileId}` : ''}?uploadType=multipart`, {
             ...options,
             body
         });
         let responseJson = await response.json();
 
-        onSuccess(responseJson);
+        Env.writeStorage(Env.key.ACCESS_TOKEN, accessToken);
+        Env.writeStorage(Env.key.BACKUP_FILE_ID, responseJson.id);
+
+        onSuccess(responseJson.id);
 
         console.log(responseJson);
     }
 
-    async download(fileId) {
+    async download() {
 
-        const options = this._configureGetOptions();
+        // get new access-token with signInSilently()
+        await GoogleSignin.signInSilently();
+        const token = await GoogleSignin.getTokens();
+        const accessToken = token.accessToken;
+
+        const fileId = Env.readStorage(Env.key.BACKUP_FILE_ID);
+
+        const options = this._configureGetOptions(accessToken);
 
         let response = await fetch(`${this.URL}/files/${fileId}?alt=media`, options);
         let responseJson = await response.json();
@@ -109,7 +113,7 @@ export default class GoogleService {
     }
 
 
-    _createMultipartBody(body, isUpdate = false) {
+    _createMultipartBody(body, isUpdate=false) {
 
         // google-drive-api multipart-upload defines the structure
         const metadata = {
@@ -131,24 +135,20 @@ export default class GoogleService {
         return multipartBody;
     }
 
-    _configureGetOptions() {
-
-        const token = Env.readStorage(Env.key.ACCESS_TOKEN);
+    _configureGetOptions(accessToken) {
 
         const headers = new Headers();
-        headers.append('Authorization', `Bearer ${token}`);
+        headers.append('Authorization', `Bearer ${accessToken}`);
         return {
             method: 'GET',
             headers,
         }
     }
 
-    _configurePostOptions(bodyLength, isUpdate = false) {
-
-        const token = Env.readStorage(Env.key.ACCESS_TOKEN);
+    _configurePostOptions(accessToken, bodyLength, isUpdate=false) {
 
         const headers = new Headers();
-        headers.append('Authorization', `Bearer ${token}`);
+        headers.append('Authorization', `Bearer ${accessToken}`);
         headers.append('Content-Type', `multipart/related; boundary=${this.BOUNDARY}`);
         headers.append('Content-Length', bodyLength);
 

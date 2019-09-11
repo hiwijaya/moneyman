@@ -3,11 +3,11 @@ import {
     View, 
     Text,
     Image,
+    ToastAndroid,
     TouchableOpacity, 
 } from 'react-native';
 import { StackActions, NavigationActions } from 'react-navigation';
 import { Styles } from './lib/styles';
-import Env from './lib/env';
 import GoogleService from './lib/google-service';
 
 
@@ -18,11 +18,10 @@ export default class Signin extends Component {
         this.googleService = new GoogleService();
     }
 
-    signIn = async () => {
-        this.googleService.signIn((accessToken, userInfo) => {
-            
-            Env.writeStorage(Env.key.ACCESS_TOKEN, accessToken);
-            Env.writeStorage(Env.key.USER_INFO, userInfo);
+    signIn = () => {
+        this.googleService.signIn((userInfo) => {
+
+            ToastAndroid.show(`Welcome, ${userInfo.user.name}`, ToastAndroid.SHORT);
 
             const resetAction = StackActions.reset({
                 index: 0,

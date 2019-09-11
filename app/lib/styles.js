@@ -214,7 +214,7 @@ export const Styles = StyleSheet.create({
         fontSize: Fonts.h5,
     },
     accountMenuBox: {
-        marginTop: 20,
+        marginTop: 10,
         backgroundColor: Colors.white,
     },
     accountMenuItem: {
