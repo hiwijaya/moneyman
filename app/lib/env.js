@@ -219,6 +219,47 @@ export default class Env {
     }
 
 
+    static getDatabase(){
+
+        let realm = new Realm({
+            schema: [Env.schema, Env.categorySchema, Env.transactionSchema]
+        });
+
+        let c = realm.objects('Category');
+        let categories = [];
+        c.forEach((item, index, array) => {
+            categories.push({
+                id: item.id,
+                title: item.title,
+                icon: item.icon,
+                color: item.color,
+                type: item.type
+            });
+        });
+
+        let t = realm.objects('Transaction');
+        let transactions = [];
+        t.forEach((item, index, array) => {
+            transactions.push({
+                id: item.id,
+                categoryId: item.categoryId,
+                amount: item.amount,
+                memo: item.memo,
+                period: item.period,
+                date: item.date,
+                type: item.type
+            });
+        });
+
+        return {
+            last_updated: Env.now(),
+            category: categories,
+            transaction: transactions
+        }
+
+    }
+
+
     static addCategory(category) {
         // consider add logic to check existing id.
 

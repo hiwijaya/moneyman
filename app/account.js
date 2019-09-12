@@ -39,22 +39,38 @@ export default class Account extends Component {
     }
 
     backup(){
+        const database = Env.getDatabase();
 
-        const data = {
-            'backup': 'Ini adalah data backup dari aplikasi moneyman.'
-        }
-
-        this.googleService.upload(data, 
-            (fileId) => {
-                Alert.alert(fileId);
+        this.googleService.upload(database, 
+            () => {
+                Alert.alert('Backup Completed', `Last backup: ${database.last_updated}`);
             });
-
     }
 
     exportCSV(){
-        const fileId = Env.readStorage(Env.key.BACKUP_FILE_ID);
-        this.googleService.download(fileId);
+        // const fileId = Env.readStorage(Env.key.BACKUP_FILE_ID);
+        // this.googleService.download(fileId);
+
+        this.googleService.restoreBackup(() =>{
+            console.log('success');
+        });
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     signOut = () => {
 

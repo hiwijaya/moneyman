@@ -72,13 +72,9 @@ export default class GoogleService {
         });
         let responseJson = await response.json();
 
-        Env.writeStorage(Env.key.ACCESS_TOKEN, accessToken);
         Env.writeStorage(Env.key.BACKUP_FILE_ID, responseJson.id);
 
-        onSuccess(responseJson.id);
-
-        console.log(`TOKEN= ${accessToken}`);
-        console.log(responseJson);
+        onSuccess();
     }
 
     async download() {
@@ -98,6 +94,32 @@ export default class GoogleService {
         console.log(responseJson);
 
         Alert.alert(responseJson.backup);
+
+    }
+
+    async restoreBackup(onSuccess){
+
+        const token = await GoogleSignin.getTokens();
+        const accessToken = token.accessToken;
+
+        const options = this._configureGetOptions(accessToken);
+
+        let response = await fetch(`${this.URL}/files?spaces=appDataFolder&fields=files/id`, options);
+
+        if(response.status !== 200){
+            console.log('STATUS 200 BRO');
+        }
+
+        let responseJson = await response.json();
+
+        const fileId = (responseJson.files.length > 0) ? responseJson.files[0].id : null;
+
+        response = await fetch(`${this.URL}/files/${fileId}?alt=media`, options);
+        responseJson = await response.json();
+
+        console.log(responseJson)
+
+
 
     }
 
