@@ -9,7 +9,7 @@ import {
     Alert,
 } from 'react-native';
 import { StackActions, NavigationActions } from 'react-navigation';
-import {Styles, Colors} from './lib/styles';
+import {Styles, Colors, Fonts} from './lib/styles';
 import Env from './lib/env';
 import GoogleService from './lib/google-service';
 
@@ -23,12 +23,14 @@ export default class Account extends Component {
             name: 'Unknown',
             email: '',
             photo: null,
+            sync: false
         };
     }
 
     componentDidMount() {
 
         const userInfo = Env.readStorage(Env.key.USER_INFO);
+        const sync = !!Env.readStorage(Env.key.SYNCED);
         this.setState({
             name: userInfo.user.name,
             email: userInfo.user.email,
@@ -132,6 +134,15 @@ export default class Account extends Component {
         );
     }
 
+    renderSyncText(){
+        if(this.state.sync){
+            return(
+                <Text style={{fontSize: Fonts.h6, fontWeight: 'bold', color: Colors.primary}}>{ '(Synced)' }</Text>
+            );
+        }
+
+    }
+
     render() {
         return (
             <View style={Styles.sceneBox}>
@@ -143,29 +154,30 @@ export default class Account extends Component {
                             require('./asset/icon-categories.png'), 
                             'Categories', 
                             false, 
-                            () => {
-                                // this.props.navigation.push('account');
-                                // Alert.alert(this.props.navigation.getParam('item'));
-                                this.props.navigation.navigate('categories');
-                            })
+                            () => { this.props.navigation.navigate('categories') })
                     }
                 </View>
 
                 <View style={Styles.accountMenuBox}>
                     {
                         this.renderMenuItem(
-                            require('./asset/icon-sync.png'),
-                            'Backup',
-                            true,
-                            () => {this.backup()})
-                    }
-                    {
-                        this.renderMenuItem(
                             require('./asset/icon-export.png'),
                             'Export',
-                            false,
-                            () => {this.exportCSV()})
+                            true,
+                            () => { this.exportCSV() })
                     }
+                    <TouchableOpacity onPress={() => {this.backup()}}>
+                        <View style={Styles.accountMenuItem}>
+                            <Image style={Styles.accountMenuIcon} 
+                                source={require('./asset/icon-drive.png')}/>
+                            <View style={Styles.accountMenuTextBox}>
+                                <Text style={Styles.accountMenuText}>{ 'Backup to Drive' }</Text>
+                            </View>
+                            <View style={Styles.versionTextBox}>
+                                {this.renderSyncText()}
+                            </View>
+                        </View>
+                    </TouchableOpacity>
                 </View>
 
                 <View style={Styles.accountMenuBox}>
@@ -181,7 +193,7 @@ export default class Account extends Component {
                             require('./asset/icon-rate.png'),
                             'Rate Us',
                             true,
-                            () => {this.props.navigation.popToTop()})
+                            () => { this.props.navigation.popToTop() })
                     }
                     <TouchableOpacity onPress={() => {Alert.alert('Moneyman')}}>
                         <View style={Styles.accountMenuItem}>

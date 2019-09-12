@@ -128,6 +128,7 @@ export default class Env {
         USER_INFO: 'USER_INFO',     // refer to 'userInfo' object from react-native-google-signin
         ACCESS_TOKEN: 'ACCESS_TOKEN',
         BACKUP_FILE_ID: 'FILE_ID',
+        SYNCED: 'SYNCED',
         // many more..
     }
 

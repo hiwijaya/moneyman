@@ -245,7 +245,7 @@ export const Styles = StyleSheet.create({
         justifyContent: 'center',
     },
     versionText: {
-        fontSize: Fonts.h5,
+        fontSize: Fonts.h6,
         color: Colors.darkGrey
     },
 
