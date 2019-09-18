@@ -28,7 +28,6 @@ export default class Account extends Component {
     }
 
     componentDidMount() {
-
         const userInfo = Env.readStorage(Env.key.USER_INFO);
         const sync = !!Env.readStorage(Env.key.SYNCED);
         this.setState({
@@ -134,13 +133,15 @@ export default class Account extends Component {
         );
     }
 
-    renderSyncText(){
+    renderSyncIcon(){
         if(this.state.sync){
             return(
-                <Text style={{fontSize: Fonts.h6, fontWeight: 'bold', color: Colors.primary}}>{ '(Synced)' }</Text>
+                <Image style={Styles.icon18} source={require('./asset/icon-checked-primary.png')}/>
             );
         }
-
+        return(
+            <Image style={Styles.icon18} source={require('./asset/icon-unsync.png')}/>
+        );
     }
 
     render() {
@@ -149,38 +150,45 @@ export default class Account extends Component {
                 {this.renderHeader()}
 
                 <View style={[Styles.accountMenuBox, {marginTop: 40}]}>
-                    {
-                        this.renderMenuItem(
-                            require('./asset/icon-categories.png'), 
-                            'Categories', 
-                            false, 
-                            () => { this.props.navigation.navigate('categories') })
-                    }
-                </View>
-
-                <View style={Styles.accountMenuBox}>
-                    {
-                        this.renderMenuItem(
-                            require('./asset/icon-export.png'),
-                            'Export',
-                            true,
-                            () => { this.exportCSV() })
-                    }
                     <TouchableOpacity onPress={() => {this.backup()}}>
                         <View style={Styles.accountMenuItem}>
                             <Image style={Styles.accountMenuIcon} 
-                                source={require('./asset/icon-drive.png')}/>
+                                source={require('./asset/google-drive.png')}/>
                             <View style={Styles.accountMenuTextBox}>
                                 <Text style={Styles.accountMenuText}>{ 'Backup to Drive' }</Text>
                             </View>
                             <View style={Styles.versionTextBox}>
-                                {this.renderSyncText()}
+                                {this.renderSyncIcon()}
                             </View>
                         </View>
                     </TouchableOpacity>
                 </View>
 
                 <View style={Styles.accountMenuBox}>
+                     {
+                        this.renderMenuItem(
+                            require('./asset/icon-categories.png'), 
+                            'Categories', 
+                            true, 
+                            () => { this.props.navigation.navigate('categories') })
+                    }
+                    {
+                        this.renderMenuItem(
+                            require('./asset/icon-export.png'),
+                            'Export',
+                            false,
+                            () => { this.exportCSV() })
+                    }
+                </View>
+
+                <View style={Styles.accountMenuBox}>
+                    {
+                        this.renderMenuItem(
+                            require('./asset/icon-reset.png'),
+                            'Reset',
+                            true,
+                            () => { this.exportCSV() })
+                    }
                     {
                         this.renderMenuItem(
                             require('./asset/icon-licenses.png'), 

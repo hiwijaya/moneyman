@@ -237,11 +237,10 @@ export const Styles = StyleSheet.create({
     },
     accountMenuText: {
         fontSize: Fonts.h4,
-        color: Colors.darkGrey,
     },
     versionTextBox: {
-        width: 70,
         height: 60,
+        marginRight: 30,
         justifyContent: 'center',
     },
     versionText: {
