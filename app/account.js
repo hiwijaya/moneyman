@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 import { StackActions, NavigationActions } from 'react-navigation';
 import {Styles, Colors, Fonts} from './lib/styles';
+import Loading from './comp/loading';
 import Env from './lib/env';
 import GoogleService from './lib/google-service';
 
@@ -23,7 +24,7 @@ export default class Account extends Component {
             name: 'Unknown',
             email: '',
             photo: null,
-            sync: false
+            syncStatus: 'P'     // Y/N/P --> Yes/No/Processing 
         };
     }
 
@@ -134,14 +135,21 @@ export default class Account extends Component {
     }
 
     renderSyncIcon(){
-        if(this.state.sync){
+        if (this.state.syncStatus === 'Y') {
             return(
                 <Image style={Styles.icon18} source={require('./asset/icon-checked-primary.png')}/>
             );
         }
+        else if(this.state.syncStatus === 'N'){
+            return(
+                <Image style={Styles.icon18} source={require('./asset/icon-unsync.png')}/>
+            );
+        }
+
         return(
-            <Image style={Styles.icon18} source={require('./asset/icon-unsync.png')}/>
+            <Loading/>
         );
+        
     }
 
     render() {
