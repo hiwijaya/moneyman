@@ -63,6 +63,8 @@ export default class TransactionDetail extends Component {
                     text: 'YES',
                     onPress: () => {
                         Env.deleteTransaction(id);
+                        Env.writeStorage(Env.key.BACKUP_SYNC, 'N');
+                        
                         ToastAndroid.show('Transaction deleted', ToastAndroid.SHORT);
                         this.props.navigation.state.params.onNavigateBack(null);
                         this.props.navigation.goBack();

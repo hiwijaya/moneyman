@@ -311,6 +311,8 @@ export default class AddTransaction extends Component {
         
         Env.saveTransaction(t);
 
+        Env.writeStorage(Env.key.BACKUP_SYNC, 'N');
+
         ToastAndroid.show('Transaction saved', ToastAndroid.SHORT);
         this.props.navigation.state.params.onNavigateBack(t);
         this.props.navigation.goBack();
