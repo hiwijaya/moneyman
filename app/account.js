@@ -3,6 +3,7 @@ import {
     View, 
     Text,
     Image,
+    ActivityIndicator,
     TouchableOpacity, 
     StatusBar,
     ScrollView,
@@ -10,7 +11,6 @@ import {
 } from 'react-native';
 import { StackActions, NavigationActions } from 'react-navigation';
 import {Styles, Colors, Fonts} from './lib/styles';
-import Loading from './comp/loading';
 import Env from './lib/env';
 import GoogleService from './lib/google-service';
 
@@ -147,7 +147,7 @@ export default class Account extends Component {
         }
 
         return(
-            <Loading/>
+            <ActivityIndicator color={Colors.primary}/>
         );
         
     }
