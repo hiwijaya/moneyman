@@ -3,6 +3,7 @@ import {
     View, 
     Text,
     Image,
+    ToastAndroid,
     ActivityIndicator,
     TouchableOpacity, 
     StatusBar,
@@ -24,28 +25,42 @@ export default class Account extends Component {
             name: 'Unknown',
             email: '',
             photo: null,
-            syncStatus: 'P'     // Y/N/P --> Yes/No/Processing 
+            syncStatus: 'N'     // Y/N/P --> Yes/No/Processing 
         };
     }
 
     componentDidMount() {
+        
         const userInfo = Env.readStorage(Env.key.USER_INFO);
-        const sync = !!Env.readStorage(Env.key.SYNCED);
+        const sync = Env.readStorage(Env.key.BACKUP_SYNC);
         this.setState({
             name: userInfo.user.name,
             email: userInfo.user.email,
-            photo: userInfo.user.photo
+            photo: userInfo.user.photo,
+            syncStatus: sync
         });
 
         this.googleService = new GoogleService();
     }
 
     backup(){
-        const database = Env.getDatabase();
+        if(this.state.syncStatus === 'Y'){
+            ToastAndroid.show('Already backup', ToastAndroid.SHORT);
+            return;
+        }
+        ToastAndroid.show('Backing up..', ToastAndroid.LONG);
+        this.setState({
+            syncStatus: 'P'
+        });
 
+        const database = Env.getDatabase();
         this.googleService.upload(database, 
             () => {
-                Alert.alert('Backup Completed', `Last backup: ${database.last_updated}`);
+                Env.writeStorage(Env.key.BACKUP_SYNC, 'Y');
+                this.setState({
+                    syncStatus: 'Y'
+                });
+                ToastAndroid.show('Backup completed', ToastAndroid.SHORT);
             });
     }
 
@@ -137,17 +152,17 @@ export default class Account extends Component {
     renderSyncIcon(){
         if (this.state.syncStatus === 'Y') {
             return(
-                <Image style={Styles.icon18} source={require('./asset/icon-checked-primary.png')}/>
+                <Image style={Styles.icon24} source={require('./asset/icon-sync.png')}/>
             );
         }
-        else if(this.state.syncStatus === 'N'){
+        else if(this.state.syncStatus === 'P'){
             return(
-                <Image style={Styles.icon18} source={require('./asset/icon-unsync.png')}/>
+                <ActivityIndicator color={Colors.primary}/>
             );
         }
 
         return(
-            <ActivityIndicator color={Colors.primary}/>
+            <Image style={Styles.icon24} source={require('./asset/icon-unsync.png')}/>
         );
         
     }
