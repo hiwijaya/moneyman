@@ -21,6 +21,8 @@ export default class Signin extends Component {
     signIn = () => {
         this.googleService.signIn((userInfo) => {
 
+            // TODO: restore backup data
+
             ToastAndroid.show(`Welcome, ${userInfo.user.name}`, ToastAndroid.SHORT);
 
             const resetAction = StackActions.reset({
