@@ -53,7 +53,7 @@ export default class Account extends Component {
         }
         ToastAndroid.show('Backing up..', ToastAndroid.LONG);
         this.setState({
-            syncStatus: 'P'
+            backupStatus: 'P'
         });
 
         const database = Env.getDatabase();

@@ -55,7 +55,7 @@ export default class Categories extends Component {
                     onPress: () => {
                         Env.deleteCategory(id);
                         this.setCategories();
-                        Env.writeStorage(Env.key.BACKUP_SYNC, 'N');
+                        Env.writeStorage(Env.key.BACKUP_STATUS, 'U');
                         ToastAndroid.show('Category deleted', ToastAndroid.SHORT);
                     }
                 }
