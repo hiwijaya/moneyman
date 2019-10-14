@@ -56,6 +56,10 @@ export default class Env {
         return false;
     }
 
+    static formatIso(date){
+        return moment(date).toISOString();
+    }
+
     // return Jul
     static formatDate(date, pattern){
         if(date !== null){
@@ -128,7 +132,8 @@ export default class Env {
         USER_INFO: 'USER_INFO',         // refer to 'userInfo' object from react-native-google-signin
         ACCESS_TOKEN: 'ACCESS_TOKEN',
         BACKUP_FILE_ID: 'FILE_ID',
-        BACKUP_SYNC: 'BACKUP_SYNC',
+        BACKUP_STATUS: 'BACKUP_STATUS', // N/S/U --> None/Sync/Unsync
+        BACKUP_TIME: 'BACKUP_TIME'
     }
 
     static schema = {

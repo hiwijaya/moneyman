@@ -87,17 +87,17 @@ export default class Home extends Component {
                     }}>
                     <View style={Styles.periodButtonBox}>
                         <Text style={Styles.periodButtonLabel}>{this.state.monthName}</Text>
-                        <Image style={Styles.icon8} source={require('./asset/icon-down.png')}/>
+                        <Image style={Styles.icon8} source={require('./asset/down.png')}/>
                     </View>
                 </TouchableOpacity>
                 <View style={Styles.actionbarButtonBox}>
                     <TouchableOpacity style={Styles.actionbarButton} 
                         onPress={() => {this.props.navigation.navigate('pie');}}>
-                        <Image style={Styles.icon24} source={require('./asset/icon-chart.png')}/>
+                        <Image style={Styles.icon24} source={require('./asset/chart.png')}/>
                     </TouchableOpacity>
                     <TouchableOpacity style={Styles.actionbarButton}
                         onPress={() => {this.props.navigation.navigate('account');}}>
-                        <Image style={Styles.icon24} source={require('./asset/icon-user.png')}/>
+                        <Image style={Styles.icon24} source={require('./asset/account.png')}/>
                     </TouchableOpacity>
                 </View>
             </View>
@@ -137,7 +137,7 @@ export default class Home extends Component {
                     });
                 }}>
                 <Image style={Styles.icon14} 
-                    source={require('./asset/icon-add.png')}/>
+                    source={require('./asset/add.png')}/>
             </TouchableOpacity>
         );
     }

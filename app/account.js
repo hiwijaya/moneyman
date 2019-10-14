@@ -22,29 +22,32 @@ export default class Account extends Component {
         super(props);
 
         this.state = {
-            name: 'Unknown',
+            name: 'User',
             email: '',
             photo: null,
-            syncStatus: 'N'     // Y/N/P --> Yes/No/Processing 
+            backupStatus: 'N', // N/S/U + P (Processing)
+            backupTime: ''
         };
     }
 
     componentDidMount() {
         
         const userInfo = Env.readStorage(Env.key.USER_INFO);
-        const sync = Env.readStorage(Env.key.BACKUP_SYNC);
+        const backupStatus = Env.readStorage(Env.key.BACKUP_STATUS);
+        const backupTime = Env.readStorage(Env.key.BACKUP_TIME);
         this.setState({
             name: userInfo.user.name,
             email: userInfo.user.email,
             photo: userInfo.user.photo,
-            syncStatus: sync
+            backupStatus: (backupStatus === null) ? 'N' : backupStatus,
+            backupTime: `last sync: ${backupTime}`
         });
 
         this.googleService = new GoogleService();
     }
 
     backup(){
-        if(this.state.syncStatus === 'Y'){
+        if (this.state.backupStatus === 'S') {
             ToastAndroid.show('Already backup', ToastAndroid.SHORT);
             return;
         }
@@ -56,21 +59,22 @@ export default class Account extends Component {
         const database = Env.getDatabase();
         this.googleService.upload(database, 
             () => {
-                Env.writeStorage(Env.key.BACKUP_SYNC, 'Y');
+
+                const backupTime = Env.formatIso(new Date());
+                Env.writeStorage(Env.key.BACKUP_STATUS, 'S');
+                Env.writeStorage(Env.key.BACKUP_TIME, backupTime);
+
                 this.setState({
-                    syncStatus: 'Y'
+                    backupStatus: 'S',
+                    backupTime: `last sync: ${backupTime}`
                 });
                 ToastAndroid.show('Backup completed', ToastAndroid.SHORT);
+
             });
     }
 
     exportCSV(){
-        // const fileId = Env.readStorage(Env.key.BACKUP_FILE_ID);
-        // this.googleService.download(fileId);
-
-        this.googleService.restoreBackup(() =>{
-            console.log('success');
-        });
+        //  export CSV
     }
 
 
@@ -118,7 +122,7 @@ export default class Account extends Component {
                     <View style={[Styles.actionbarBox, {elevation: 0}]}>
                         <TouchableOpacity style={Styles.backButton} 
                             onPress={() => { this.props.navigation.goBack(); }}>
-                            <Image style={Styles.icon18} source={require('./asset/icon-back.png')}/>
+                            <Image style={Styles.icon18} source={require('./asset/back.png')}/>
                         </TouchableOpacity>
                         <Text style={Styles.actionbarTitle}>Account</Text>
                     </View>
@@ -149,22 +153,39 @@ export default class Account extends Component {
         );
     }
 
-    renderSyncIcon(){
-        if (this.state.syncStatus === 'Y') {
-            return(
-                <Image style={Styles.icon24} source={require('./asset/icon-sync.png')}/>
-            );
-        }
-        else if(this.state.syncStatus === 'P'){
-            return(
-                <ActivityIndicator color={Colors.primary}/>
-            );
-        }
+    
 
+    renderBackupMenu() {
         return(
-            <Image style={Styles.icon24} source={require('./asset/icon-unsync.png')}/>
+            <View style={[Styles.accountMenuBox, {marginTop: 40}]}>
+                <TouchableOpacity onPress={() => {this.backup()}}>
+                    <View style={Styles.accountMenuItem}>
+                        <Image style={Styles.accountMenuIcon} 
+                            source={require('./asset/backup.png')}/>
+                        <View style={Styles.accountMenuTextBox}>
+                            <Text style={Styles.accountMenuText}>{ 'Backup to Drive' }</Text>
+                            {(this.state.backupStatus !== 'N') && <Text style={Styles.legendText}>{this.state.backupTime}</Text>}
+                        </View>
+                        <View style={Styles.versionTextBox}>
+                            {this.renderSyncIcon()}
+                        </View>
+                    </View>
+                </TouchableOpacity>
+            </View>
         );
-        
+    }
+
+    renderSyncIcon(){
+        if (this.state.backupStatus === 'S') {
+            return(<Image style={Styles.icon18} source={require('./asset/sync.png')}/>);
+        }
+        if (this.state.backupStatus === 'U') {
+            return(<Image style={Styles.icon18} source={require('./asset/unsync.png')}/>);
+        }
+        else if (this.state.backupStatus === 'P') {
+            return(<ActivityIndicator color={Colors.primary}/>);
+        }
+        return null;
     }
 
     render() {
@@ -172,32 +193,19 @@ export default class Account extends Component {
             <View style={Styles.sceneBox}>
                 {this.renderHeader()}
 
-                <View style={[Styles.accountMenuBox, {marginTop: 40}]}>
-                    <TouchableOpacity onPress={() => {this.backup()}}>
-                        <View style={Styles.accountMenuItem}>
-                            <Image style={Styles.accountMenuIcon} 
-                                source={require('./asset/google-drive.png')}/>
-                            <View style={Styles.accountMenuTextBox}>
-                                <Text style={Styles.accountMenuText}>{ 'Backup to Drive' }</Text>
-                            </View>
-                            <View style={Styles.versionTextBox}>
-                                {this.renderSyncIcon()}
-                            </View>
-                        </View>
-                    </TouchableOpacity>
-                </View>
+                {this.renderBackupMenu()}
 
                 <View style={Styles.accountMenuBox}>
                      {
                         this.renderMenuItem(
-                            require('./asset/icon-categories.png'), 
+                            require('./asset/categories.png'), 
                             'Categories', 
                             true, 
                             () => { this.props.navigation.navigate('categories') })
                     }
                     {
                         this.renderMenuItem(
-                            require('./asset/icon-export.png'),
+                            require('./asset/export.png'),
                             'Export',
                             false,
                             () => { this.exportCSV() })
@@ -207,21 +215,21 @@ export default class Account extends Component {
                 <View style={Styles.accountMenuBox}>
                     {
                         this.renderMenuItem(
-                            require('./asset/icon-reset.png'),
+                            require('./asset/reset.png'),
                             'Reset',
                             true,
                             () => { this.exportCSV() })
                     }
                     {
                         this.renderMenuItem(
-                            require('./asset/icon-licenses.png'), 
+                            require('./asset/licenses.png'), 
                             'Licenses', 
                             true, 
                             () => {})
                     }
                     {
                         this.renderMenuItem(
-                            require('./asset/icon-rate.png'),
+                            require('./asset/rate.png'),
                             'Rate Us',
                             true,
                             () => { this.props.navigation.popToTop() })
@@ -229,7 +237,7 @@ export default class Account extends Component {
                     <TouchableOpacity onPress={() => {Alert.alert('Moneyman')}}>
                         <View style={Styles.accountMenuItem}>
                             <Image style={Styles.accountMenuIcon} 
-                                source={require('./asset/icon-about.png')}/>
+                                source={require('./asset/about.png')}/>
                             <View style={Styles.accountMenuTextBox}>
                                 <Text style={Styles.accountMenuText}>{ 'About' }</Text>
                             </View>

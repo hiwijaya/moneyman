@@ -75,7 +75,7 @@ export default class Categories extends Component {
                 <View style={[Styles.actionbarBox, {elevation: 0}]}>
                     <TouchableOpacity style={Styles.backButton} 
                         onPress={() => { this.props.navigation.goBack(); }}>
-                        <Image style={Styles.icon18} source={require('./asset/icon-back.png')}/>
+                        <Image style={Styles.icon18} source={require('./asset/back.png')}/>
                     </TouchableOpacity>
                     <Text style={Styles.actionbarTitle}>Categories</Text>
                 </View>
@@ -107,7 +107,7 @@ export default class Categories extends Component {
                             <Text style={{flex: 1}}>{item.title}</Text>
                             <TouchableOpacity style={Styles.deleteIconBox} 
                                 onPress={() => this.deleteCategory(item.id)}>
-                                <Image style={Styles.icon18} source={require('./asset/icon-delete-red.png')}/>
+                                <Image style={Styles.icon18} source={require('./asset/delete.png')}/>
                             </TouchableOpacity>
                         </View>
                     );
@@ -133,7 +133,7 @@ export default class Categories extends Component {
                     }}>
                     <View style={Styles.listAddBox}>
                         <Image style={[Styles.icon12, {marginRight: 5}]} 
-                            source={require('./asset/icon-add.png')}/>
+                            source={require('./asset/add.png')}/>
                         <Text>New Category</Text>
                     </View>
                 </TouchableOpacity>

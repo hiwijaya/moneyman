@@ -115,7 +115,7 @@ export default class Pie extends Component {
             <View style={[Styles.actionbarBox, {justifyContent: 'flex-start'}]}>
                 <TouchableOpacity style={Styles.backButton} 
                     onPress={() => { this.props.navigation.goBack(); }}>
-                    <Image style={Styles.icon18} source={require('./asset/icon-back.png')}/>
+                    <Image style={Styles.icon18} source={require('./asset/back.png')}/>
                 </TouchableOpacity>
                 <TouchableOpacity 
                     onPress={() => {
@@ -128,7 +128,7 @@ export default class Pie extends Component {
                     }}>
                     <View style={Styles.periodButtonBox}>
                         <Text style={Styles.periodButtonLabel}>{this.state.monthName}</Text>
-                        <Image style={Styles.icon8} source={require('./asset/icon-down.png')}/>
+                        <Image style={Styles.icon8} source={require('./asset/down.png')}/>
                     </View>
                 </TouchableOpacity>
             </View>

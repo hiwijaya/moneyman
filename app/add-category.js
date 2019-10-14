@@ -66,14 +66,14 @@ export default class AddCategory extends Component {
             <View style={Styles.actionbarBox}>
                 <TouchableOpacity style={Styles.backButton} 
                     onPress={() => { this.props.navigation.goBack(); }}>
-                    <Image style={Styles.icon18} source={require('./asset/icon-back.png')}/>
+                    <Image style={Styles.icon18} source={require('./asset/back.png')}/>
                 </TouchableOpacity>
                 <Text style={Styles.actionbarTitle}>
                     {this.state.transactionType === Env.EXPENSE_TYPE ? 'Add Expense Category' : 'Add Income Category'}
                 </Text>
                 <TouchableOpacity style={Styles.backButton} 
                     onPress={() => this.saveCategory() }>
-                    <Image style={Styles.icon18} source={require('./asset/icon-checked.png')}/>
+                    <Image style={Styles.icon18} source={require('./asset/checked.png')}/>
                 </TouchableOpacity>
             </View>
         );

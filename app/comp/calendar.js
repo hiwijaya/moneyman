@@ -82,12 +82,12 @@ export default class Calendar extends Component {
                         <View style={Styles.calendarYearBox}>
                             <TouchableOpacity style={Styles.calendarYearButton} 
                                 onPress={() => this.onChangeYear('prev')}>
-                                <Image style={Styles.icon12} source={require('../asset/icon-left.png')}/>
+                                <Image style={Styles.icon12} source={require('../asset/left-grey.png')}/>
                             </TouchableOpacity>
                             <Text style={{color: Colors.grey}}>{this.state.year}</Text>
                             <TouchableOpacity style={[Styles.calendarYearButton, {alignItems: 'flex-end'}]}
                                 onPress={() => this.onChangeYear('next')}>
-                                <Image style={Styles.icon12} source={require('../asset/icon-right.png')}/>
+                                <Image style={Styles.icon12} source={require('../asset/right-grey.png')}/>
                             </TouchableOpacity>
                         </View>
                         <View style={Styles.calendarRowBox}>

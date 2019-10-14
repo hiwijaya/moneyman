@@ -87,12 +87,12 @@ export default class TransactionDetail extends Component {
                         this.props.navigation.state.params.onNavigateBack(null);
                         this.props.navigation.goBack();
                     }}>
-                    <Image style={Styles.icon18} source={require('./asset/icon-back.png')}/>
+                    <Image style={Styles.icon18} source={require('./asset/back.png')}/>
                 </TouchableOpacity>
                 <Text style={Styles.actionbarTitle}>Details</Text>
                 <TouchableOpacity style={Styles.backButton} 
                     onPress={() => this.deleteTransaction(this.transaction.id) }>
-                    <Image style={Styles.icon18} source={require('./asset/icon-delete.png')}/>
+                    <Image style={Styles.icon18} source={require('./asset/delete.png')}/>
                 </TouchableOpacity>
             </View>
         );
@@ -108,7 +108,7 @@ export default class TransactionDetail extends Component {
                     });
                 }}>
                 <Image style={Styles.icon14} 
-                    source={require('./asset/icon-edit.png')}/>
+                    source={require('./asset/edit.png')}/>
             </TouchableOpacity>
         );
     }

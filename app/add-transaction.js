@@ -324,12 +324,12 @@ export default class AddTransaction extends Component {
             <View style={[Styles.actionbarBox, {justifyContent: 'flex-start'}]}>
                 <TouchableOpacity style={Styles.backButton} 
                     onPress={() => { this.props.navigation.goBack(); }}>
-                    <Image style={Styles.icon18} source={require('./asset/icon-back.png')}/>
+                    <Image style={Styles.icon18} source={require('./asset/back.png')}/>
                 </TouchableOpacity>
                 <TouchableOpacity onPress={() => {this.setState({showCombobox: !this.state.showCombobox}) }}>
                     <View style={Styles.periodButtonBox}>
                         <Text style={Styles.periodButtonLabel}>{this.state.transactionType}</Text>
-                        <Image style={Styles.icon8} source={require('./asset/icon-down.png')}/>
+                        <Image style={Styles.icon8} source={require('./asset/down.png')}/>
                     </View>
                 </TouchableOpacity>
             </View>
@@ -367,7 +367,7 @@ export default class AddTransaction extends Component {
     renderChecked(own){
         if(this.state.transactionType === own){
             return(
-                <Image style={Styles.icon18} source={require('./asset/icon-checked-primary.png')}/>
+                <Image style={Styles.icon18} source={require('./asset/checked.png')}/>
             );
         }
         return null;
@@ -481,7 +481,7 @@ export default class AddTransaction extends Component {
                         <TouchableOpacity style={Styles.boardKey}
                             onPress={() => this.onType('+')}>
                             <Image style={Styles.icon10} 
-                                source={require('./asset/icon-add.png')}/>
+                                source={require('./asset/add.png')}/>
                         </TouchableOpacity>
                     </View>
                     <View style={Styles.boardKeyBox}>
@@ -500,7 +500,7 @@ export default class AddTransaction extends Component {
                         <TouchableOpacity style={Styles.boardKey}
                             onPress={() => this.onType('-')}>
                             <Image style={Styles.icon10} 
-                                source={require('./asset/icon-minus.png')}/>
+                                source={require('./asset/minus.png')}/>
                         </TouchableOpacity>
                     </View>
                     <View style={Styles.boardKeyBox}>
@@ -515,14 +515,14 @@ export default class AddTransaction extends Component {
                         <TouchableOpacity style={Styles.boardKey}
                             onPress={() => this.onType('D')}>
                             <Image style={Styles.icon18} 
-                                source={require('./asset/icon-backspace.png')}/>
+                                source={require('./asset/backspace.png')}/>
                         </TouchableOpacity>
                         <TouchableOpacity style={[Styles.boardKey, {backgroundColor: Colors.primary}]}
                             onPress={() => this.saveTransaction()}>
                             {
                                 (this.state.doCalculate) ? 
                                 <Text style={Styles.boardDigit}>=</Text> :
-                                <Image style={Styles.icon18} source={require('./asset/icon-checked.png')}/>
+                                <Image style={Styles.icon18} source={require('./asset/checked.png')}/>
                             }
                         </TouchableOpacity>
                     </View>

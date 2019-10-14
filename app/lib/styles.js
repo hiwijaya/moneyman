@@ -223,10 +223,10 @@ export const Styles = StyleSheet.create({
         alignItems: 'center',
     },
     accountMenuIcon: {
-        width: 24,
-        height: 24,
+        width: 20,
+        height: 20,
         marginLeft: 15,
-        marginRight: 30,
+        marginRight: 15,
     },
     accountMenuTextBox: {
         flex: 1,
