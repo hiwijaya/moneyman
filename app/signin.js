@@ -3,12 +3,14 @@ import {
     View, 
     Text,
     Image,
+    Alert,
     ToastAndroid,
     TouchableOpacity, 
 } from 'react-native';
 import { StackActions, NavigationActions } from 'react-navigation';
 import { Styles } from './lib/styles';
 import GoogleService from './lib/google-service';
+import Env from './lib/env';
 
 
 export default class Signin extends Component {
@@ -18,20 +20,49 @@ export default class Signin extends Component {
         this.googleService = new GoogleService();
     }
 
+    redirectToHome(userInfo){
+        ToastAndroid.show(`Welcome, ${userInfo.user.name}`, ToastAndroid.SHORT);
+        const resetAction = StackActions.reset({
+            index: 0,
+            actions: [NavigationActions.navigate({
+                routeName: 'home'
+            })],
+        });
+        this.props.navigation.dispatch(resetAction);
+    }
+
     signIn = () => {
-        this.googleService.signIn((userInfo) => {
+        this.googleService.signIn((userInfo, backupData) => {
 
-            // TODO: restore backup data
+            if(backupData !== null){
 
-            ToastAndroid.show(`Welcome, ${userInfo.user.name}`, ToastAndroid.SHORT);
+                Alert.alert(
+                    'Backup Founded',
+                    'Do you want to restore your data?',
+                    [{
+                            text: 'NO',
+                            onPress: () => {
+                                this.redirectToHome(userInfo);
+                            }
+                        },
+                        {
+                            text: 'YES',
+                            onPress: () => {
+                                // restoring data
+                                Env.restoreDatabase(backupData);
 
-            const resetAction = StackActions.reset({
-                index: 0,
-                actions: [NavigationActions.navigate({
-                    routeName: 'home'
-                })],
-            });
-            this.props.navigation.dispatch(resetAction);
+                                this.redirectToHome(userInfo);
+                            }
+                        }
+                    ]
+                );
+
+            }
+            else{
+                this.redirectToHome(userInfo);
+            }
+
+            
 
         });
     }

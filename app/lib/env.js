@@ -1,4 +1,8 @@
 import Realm from 'realm';
+import {
+    Alert,
+    ToastAndroid,
+} from 'react-native';
 import moment from 'moment';
 
 
@@ -224,6 +228,7 @@ export default class Env {
     }
 
 
+    // for backup
     static getDatabase(){
 
         let realm = new Realm({
@@ -258,9 +263,43 @@ export default class Env {
 
         return {
             last_updated: Env.now(),
-            category: categories,
-            transaction: transactions
+            categories: categories,
+            transactions: transactions
         }
+
+    }
+
+    static restoreDatabase(backupData){
+
+        ToastAndroid.show('Restoring your data..', ToastAndroid.SHORT);
+
+        let realm = new Realm({
+            schema: [Env.schema, Env.categorySchema, Env.transactionSchema]
+        });
+
+        // TODO: delete all current data before restore.
+
+        realm.write(() => {
+            const backupTime = backupData.last_updated;
+            const categories = backupData.categories;
+            const transactions = backupData.transactions;
+
+            // delete current database
+            let currentCategories = realm.objects('Category');
+            realm.delete(currentCategories);
+            let currentTransactions = realm.objects('Transaction');
+            realm.delete(currentTransactions);
+            
+
+            categories.forEach((value, index, array) => {
+                realm.create('Category', value);
+            });
+            transactions.forEach((value, index, array) => {
+                realm.create('Transaction', value);
+            });
+        });
+
+        ToastAndroid.show('Data restored', ToastAndroid.SHORT);
 
     }
 

@@ -1,5 +1,6 @@
 import {
-    Alert
+    Alert, 
+    ToastAndroid,
 } from 'react-native';
 import {
     GoogleSignin,
@@ -25,16 +26,41 @@ export default class GoogleService {
 
     }
 
-    // onSuccess(userInfo);
+    // onSuccess(userInfo, backupData);
     async signIn(onSuccess){
         try{
             // Check if device has Google Play Services installed
             await GoogleSignin.hasPlayServices({ showPlayServicesUpdateDialog: true });
 
+            // signin
             const userInfo = await GoogleSignin.signIn();
             Env.writeStorage(Env.key.USER_INFO, userInfo);
 
-            onSuccess(userInfo);
+
+            // check existing backup
+            ToastAndroid.show('Checking backup data..', ToastAndroid.LONG);
+            const token = await GoogleSignin.getTokens();
+            const options = this._configureGetOptions(token.accessToken);
+            let response = await fetch(`${this.URL}/files?spaces=appDataFolder&fields=files/id`, options);
+
+            // backup not found
+            if (response.status !== 200) {
+                console.log('NO BACKUP FILE');
+                onSuccess(userInfo, null);
+                return;
+            }
+
+            // backup founded, getting the file
+            let responseJson = await response.json();
+            console.log('all data drive: '+responseJson.files);
+            const fileId = (responseJson.files.length > 0) ? responseJson.files[0].id : null;
+            response = await fetch(`${this.URL}/files/${fileId}?alt=media`, options);
+            const backupData = await response.json();
+
+            console.log('FILEID: ' +fileId);
+
+            onSuccess(userInfo, backupData);
+
         }
         catch(error){
             this._handleError(error);
@@ -77,53 +103,8 @@ export default class GoogleService {
         onSuccess();
     }
 
-    async download() {
 
-        // get new access-token with signInSilently()
-        await GoogleSignin.signInSilently();
-        const token = await GoogleSignin.getTokens();
-        const accessToken = token.accessToken;
-
-        const fileId = Env.readStorage(Env.key.BACKUP_FILE_ID);
-
-        const options = this._configureGetOptions(accessToken);
-
-        let response = await fetch(`${this.URL}/files/${fileId}?alt=media`, options);
-        let responseJson = await response.json();
-
-        console.log(responseJson);
-
-        Alert.alert(responseJson.backup);
-
-    }
-
-    async restoreBackup(onSuccess){
-
-        const token = await GoogleSignin.getTokens();
-        const accessToken = token.accessToken;
-
-        const options = this._configureGetOptions(accessToken);
-
-        let response = await fetch(`${this.URL}/files?spaces=appDataFolder&fields=files/id`, options);
-
-        if(response.status !== 200){
-            console.log('STATUS 200 BRO');
-        }
-
-        let responseJson = await response.json();
-
-        const fileId = (responseJson.files.length > 0) ? responseJson.files[0].id : null;
-
-        response = await fetch(`${this.URL}/files/${fileId}?alt=media`, options);
-        responseJson = await response.json();
-
-        console.log(responseJson)
-
-
-
-    }
-
-
+   
     _createMultipartBody(body, isUpdate=false) {
 
         // google-drive-api multipart-upload defines the structure
