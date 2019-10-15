@@ -32,7 +32,7 @@ export default class Signin extends Component {
     }
 
     signIn = () => {
-        this.googleService.signIn((userInfo, backupData) => {
+        this.googleService.signIn((userInfo, fileId, backupData) => {
 
             if(backupData !== null){
 
@@ -49,7 +49,7 @@ export default class Signin extends Component {
                             text: 'YES',
                             onPress: () => {
                                 // restoring data
-                                Env.restoreDatabase(backupData);
+                                Env.restoreDatabase(fileId, backupData);
 
                                 this.redirectToHome(userInfo);
                             }

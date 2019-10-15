@@ -269,28 +269,30 @@ export default class Env {
 
     }
 
-    static restoreDatabase(backupData){
+    static restoreDatabase(fileId, backupData){
 
         ToastAndroid.show('Restoring your data..', ToastAndroid.SHORT);
+
+        const backupTime = backupData.last_updated;
+        const categories = backupData.categories;
+        const transactions = backupData.transactions;
+
+        Env.writeStorage(Env.key.BACKUP_STATUS, 'S');
+        Env.writeStorage(Env.key.BACKUP_TIME, backupTime);
+        Env.writeStorage(Env.key.BACKUP_FILE_ID, fileId);
 
         let realm = new Realm({
             schema: [Env.schema, Env.categorySchema, Env.transactionSchema]
         });
 
-        // TODO: delete all current data before restore.
-
         realm.write(() => {
-            const backupTime = backupData.last_updated;
-            const categories = backupData.categories;
-            const transactions = backupData.transactions;
-
+            
             // delete current database
             let currentCategories = realm.objects('Category');
             realm.delete(currentCategories);
             let currentTransactions = realm.objects('Transaction');
             realm.delete(currentTransactions);
             
-
             categories.forEach((value, index, array) => {
                 realm.create('Category', value);
             });

@@ -26,7 +26,7 @@ export default class GoogleService {
 
     }
 
-    // onSuccess(userInfo, backupData);
+    // onSuccess(userInfo, fileId, backupData);
     async signIn(onSuccess){
         try{
             // Check if device has Google Play Services installed
@@ -46,7 +46,7 @@ export default class GoogleService {
             // backup not found
             if (response.status !== 200) {
                 console.log('NO BACKUP FILE');
-                onSuccess(userInfo, null);
+                onSuccess(userInfo, null, null);
                 return;
             }
 
@@ -59,7 +59,7 @@ export default class GoogleService {
 
             console.log('FILEID: ' +fileId);
 
-            onSuccess(userInfo, backupData);
+            onSuccess(userInfo, fileId, backupData);
 
         }
         catch(error){

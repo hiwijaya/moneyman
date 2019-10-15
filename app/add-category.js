@@ -50,7 +50,7 @@ export default class AddCategory extends Component {
         }
         Env.addCategory(newCategory);
 
-        Env.writeStorage(Env.key.BACKUP_STATUS, 'u');
+        Env.writeStorage(Env.key.BACKUP_STATUS, 'U');
 
         ToastAndroid.show('Category added', ToastAndroid.SHORT);
         this.props.navigation.state.params.onNavigateBack(null);

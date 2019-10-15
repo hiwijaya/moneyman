@@ -77,22 +77,8 @@ export default class Account extends Component {
 
     exportCSV(){
         //  export CSV
+        ToastAndroid.show('Coming soon..', ToastAndroid.SHORT);
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
     signOut = () => {
