@@ -31,8 +31,6 @@ export default class Account extends Component {
     }
 
     componentDidMount() {
-
-        // FIXME: Bug on 'backupTime' when first time do transaction and doesnt backup yet
         
         const userInfo = Env.readStorage(Env.key.USER_INFO);
         const backupStatus = Env.readStorage(Env.key.BACKUP_STATUS);

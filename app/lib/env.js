@@ -227,6 +227,14 @@ export default class Env {
         }
     }
 
+    static changeBackupStatus() {
+        let currentStatus = Env.readStorage(Env.key.BACKUP_STATUS);
+        if(currentStatus === null || currentStatus === 'N'){
+            return;
+        }
+        Env.writeStorage(Env.key.BACKUP_STATUS, 'U');
+    }
+
 
     // for backup
     static getDatabase(){
