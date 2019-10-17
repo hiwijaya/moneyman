@@ -313,6 +313,21 @@ export default class Env {
 
     }
 
+    reset() {
+
+        let realm = new Realm({
+            schema: [Env.schema, Env.categorySchema, Env.transactionSchema]
+        });
+
+        realm.write(() => {
+            let currentCategories = realm.objects('Category');
+            realm.delete(currentCategories);
+            let currentTransactions = realm.objects('Transaction');
+            realm.delete(currentTransactions);
+        });
+
+    }
+
 
     static addCategory(category) {
         // consider add logic to check existing id.
