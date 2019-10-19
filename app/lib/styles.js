@@ -322,6 +322,15 @@ export const Styles = StyleSheet.create({
         alignItems: 'center',
     },
 
+    illustrationImage: {
+        width: 180, 
+        height: 140, 
+        marginVertical: 15,
+    },
+    illustrationImageText: {
+        color: Colors.grey
+    },
+
     homeScroll: {
         display: 'flex',
         flex: 1,

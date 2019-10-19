@@ -188,13 +188,21 @@ export default class Home extends Component {
         return(
             <FlatList style={Styles.homeScroll} data={this.state.transactions} 
                 keyExtractor={(item, index) => index.toString()}
-                ListHeaderComponent={() => {
-                    return(this.renderResume());
-                }}
+                ListHeaderComponent={this.renderResume()}
+                ListEmptyComponent={this.renderEmpty()}
                 renderItem={({item}) => {
                     return(this.renderTransactionCard(item));
                 }}
             />
+        );
+    }
+
+    renderEmpty() {
+        return(
+            <View style={Styles.center}>
+                <Image style={Styles.illustrationImage} source={require('./asset/empty.png')}/>
+                <Text style={Styles.illustrationImageText}>No Transaction Today</Text>
+            </View>
         );
     }
 

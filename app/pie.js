@@ -25,6 +25,7 @@ export default class Pie extends Component {
             period: Env.formatMonthYear(Env.now()),
             transactionData: [],
             pieData: [],
+            noTransaction: false
         };
 
         this.refCalendar = null;
@@ -47,7 +48,9 @@ export default class Pie extends Component {
         this.setState({
             transactionData: (isExpense) ? this.expenseData : this.incomeData,
             pieData: (isExpense) ? this.expensePie : this.incomePie,
+            noTransaction: (this.expenseData.length === 0 && this.incomeData.length === 0)
         });
+
     }
 
     switchPieData(){
@@ -191,6 +194,15 @@ export default class Pie extends Component {
         );
     }
 
+    renderEmpty() {
+        return(
+            <View style={Styles.center}>
+                <Image style={Styles.illustrationImage} source={require('./asset/empty.png')}/>
+                <Text style={Styles.illustrationImageText}>No Data Available</Text>
+            </View>
+        );
+    }
+
 
     render() {
         return (
@@ -206,8 +218,9 @@ export default class Pie extends Component {
                 }}/>
 
                 <ScrollView style={Styles.homeScroll}>
-                    {this.renderChart()}
-                    {this.renderList()}
+                    {(!this.state.noTransaction)&&this.renderChart()}
+                    {(!this.state.noTransaction)&&this.renderList()}
+                    {(this.state.noTransaction)&&this.renderEmpty()}
                 </ScrollView>
                 
             </View>
