@@ -313,7 +313,9 @@ export default class Env {
 
     }
 
-    reset() {
+    static reset() {
+
+        // TODO: also delete file backup on Google Drive
 
         let realm = new Realm({
             schema: [Env.schema, Env.categorySchema, Env.transactionSchema]
@@ -324,6 +326,9 @@ export default class Env {
             realm.delete(currentCategories);
             let currentTransactions = realm.objects('Transaction');
             realm.delete(currentTransactions);
+
+            let currentEnv = realm.objects('Env');
+            realm.delete(currentEnv);
         });
 
     }

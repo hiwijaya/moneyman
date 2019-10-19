@@ -237,6 +237,7 @@ export const Styles = StyleSheet.create({
     },
     accountMenuText: {
         fontSize: Fonts.h4,
+        fontWeight: 'bold'
     },
     versionTextBox: {
         height: 60,

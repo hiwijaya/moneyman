@@ -78,6 +78,29 @@ export default class Account extends Component {
         ToastAndroid.show('Coming soon..', ToastAndroid.SHORT);
     }
 
+    reset() {
+        Alert.alert(
+            'RESET',
+            'Are you sure want to reset all data?',
+            [{
+                    text: 'CANCEL',
+                },
+                {
+                    text: 'YES',
+                    onPress: () => {
+                        Env.reset();
+
+                        Env.initDefaultCategories();
+
+                        Alert.alert('Reset Completed', 'please signin again');
+                        this.signOut();
+                    }
+                }
+            ]
+        );
+
+    }
+
 
     signOut = () => {
 
@@ -204,7 +227,7 @@ export default class Account extends Component {
                             require('./asset/reset.png'),
                             'Reset',
                             true,
-                            () => { this.exportCSV() })
+                            () => { this.reset() })
                     }
                     {
                         this.renderMenuItem(
