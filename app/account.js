@@ -251,7 +251,7 @@ export default class Account extends Component {
                                 <Text style={Styles.accountMenuText}>{ 'About' }</Text>
                             </View>
                             <View style={Styles.versionTextBox}>
-                                <Text style={Styles.versionText}>{ 'v1.0(dev)' }</Text>
+                                <Text style={Styles.versionText}>{ 'v1.0' }</Text>
                             </View>
                         </View>
                     </TouchableOpacity>

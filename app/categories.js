@@ -134,7 +134,7 @@ export default class Categories extends Component {
                     <View style={Styles.listAddBox}>
                         <Image style={[Styles.icon12, {marginRight: 5}]} 
                             source={require('./asset/add.png')}/>
-                        <Text>New Category</Text>
+                        <Text style={{fontWeight: 'bold'}}>New Category</Text>
                     </View>
                 </TouchableOpacity>
             </View>
