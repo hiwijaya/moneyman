@@ -72,7 +72,7 @@ export default class Signin extends Component {
         return (
             <View style={[Styles.sceneBox, Styles.center]}>
                 <Image style={{width: 256, height: 210, marginBottom: 30}} 
-                    source={require('./asset/worthy.png')}/>
+                    source={require('./asset/welcome.png')}/>
 
                 <TouchableOpacity style={Styles.googleButton} onPress={this.signIn}>
                     <Image style={Styles.icon24} source={require('./asset/google.png')}/>
