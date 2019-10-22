@@ -43,7 +43,12 @@ export default class Pie extends Component {
         this.expensePie = this.convertToPieData(this.expenseData);
         this.incomePie = this.convertToPieData(this.incomeData);
 
-        let isExpense = (this.state.transactionType === Env.EXPENSE_TYPE);
+        let selectedType = this.state.transactionType;
+        if(this.expensePie.length === 0 && this.incomePie.length > 0){
+            selectedType = Env.INCOME_TYPE;
+        }
+
+        let isExpense = (selectedType === Env.EXPENSE_TYPE);
 
         this.setState({
             transactionData: (isExpense) ? this.expenseData : this.incomeData,
@@ -170,7 +175,9 @@ export default class Pie extends Component {
     renderList(){
         return(
             <View style={Styles.pieListBox}>
-                <Text style={[Styles.legendText, {marginBottom: 5}]}>Expenses List</Text>
+                <Text style={[Styles.legendText, {marginBottom: 5}]}>
+                    {(this.state.transactionType === Env.EXPENSE_TYPE) ? 'Expenses List' : 'Income List'}
+                </Text>
                 {
                     this.state.transactionData.map((item, index) => {
                         return(
