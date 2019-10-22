@@ -8,6 +8,7 @@ import {
 } from 'react-native-google-signin';
 import config from '../../config';
 import Env from './env';
+import { file } from '@babel/types';
 
 
 export default class GoogleService {
@@ -43,21 +44,18 @@ export default class GoogleService {
             const options = this._configureGetOptions(token.accessToken);
             let response = await fetch(`${this.URL}/files?spaces=appDataFolder&fields=files/id`, options);
 
+            let files = await response.json().files;
+
             // backup not found
-            if (response.status !== 200) {
-                console.log('NO BACKUP FILE');
+            if (file.length === 0) {
                 onSuccess(userInfo, null, null);
                 return;
             }
 
             // backup founded, getting the file
-            let responseJson = await response.json();
-            console.log('all data drive: '+responseJson.files);
-            const fileId = (responseJson.files.length > 0) ? responseJson.files[0].id : null;
+            const fileId = files[0].id;
             response = await fetch(`${this.URL}/files/${fileId}?alt=media`, options);
             const backupData = await response.json();
-
-            console.log('FILEID: ' +fileId);
 
             onSuccess(userInfo, fileId, backupData);
 
