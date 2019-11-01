@@ -152,29 +152,30 @@ export default class GoogleService {
 
     _handleError(error){
         if(error.code === '401'){
-            Alert.alert('invalid credentials');
+            ToastAndroid.show('Invalid credentials', ToastAndroid.SHORT);
         }
         else if(error.code === '404'){
-            Alert.alert('backup not found');
+            ToastAndroid.show('Backup not found', ToastAndroid.SHORT);
         }
         else if (error.code === statusCodes.SIGN_IN_CANCELLED) {
             // sign in was cancelled
-            Alert.alert('cancelled');
+            ToastAndroid.show('Cancelled', ToastAndroid.SHORT);
         } 
         else if (error.code === statusCodes.IN_PROGRESS) {
             // operation in progress already
-            Alert.alert('in progress');
+            ToastAndroid.show('On progress', ToastAndroid.SHORT);
         } 
         else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
-            Alert.alert('play services not available or outdated');
+            ToastAndroid.show('Play services not available or outdated', ToastAndroid.SHORT);
         } 
+        else if(error.code === '7'){
+            // no connection
+            ToastAndroid.show('Connection required', ToastAndroid.SHORT);
+        }
         else {
-            Alert.alert('Something went wrong', error.toString());
+            ToastAndroid.show('Something went wrong', ToastAndroid.SHORT);
         }
     }
-
-
-
 
 
 }
