@@ -19,13 +19,9 @@ export default class Splash extends Component {
             offlineAccess: true,
         });
 
-        // TODO: Refactor again. Consider to user signInSilently()
         const isSignedIn = await GoogleSignin.isSignedIn();
 
         setTimeout(() => {
-
-            // TODO: testing. Next, put it on signin process.
-            Env.initDefaultCategories();
 
             const resetAction = StackActions.reset({
                 index: 0,
@@ -36,7 +32,7 @@ export default class Splash extends Component {
             this.props.navigation.dispatch(resetAction);
 
             
-        }, 1000);
+        }, 500);
     }
 
     render() {

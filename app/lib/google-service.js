@@ -48,6 +48,10 @@ export default class GoogleService {
 
             // backup not found
             if (file.length === 0) {
+
+                // init default categories
+                Env.initDefaultCategories();
+
                 onSuccess(userInfo, null, null);
                 return;
             }
