@@ -43,11 +43,12 @@ export default class GoogleService {
             const token = await GoogleSignin.getTokens();
             const options = this._configureGetOptions(token.accessToken);
             let response = await fetch(`${this.URL}/files?spaces=appDataFolder&fields=files/id`, options);
+            let responseJson = await response.json();   // WARN: required new var before extract the values
 
-            let files = await response.json().files;
+            let files = responseJson.files;
 
             // backup not found
-            if (file.length === 0) {
+            if (files.length === 0) {
 
                 // init default categories
                 Env.initDefaultCategories();
@@ -99,6 +100,8 @@ export default class GoogleService {
             body
         });
         let responseJson = await response.json();
+
+        // TODO: handle unexpected response
 
         Env.writeStorage(Env.key.BACKUP_FILE_ID, responseJson.id);
 
@@ -177,6 +180,7 @@ export default class GoogleService {
             ToastAndroid.show('Connection required', ToastAndroid.SHORT);
         }
         else {
+            Alert.alert('Something went wrong', error.toString());
             ToastAndroid.show('Something went wrong', ToastAndroid.SHORT);
         }
     }

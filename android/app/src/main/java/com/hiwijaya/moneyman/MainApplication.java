@@ -1,4 +1,4 @@
-package com.moneyman;
+package com.hiwijaya.moneyman;
 
 import android.app.Application;
 
