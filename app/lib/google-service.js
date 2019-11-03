@@ -8,7 +8,6 @@ import {
 } from 'react-native-google-signin';
 import config from '../../config';
 import Env from './env';
-import { file } from '@babel/types';
 
 
 export default class GoogleService {
@@ -46,7 +45,7 @@ export default class GoogleService {
             let responseJson = await response.json();   // WARN: required new var before extract the values
 
             let files = responseJson.files;
-
+            
             // backup not found
             if (files.length === 0) {
 
@@ -108,6 +107,30 @@ export default class GoogleService {
         onSuccess();
     }
 
+    async deleteBackup(){
+
+        // check existing backup
+        const token = await GoogleSignin.getTokens();
+        const options = this._configureGetOptions(token.accessToken);
+        let response = await fetch(`${this.URL}/files?spaces=appDataFolder&fields=files/id`, options);
+        let responseJson = await response.json(); 
+
+        let files = responseJson.files;
+
+        // backup file not exist
+        if (files.length === 0) {
+            return;
+        }
+
+        for(let i=0; i<files.length; i++){
+            let fileId = files[i].id;
+
+            const options = this._configureDeleteOptions(token.accessToken);
+            response = await fetch(`${this.URL}/files/${fileId}`, options);
+        };
+
+    }
+
 
    
     _createMultipartBody(body, isUpdate=false) {
@@ -130,6 +153,16 @@ export default class GoogleService {
             `--${this.BOUNDARY}--`;
 
         return multipartBody;
+    }
+
+    _configureDeleteOptions(accessToken) {
+
+        const headers = new Headers();
+        headers.append('Authorization', `Bearer ${accessToken}`);
+        return {
+            method: 'DELETE',
+            headers,
+        }
     }
 
     _configureGetOptions(accessToken) {

@@ -88,12 +88,27 @@ export default class Account extends Component {
                 {
                     text: 'YES',
                     onPress: () => {
-                        Env.reset();
 
-                        Env.initDefaultCategories();
+                        // delete all data including backup file
+                        Env.reset();
+                        this.googleService.deleteBackup(()=>{});
 
                         Alert.alert('Reset Completed', 'please signin again');
-                        this.signOut();
+                        this.googleService.signOut(() => {
+
+                            // remove local storage
+                            Env.writeStorage(Env.key.ACCESS_TOKEN, null);
+                            Env.writeStorage(Env.key.USER_INFO, null);
+
+                            const resetAction = StackActions.reset({
+                                index: 0,
+                                actions: [NavigationActions.navigate({
+                                    routeName: 'signin'
+                                })],
+                            });
+                            this.props.navigation.dispatch(resetAction);
+                        });
+
                     }
                 }
             ]
@@ -106,8 +121,32 @@ export default class Account extends Component {
 
         // TODO: implement double click to prevent unwanted signout
 
+        const backupStatus = Env.readStorage(Env.key.BACKUP_STATUS);
+        if(backupStatus === 'S'){
+            this.doSignOut();
+        }
+        else{
+            Alert.alert(
+                'WARNING',
+                'Please backup your data before sign out or your data will be lost.',
+                [{
+                        text: 'CANCEL',
+                    },
+                    {
+                        text: 'SIGN OUT',
+                        onPress: () => {this.doSignOut()}
+                    }
+                ]
+            );
+        }
+        
+    }
+
+    doSignOut() {
+        Env.reset();
+
         this.googleService.signOut(() => {
-            
+
             // remove local storage
             Env.writeStorage(Env.key.ACCESS_TOKEN, null);
             Env.writeStorage(Env.key.USER_INFO, null);
@@ -120,7 +159,6 @@ export default class Account extends Component {
             });
             this.props.navigation.dispatch(resetAction);
         });
-        
     }
 
     renderHeader() {
