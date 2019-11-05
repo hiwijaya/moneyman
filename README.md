@@ -38,5 +38,5 @@ Thank you.
 <br/>
 
 <a href="https://www.buymeacoffee.com/hiwijaya" rel="buymeacoffee">
-  <img src="docs/buymeacoffe.png" alt="buymeacoffee" width="150"/>
+  <img src="docs/buymeacoffee.png" alt="buymeacoffee" width="150"/>
 </a>
