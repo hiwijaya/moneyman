@@ -545,6 +545,12 @@ export const Styles = StyleSheet.create({
         backgroundColor: Colors.primary
     },
 
+    licensesHeader: {
+        fontSize: Fonts.h3,
+        fontWeight: 'bold',
+        margin: 15,
+    }
+
 
     
     

@@ -8,6 +8,7 @@ import Categories from '../categories';
 import AddCategory from '../add-category';
 import AddTransaction from '../add-transaction';
 import TransactionDetail from '../transaction-detail';
+import Licenses from '../licenses';
 
 
 const Router = createStackNavigator({
@@ -71,6 +72,13 @@ const Router = createStackNavigator({
         screen: TransactionDetail,
         navigationOptions: {
             title: 'Details',
+            header: null
+        }
+    },
+    licenses: {
+        screen: Licenses,
+        navigationOptions: {
+            title: 'Open Source Licenses',
             header: null
         }
     },

@@ -272,7 +272,7 @@ export default class Account extends Component {
                             require('./asset/licenses.png'), 
                             'Licenses', 
                             true, 
-                            () => {})
+                            () => { this.props.navigation.navigate('licenses') })
                     }
                     {
                         this.renderMenuItem(
