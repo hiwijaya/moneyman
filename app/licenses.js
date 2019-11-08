@@ -35,7 +35,12 @@ export default class Licenses extends Component {
                     <View style={Styles.licenseBox}>
                         <Text style={Styles.licenseTitle}>react-native-google-signin</Text>
                         <Text style={Styles.licenseSubtitle}>https://github.com/react-native-community/react-native-google-signin</Text>
-                        <Text style={Styles.licenseSubtitle}>© react-native-community under MIT license</Text>
+                        <Text style={Styles.licenseSubtitle}>© React Native Community under MIT license</Text>
+                    </View>
+                    <View style={Styles.licenseBox}>
+                        <Text style={Styles.licenseTitle}>react-native-webview</Text>
+                        <Text style={Styles.licenseSubtitle}>https://github.com/react-native-community/react-native-webview</Text>
+                        <Text style={Styles.licenseSubtitle}>© React Native Community under MIT license</Text>
                     </View>
                     <View style={Styles.licenseBox}>
                         <Text style={Styles.licenseTitle}>react-navigation</Text>
