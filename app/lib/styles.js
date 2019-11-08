@@ -545,15 +545,21 @@ export const Styles = StyleSheet.create({
         backgroundColor: Colors.primary
     },
 
-    licensesHeader: {
+    licenseHeader: {
         fontSize: Fonts.h3,
         fontWeight: 'bold',
-        margin: 15,
-    }
-
-
-    
-    
+        marginVertical: 10
+    },
+    licenseBox: {
+        marginVertical: 10,
+    },
+    licenseTitle: {
+        fontWeight: 'bold'
+    },
+    licenseSubtitle: {
+        fontSize: Fonts.h6,
+        color: Colors.darkGrey
+    },
 
 
 });
