@@ -6,6 +6,7 @@ import {
     StatusBar,
     TouchableOpacity, 
 } from 'react-native';
+import WebView from 'react-native-webview';
 import {Styles, Colors} from './lib/styles';
 
 
@@ -13,7 +14,7 @@ export default class Policy extends Component {
 
     render() {
         return(
-            <View>
+            <View style={Styles.box}>
                 <StatusBar backgroundColor={Colors.primary} barStyle="dark-content" />
                 <View style={[Styles.actionbarBox, {elevation: 0}]}>
                     <TouchableOpacity style={Styles.backButton} 
@@ -23,7 +24,7 @@ export default class Policy extends Component {
                     <Text style={Styles.actionbarTitle}>Privacy Policy</Text>
                 </View>
 
-                <WebView style={{margin: 15}}
+                <WebView
                     source={{uri: 'https://hiwijaya.com/app/moneyman/policy.html'}} />
 
             </View>

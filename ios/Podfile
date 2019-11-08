@@ -32,6 +32,8 @@ target 'Moneyman' do
 
   pod 'RNSVG', :path => '../node_modules/react-native-svg'
 
+  pod 'react-native-webview', :path => '../node_modules/react-native-webview'
+
   target 'MoneymanTests' do
     inherit! :search_paths
     # Pods for testing
