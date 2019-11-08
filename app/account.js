@@ -240,68 +240,77 @@ export default class Account extends Component {
             <View style={Styles.sceneBox}>
                 {this.renderHeader()}
 
-                {this.renderBackupMenu()}
+                <ScrollView>
+                    {this.renderBackupMenu()}
 
-                <View style={Styles.accountMenuBox}>
-                     {
-                        this.renderMenuItem(
-                            require('./asset/categories.png'), 
-                            'Categories', 
-                            true, 
-                            () => { this.props.navigation.navigate('categories') })
-                    }
-                    {
-                        this.renderMenuItem(
-                            require('./asset/export.png'),
-                            'Export',
-                            false,
-                            () => { this.exportCSV() })
-                    }
-                </View>
+                    <View style={Styles.accountMenuBox}>
+                        {
+                            this.renderMenuItem(
+                                require('./asset/categories.png'), 
+                                'Categories', 
+                                true, 
+                                () => { this.props.navigation.navigate('categories') })
+                        }
+                        {
+                            this.renderMenuItem(
+                                require('./asset/export.png'),
+                                'Export',
+                                false,
+                                () => { this.exportCSV() })
+                        }
+                    </View>
 
-                <View style={Styles.accountMenuBox}>
-                    {
-                        this.renderMenuItem(
-                            require('./asset/reset.png'),
-                            'Reset',
-                            true,
-                            () => { this.reset() })
-                    }
-                    {
-                        this.renderMenuItem(
-                            require('./asset/licenses.png'), 
-                            'Licenses', 
-                            true, 
-                            () => { this.props.navigation.navigate('licenses') })
-                    }
-                    {
-                        this.renderMenuItem(
-                            require('./asset/rate.png'),
-                            'Rate Us',
-                            true,
-                            () => { this.props.navigation.popToTop() })
-                    }
-                    <TouchableOpacity onPress={() => {Alert.alert('Moneyman')}}>
-                        <View style={Styles.accountMenuItem}>
-                            <Image style={Styles.accountMenuIcon} 
-                                source={require('./asset/about.png')}/>
-                            <View style={Styles.accountMenuTextBox}>
-                                <Text style={Styles.accountMenuText}>{ 'About' }</Text>
+                    <View style={Styles.accountMenuBox}>
+                        {
+                            this.renderMenuItem(
+                                require('./asset/reset.png'),
+                                'Reset',
+                                true,
+                                () => { this.reset() })
+                        }
+                        {
+                            this.renderMenuItem(
+                                require('./asset/policy.png'),
+                                'Privacy Policy',
+                                true,
+                                () => { this.props.navigation.navigate('policy') })
+                        }
+                        {
+                            this.renderMenuItem(
+                                require('./asset/licenses.png'), 
+                                'Open Source Licenses', 
+                                true, 
+                                () => { this.props.navigation.navigate('licenses') })
+                        }
+                        {
+                            this.renderMenuItem(
+                                require('./asset/rate.png'),
+                                'Rate Us',
+                                true,
+                                () => { this.props.navigation.popToTop() })
+                        }
+                        <TouchableOpacity onPress={() => {Alert.alert('Moneyman')}}>
+                            <View style={Styles.accountMenuItem}>
+                                <Image style={Styles.accountMenuIcon} 
+                                    source={require('./asset/about.png')}/>
+                                <View style={Styles.accountMenuTextBox}>
+                                    <Text style={Styles.accountMenuText}>{ 'About' }</Text>
+                                </View>
+                                <View style={Styles.versionTextBox}>
+                                    <Text style={Styles.versionText}>{ 'v1.0' }</Text>
+                                </View>
                             </View>
-                            <View style={Styles.versionTextBox}>
-                                <Text style={Styles.versionText}>{ 'v1.0' }</Text>
-                            </View>
-                        </View>
-                    </TouchableOpacity>
-                </View>
+                        </TouchableOpacity>
+                    </View>
 
-                <View style={Styles.accountMenuBox}>
-                    <TouchableOpacity onPress={this.signOut}>
-                        <View style={Styles.signoutButton}>
-                            <Text style={Styles.signoutText}>Sign Out</Text>
-                        </View>
-                    </TouchableOpacity>
-                </View>
+                    <View style={Styles.accountMenuBox}>
+                        <TouchableOpacity onPress={this.signOut}>
+                            <View style={Styles.signoutButton}>
+                                <Text style={Styles.signoutText}>Sign Out</Text>
+                            </View>
+                        </TouchableOpacity>
+                    </View>
+                </ScrollView>
             </View>
         );
     }

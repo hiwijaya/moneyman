@@ -9,6 +9,7 @@ import AddCategory from '../add-category';
 import AddTransaction from '../add-transaction';
 import TransactionDetail from '../transaction-detail';
 import Licenses from '../licenses';
+import Policy from '../policy';
 
 
 const Router = createStackNavigator({
@@ -79,6 +80,13 @@ const Router = createStackNavigator({
         screen: Licenses,
         navigationOptions: {
             title: 'Open Source Licenses',
+            header: null
+        }
+    },
+    policy: {
+        screen: Policy,
+        navigationOptions: {
+            title: 'Privacy Policy',
             header: null
         }
     },
