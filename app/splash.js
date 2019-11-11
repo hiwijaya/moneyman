@@ -1,28 +1,18 @@
 import React, { Component } from 'react';
 import { View, Image, Alert } from 'react-native';
-import {
-    GoogleSignin,
-    statusCodes,
-} from 'react-native-google-signin';
 import { StackActions, NavigationActions } from 'react-navigation';
+import GoogleService from './lib/google-service';
 import { Styles } from './lib/styles';
-import config from '../config';
-import Env from './lib/env';
 
 
 export default class Splash extends Component {
 
     async componentDidMount() {
-        
-        await GoogleSignin.configure({
-            webClientId: config.webClientId,
-            offlineAccess: true,
-        });
 
-        const isSignedIn = await GoogleSignin.isSignedIn();
+        this.googleService = new GoogleService();
+        const isSignedIn = await this.googleService.obj().isSignedIn();
 
         setTimeout(() => {
-
             const resetAction = StackActions.reset({
                 index: 0,
                 actions: [NavigationActions.navigate({
@@ -30,8 +20,6 @@ export default class Splash extends Component {
                 })],
             });
             this.props.navigation.dispatch(resetAction);
-
-            
         }, 500);
     }
 

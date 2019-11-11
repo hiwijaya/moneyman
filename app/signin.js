@@ -42,6 +42,10 @@ export default class Signin extends Component {
                     [{
                             text: 'NO',
                             onPress: () => {
+
+                                // init default categories
+                                Env.initDefaultCategories();
+                                
                                 this.redirectToHome(userInfo);
                             }
                         },

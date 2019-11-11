@@ -26,6 +26,10 @@ export default class GoogleService {
 
     }
 
+    obj() {
+        return GoogleSignin;
+    }
+
     // onSuccess(userInfo, fileId, backupData);
     async signIn(onSuccess){
         try{

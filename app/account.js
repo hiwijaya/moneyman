@@ -289,7 +289,7 @@ export default class Account extends Component {
                                 true,
                                 () => { this.props.navigation.popToTop() })
                         }
-                        <TouchableOpacity onPress={() => {Alert.alert('Moneyman')}}>
+                        <TouchableOpacity onPress={() => {Alert.alert('Moneyman', 'version 1.1')}}>
                             <View style={Styles.accountMenuItem}>
                                 <Image style={Styles.accountMenuIcon} 
                                     source={require('./asset/about.png')}/>
@@ -297,7 +297,7 @@ export default class Account extends Component {
                                     <Text style={Styles.accountMenuText}>{ 'About' }</Text>
                                 </View>
                                 <View style={Styles.versionTextBox}>
-                                    <Text style={Styles.versionText}>{ 'v1.0' }</Text>
+                                    <Text style={Styles.versionText}>{ 'v1.1' }</Text>
                                 </View>
                             </View>
                         </TouchableOpacity>
