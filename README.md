@@ -10,7 +10,7 @@ This is the features details:
 - Save your own data to your Google Drive appdata.
 
 ### Live demo
-[Download APK](https://drive.google.com/open?id=1nYtvuiA8nV50Zbg7TuwtxZJjHleIGO7X)
+[Download APK](http://bit.ly/app-moneyman)
 
 
 ### Build with
