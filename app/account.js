@@ -287,9 +287,9 @@ export default class Account extends Component {
                                 require('./asset/rate.png'),
                                 'Rate Us',
                                 true,
-                                () => { this.props.navigation.popToTop() })
+                                () => { ToastAndroid.show('Feature is not available yet.', ToastAndroid.SHORT); })
                         }
-                        <TouchableOpacity onPress={() => {Alert.alert('Moneyman', 'version 1.1')}}>
+                        <TouchableOpacity onPress={() => {Alert.alert('Moneyman', 'by Happy Indra Wijaya')}}>
                             <View style={Styles.accountMenuItem}>
                                 <Image style={Styles.accountMenuIcon} 
                                     source={require('./asset/about.png')}/>
