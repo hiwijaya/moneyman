@@ -9,6 +9,9 @@ This is the features details:
 - Show your list per-month
 - Save your own data to your Google Drive appdata.
 
+### Live demo
+[Download APK](https://bit.ly/apk-moneyman)
+
 
 ### Build with
 <a href="https://facebook.github.io/react-native/" rel="React Native">
@@ -34,8 +37,13 @@ export default {
 ```
 To get `webClientId`, please follow [react-native-google-signin](https://github.com/react-native-community/react-native-google-signin/blob/master/docs/android-guide.md) android guide.
 
+
+### License
+Moneyman is [MIT Licensed](https://github.com/hiwijaya/moneyman/blob/master/LICENSE)
+
+
 Thank you.
-<br/>
+
 
 <a href="https://www.buymeacoffee.com/hiwijaya" rel="buymeacoffee">
   <img src="docs/buymeacoffee.png" alt="buymeacoffee" width="150"/>
