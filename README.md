@@ -1,7 +1,9 @@
 ![Moneyman Preview](docs/github-banner.png)
 
-### Moneyman
+# Moneyman
+
 Moneyman is your personal finance manager. You can note and tracking your expenses & income with a simple steps.
+
 This is the features details:
 - Write expenses & income per category
 - Tons of epic category icons
@@ -10,16 +12,17 @@ This is the features details:
 - Save your own data to your Google Drive appdata.
 
 ### Live demo
+
 [Download APK](https://bit.ly/apk-moneyman)
 
-
 ### Build with
+
 <a href="https://facebook.github.io/react-native/" rel="React Native">
   <img src="docs/react-native.png" alt="react-native" width="200"/>
 </a>
 
-
 ### Configue
+
 Get the repo
 ```sh
 git clone https://github.com/hiwijaya/moneyman.git
@@ -35,15 +38,14 @@ export default {
     webClientId: 'YOUR_WEBCLIENTID',
 }; 
 ```
+
 To get `webClientId`, please follow [react-native-google-signin](https://github.com/react-native-community/react-native-google-signin/blob/master/docs/android-guide.md) android guide.
 
-
 ### License
+
 Moneyman is [MIT Licensed](https://github.com/hiwijaya/moneyman/blob/master/LICENSE)
 
-
 Thank you.
-
 
 <a href="https://www.buymeacoffee.com/hiwijaya" rel="buymeacoffee">
   <img src="docs/buymeacoffee.png" alt="buymeacoffee" width="150"/>
