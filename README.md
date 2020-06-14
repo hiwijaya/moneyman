@@ -43,7 +43,7 @@ To get `webClientId`, please follow [react-native-google-signin](https://github.
 
 ### License
 
-Moneyman is [MIT Licensed](https://github.com/hiwijaya/moneyman/blob/master/LICENSE)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/hiwijaya/moneyman/blob/master/LICENSE)
 
 Thank you.
 
